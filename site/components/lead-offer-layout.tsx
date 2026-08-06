@@ -53,12 +53,16 @@ export function LeadOfferLayout({ offer }: LeadOfferLayoutProps) {
           </FadeIn>
         </div>
         <p className="mt-12 text-center text-sm text-slate-500">
-          <Link href="/download-brochure" className="font-semibold text-teal-700 hover:underline">
-            Download brochure
+          <Link href="/erp" className="font-semibold text-teal-700 hover:underline">
+            LoopC ERP
           </Link>
           {" · "}
-          <Link href="/features" className="font-semibold text-teal-700 hover:underline">
-            View features
+          <Link href="/services" className="font-semibold text-teal-700 hover:underline">
+            Services
+          </Link>
+          {" · "}
+          <Link href="/work" className="font-semibold text-teal-700 hover:underline">
+            Our work
           </Link>
         </p>
       </div>

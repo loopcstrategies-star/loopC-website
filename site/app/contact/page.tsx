@@ -7,7 +7,7 @@ import { getWhatsAppUrl, siteConfig } from "@/lib/site-config";
 
 export const metadata: Metadata = {
   title: "Contact",
-  description: `Contact ${siteConfig.name} — ERP for trading businesses in India.`,
+  description: `Contact ${siteConfig.name} — consulting, custom web & mobile, and LoopC ERP.`,
   openGraph: {
     title: `Contact | ${siteConfig.brand}`,
     url: "/contact",
@@ -20,8 +20,8 @@ export default function ContactPage() {
       <PageBanner
         banner="contact"
         eyebrow="Contact"
-        title="Talk to our trading ERP team"
-        description="Chennai HQ · Remote demos across India. For faster response, use a free demo, audit, or brochure download."
+        title="Tell us what you need"
+        description="Website, mobile app, ERP, or not sure yet — we'll route you to the right conversation."
         priority
       />
 

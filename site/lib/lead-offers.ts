@@ -26,15 +26,15 @@ export const leadOffers: LeadOffer[] = [
   {
     slug: "free-demo",
     title: "Free Demo",
-    headline: "Schedule a 30-Minute ERP Demo",
+    headline: "Book a free demo or scoping call",
     description:
-      "See LoopC ERP live: inventory, trading workflows, GST invoicing, and reports—customized to your client requirements at low pricing.",
+      "Two paths: try LoopC ERP on your workflow, or get a custom build quote for web or mobile. Tell us which you need — we'll prep the right demo.",
     cta: "Book free demo",
     intent: "demo",
     bullets: [
-      "Live ERP dashboard walkthrough—not slides",
-      "Language options: English, SA, UZ, and RU",
-      "Customization scope and low, scoped pricing after the demo",
+      "LoopC ERP — live product walkthrough and plan recommendation",
+      "Custom build — scope, timeline, and stack (Next.js, Flutter, NestJS)",
+      "No obligation — honest answer if consulting beats code",
     ],
   },
   {

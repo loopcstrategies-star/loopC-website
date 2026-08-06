@@ -16,12 +16,12 @@ const intentLabels: Record<FormIntent, { subject: string; button: string; intro:
   contact: {
     subject: "Contact",
     button: "Send message",
-    intro: "Tell us about your trading business—we will respond with next steps.",
+    intro: "Tell us what you need — we'll route you to the right team.",
   },
   demo: {
     subject: "Demo request",
     button: "Book free demo",
-    intro: "Schedule a 30-minute ERP demo—see how we customize the application to your requirements and scope low pricing for your team.",
+    intro: "Custom build quote or LoopC ERP trial — tell us which you're interested in and we'll schedule a call.",
   },
   audit: {
     subject: "Free audit request",
@@ -39,6 +39,15 @@ const intentLabels: Record<FormIntent, { subject: string; button: string; intro:
     intro: "Enter your details to download the LoopC ERP product brochure.",
   },
 };
+
+const needOptions = [
+  { value: "", label: "What do you need?" },
+  { value: "website", label: "Website / web app" },
+  { value: "mobile", label: "Mobile app (iOS / Android)" },
+  { value: "erp", label: "LoopC ERP" },
+  { value: "consulting", label: "Business consulting / audit" },
+  { value: "not-sure", label: "Not sure yet" },
+] as const;
 
 const employeeOptions = [
   { value: "", label: "Select team size" },
@@ -65,6 +74,7 @@ export function ContactForm({
     const company = String(fd.get("company") ?? "").trim();
     const mobile = String(fd.get("mobile") ?? "").trim();
     const email = String(fd.get("email") ?? "").trim();
+    const need = String(fd.get("need") ?? "").trim();
     const employees = String(fd.get("employees") ?? "").trim();
     const message = String(fd.get("message") ?? "").trim();
 
@@ -79,6 +89,7 @@ export function ContactForm({
       company,
       mobile,
       email,
+      need,
       employees,
       message,
       intent,
@@ -154,10 +165,24 @@ export function ContactForm({
           </label>
         </div>
         <label className="block text-sm font-medium text-slate-700">
+          What do you need?
+          <select
+            name="need"
+            required
+            defaultValue=""
+            className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-slate-900 shadow-sm outline-none ring-teal-600/15 focus:border-teal-500 focus:ring-4"
+          >
+            {needOptions.map((o) => (
+              <option key={o.value || "empty"} value={o.value} disabled={!o.value}>
+                {o.label}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label className="block text-sm font-medium text-slate-700">
           Number of employees
           <select
             name="employees"
-            required
             defaultValue=""
             className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-slate-900 shadow-sm outline-none ring-teal-600/15 focus:border-teal-500 focus:ring-4"
           >
@@ -175,7 +200,7 @@ export function ContactForm({
               name="message"
               rows={4}
               className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-slate-900 shadow-sm outline-none ring-teal-600/15 focus:border-teal-500 focus:ring-4"
-              placeholder="SKUs, warehouses, current tools, preferred demo time…"
+              placeholder="Brief context — current tools, timeline, branch count…"
             />
           </label>
         ) : null}

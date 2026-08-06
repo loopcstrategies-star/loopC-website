@@ -8,9 +8,11 @@ import { getWhatsAppUrl } from "@/lib/site-config";
 
 const nav = [
   { href: "/", label: "Home" },
-  { href: "/features", label: "Features" },
-  { href: "/industries", label: "Industries" },
-  { href: "/pricing", label: "Pricing" },
+  { href: "/services", label: "Services" },
+  { href: "/erp", label: "ERP" },
+  { href: "/work", label: "Work" },
+  { href: "/about", label: "About" },
+  { href: "/blog", label: "Blog" },
   { href: "/contact", label: "Contact" },
 ] as const;
 
@@ -35,7 +37,7 @@ export function SiteHeader() {
         <Logo />
         <div className="flex items-center gap-4 lg:gap-6">
           <nav
-            className="hidden items-center gap-6 text-sm lg:flex xl:gap-7"
+            className="hidden items-center gap-5 text-sm lg:flex xl:gap-6"
             aria-label="Main"
           >
             {nav.map(({ href, label }) => (

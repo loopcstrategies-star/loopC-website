@@ -7,12 +7,12 @@ export const siteConfig = {
   name: "LoopC Business Strategies",
   legalName: "LoopC Business Strategies",
   tagline:
-    "Customized ERP dashboard for trading businesses—English, SA, UZ, and RU language support, at low pricing.",
+    "We turn business bottlenecks into software — websites, apps, and ERP systems built around how you actually work.",
   description:
-    "Manage inventory, accounts, procurement, customer margins, and multi-currency trading with LoopC ERP—for wholesale, distribution, and commodity businesses in India.",
+    "LoopC diagnoses business problems, then builds the fix: custom web and mobile apps, business consulting, and LoopC ERP — our own SaaS product with transparent plans.",
   /** One line for hero / CTAs */
   erpSalesLine:
-    "One ERP dashboard customized to your requirements—inventory, sales, purchases, and accounts in English, SA, UZ, or RU, at low pricing.",
+    "Web platforms, mobile apps, and our own ERP — designed around how your business actually works, not a generic template.",
   /** Short value props for badges, pills, and CTAs */
   customizationLine:
     "We customize the application to your workflows, reports, approvals, and integrations—not a one-size-fits-all template.",

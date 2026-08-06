@@ -1,45 +1,52 @@
 import { getSiteUrl, siteConfig } from "@/lib/site-config";
 
 export const seoKeywords = [
+  "Custom Software Development",
+  "Business Solutions Consulting",
+  "Web Development India",
+  "Mobile App Development",
   "ERP Software",
-  "Trading ERP",
-  "Inventory Management",
-  "Commodity Trading ERP",
-  "Business Management Software",
-  "ERP India",
-  "Multi-Currency ERP",
-  "Procurement Management",
-  "Customer Margin Analysis",
+  "LoopC ERP",
+  "SaaS Development",
+  "Next.js Development",
+  "Flutter Apps",
 ] as const;
 
-export const defaultSiteTitle = "LoopC ERP | ERP for Trading & Commodity Businesses";
+export const defaultSiteTitle =
+  "LoopC | Business Strategy → Software That Runs It";
 
 export const defaultSiteDescription =
-  "Manage inventory, accounts, procurement, customer margins, and multi-currency trading with LoopC ERP.";
+  "We understand your business first, then build the software — websites, mobile apps, and LoopC ERP with transparent plans.";
 
-export const homePageTitle = "LoopC ERP - ERP Software for Trading Businesses";
+export const homePageTitle =
+  "LoopC — We Understand Your Business First, Then We Build the Software";
 
 export const homePageDescription =
-  "Complete ERP platform for inventory, finance, procurement, customer profitability and operations.";
+  "Business consulting, custom web and mobile development, and LoopC ERP — a software house that owns its product.";
 
-export const openGraphTitle = "LoopC ERP";
+export const openGraphTitle = "LoopC Business Strategies";
 
 export const openGraphDescription =
-  "ERP Software for Trading and Commodity Businesses";
+  "Turn business bottlenecks into software — web, mobile, and ERP.";
 
 /** Public routes included in sitemap.xml */
 export const sitemapPaths = [
   "/",
-  "/features",
-  "/industries",
-  "/pricing",
-  "/contact",
+  "/services",
+  "/erp",
+  "/erp/pricing",
+  "/work",
+  "/work/coacher-max",
   "/about",
+  "/blog",
+  "/contact",
   "/free-demo",
   "/free-audit",
   "/free-consultation",
   "/download-brochure",
-  "/blog",
+  "/features",
+  "/industries",
+  "/pricing",
 ] as const;
 
 export function getAbsoluteUrl(path: string): string {
@@ -58,10 +65,10 @@ export function getSoftwareApplicationSchema() {
       "@type": "Offer",
       price: "0",
       priceCurrency: "INR",
-      description: "Scoped pricing after discovery call",
+      description: "Basic, Standard, and Premium plans — quote on demo",
     },
     description: openGraphDescription,
-    url: getSiteUrl(),
+    url: getAbsoluteUrl("/erp"),
     provider: {
       "@type": "Organization",
       name: siteConfig.legalName,

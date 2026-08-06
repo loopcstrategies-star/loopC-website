@@ -12,9 +12,10 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
-      { source: "/solutions", destination: "/features", permanent: true },
-      { source: "/service", destination: "/features", permanent: true },
-      { source: "/services", destination: "/features", permanent: true },
+      { source: "/solutions", destination: "/services", permanent: true },
+      { source: "/service", destination: "/services", permanent: true },
+      { source: "/pricing", destination: "/erp/pricing", permanent: true },
+      { source: "/case-studies", destination: "/work", permanent: true },
       { source: "/demo", destination: "/free-demo", permanent: true },
       { source: "/request-demo", destination: "/free-demo", permanent: true },
     ];

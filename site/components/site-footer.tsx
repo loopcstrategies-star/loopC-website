@@ -1,19 +1,17 @@
 import Link from "next/link";
 import { Logo } from "@/components/logo";
-import { features } from "@/lib/features";
 import { getWhatsAppUrl, siteConfig } from "@/lib/site-config";
 
 const quickLinks = [
   { href: "/", label: "Home" },
-  { href: "/features", label: "Features" },
-  { href: "/industries", label: "Industries" },
-  { href: "/pricing", label: "Pricing" },
+  { href: "/services", label: "Services" },
+  { href: "/erp", label: "LoopC ERP" },
+  { href: "/erp/pricing", label: "ERP pricing" },
+  { href: "/work", label: "Work" },
+  { href: "/about", label: "About" },
   { href: "/blog", label: "Blog" },
   { href: "/contact", label: "Contact" },
-  { href: "/download-brochure", label: "Download brochure" },
   { href: "/free-demo", label: "Book demo" },
-  { href: "/free-audit", label: "Free audit" },
-  { href: "/free-consultation", label: "Free consultation" },
 ] as const;
 
 function SocialIconLinkedIn() {
@@ -115,18 +113,28 @@ export function SiteFooter() {
           </div>
 
           <div className="lg:col-span-3">
-            <p className="text-xs font-bold uppercase tracking-[0.16em] text-slate-500">Features</p>
+            <p className="text-xs font-bold uppercase tracking-[0.16em] text-slate-500">What we build</p>
             <ul className="mt-4 space-y-2.5 text-sm">
-              {features.map((f) => (
-                <li key={f.slug}>
-                  <Link
-                    href={`/features#${f.slug}`}
-                    className="text-slate-400 transition hover:text-teal-300"
-                  >
-                    {f.title}
-                  </Link>
-                </li>
-              ))}
+              <li>
+                <Link href="/services#consulting" className="text-slate-400 transition hover:text-teal-300">
+                  Business consulting
+                </Link>
+              </li>
+              <li>
+                <Link href="/services#web" className="text-slate-400 transition hover:text-teal-300">
+                  Web development
+                </Link>
+              </li>
+              <li>
+                <Link href="/services#mobile" className="text-slate-400 transition hover:text-teal-300">
+                  Mobile apps
+                </Link>
+              </li>
+              <li>
+                <Link href="/erp" className="text-slate-400 transition hover:text-teal-300">
+                  LoopC ERP
+                </Link>
+              </li>
             </ul>
           </div>
 

@@ -14,41 +14,31 @@ export const testimonials: Testimonial[] = [
   {
     id: "1",
     quote:
-      "LoopC cut our rollout risk in half. ERP scope stayed honest, dashboards matched how our Chennai HQ and branches actually work.",
+      "LoopC cut our fee-collection follow-ups by half within a month. They understood our center workflow before proposing anything.",
     name: "Ananya Krishnan",
-    role: "Head of Operations",
-    company: "Regional distribution",
+    role: "Center Director",
+    company: "Tuition network, Chennai",
     imageSrc:
       "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=400&fit=crop&q=88",
   },
   {
     id: "2",
     quote:
-      "Finally a team that did not sell us shelf-ware. CRM views are tied to our pipeline stages—not a generic SaaS template.",
+      "Finally a team that didn't sell shelf-ware. They scoped only what we needed — a web dashboard, not a bloated ERP quote.",
     name: "Rahul Venkat",
-    role: "Commercial Director",
-    company: "B2B services",
+    role: "Founder",
+    company: "B2B services startup",
     imageSrc:
       "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&h=400&fit=crop&q=88",
   },
   {
     id: "3",
     quote:
-      "Pricing was transparent and the weekly demos kept leadership aligned. We went live on one entity first, then scaled.",
+      "Weekly demos kept leadership aligned. We went live on one branch first, then scaled — exactly how they said it would work.",
     name: "Meera Subramanian",
-    role: "CFO",
-    company: "Manufacturing group",
+    role: "Operations Head",
+    company: "Multi-branch operator",
     imageSrc:
       "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&h=400&fit=crop&q=88",
-  },
-  {
-    id: "4",
-    quote:
-      "Our executives use the executive cockpit every Monday. Same numbers as finance—no more arguing about which spreadsheet is “truth.”",
-    name: "David Thomas",
-    role: "CEO",
-    company: "Multi-site retail",
-    imageSrc:
-      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&q=88",
   },
 ];
