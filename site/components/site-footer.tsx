@@ -2,16 +2,36 @@ import Link from "next/link";
 import { Logo } from "@/components/logo";
 import { getWhatsAppUrl, siteConfig } from "@/lib/site-config";
 
-const quickLinks = [
+const companyLinks = [
   { href: "/", label: "Home" },
-  { href: "/services", label: "Services" },
-  { href: "/erp", label: "LoopC ERP" },
-  { href: "/erp/pricing", label: "ERP pricing" },
-  { href: "/work", label: "Work" },
   { href: "/about", label: "About" },
+  { href: "/work", label: "Work" },
   { href: "/blog", label: "Blog" },
   { href: "/contact", label: "Contact" },
-  { href: "/free-demo", label: "Book demo" },
+] as const;
+
+const serviceLinks = [
+  { href: "/services#web", label: "Web Development" },
+  { href: "/services#mobile", label: "Mobile Development" },
+  { href: "/services#erp", label: "ERP Solutions" },
+  { href: "/services#custom", label: "Custom Software" },
+  { href: "/services#design", label: "UI/UX" },
+  { href: "/services#testing", label: "Testing & QA" },
+] as const;
+
+const erpLinks = [
+  { href: "/erp", label: "Overview" },
+  { href: "/features", label: "Features" },
+  { href: "/industries", label: "Industries" },
+  { href: "/erp/pricing", label: "Plans" },
+  { href: "/free-demo", label: "Book a Demo" },
+] as const;
+
+const resourceLinks = [
+  { href: "/blog", label: "Blog" },
+  { href: "/work", label: "Case Studies" },
+  { href: "/#faq", label: "FAQs" },
+  { href: "/contact", label: "Contact" },
 ] as const;
 
 function SocialIconLinkedIn() {
@@ -75,13 +95,13 @@ export function SiteFooter() {
     <footer className="mt-auto border-t border-white/10 bg-slate-950 text-slate-300">
       <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6 lg:py-16">
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-8">
-          <div className="lg:col-span-4">
+          <div className="lg:col-span-3">
             <Logo variant="footer" />
             <p className="mt-4 text-sm font-semibold leading-snug text-teal-100/90">
               {siteConfig.tagline}
             </p>
             <p className="mt-3 max-w-sm text-sm leading-relaxed text-slate-400">
-              {siteConfig.description}
+              We build digital systems that help businesses operate, connect and grow.
             </p>
             <div className="mt-6 flex flex-wrap gap-2">
               <SocialButton href={siteConfig.social.linkedIn} label="LoopC on LinkedIn">
@@ -100,9 +120,9 @@ export function SiteFooter() {
           </div>
 
           <div className="lg:col-span-2">
-            <p className="text-xs font-bold uppercase tracking-[0.16em] text-slate-500">Quick links</p>
+            <p className="text-xs font-bold uppercase tracking-[0.16em] text-slate-500">Company</p>
             <ul className="mt-4 space-y-2.5 text-sm">
-              {quickLinks.map(({ href, label }) => (
+              {companyLinks.map(({ href, label }) => (
                 <li key={href}>
                   <Link href={href} className="text-slate-400 transition hover:text-teal-300">
                     {label}
@@ -112,34 +132,47 @@ export function SiteFooter() {
             </ul>
           </div>
 
-          <div className="lg:col-span-3">
-            <p className="text-xs font-bold uppercase tracking-[0.16em] text-slate-500">What we build</p>
+          <div className="lg:col-span-2">
+            <p className="text-xs font-bold uppercase tracking-[0.16em] text-slate-500">Services</p>
             <ul className="mt-4 space-y-2.5 text-sm">
-              <li>
-                <Link href="/services#consulting" className="text-slate-400 transition hover:text-teal-300">
-                  Business consulting
-                </Link>
-              </li>
-              <li>
-                <Link href="/services#web" className="text-slate-400 transition hover:text-teal-300">
-                  Web development
-                </Link>
-              </li>
-              <li>
-                <Link href="/services#mobile" className="text-slate-400 transition hover:text-teal-300">
-                  Mobile apps
-                </Link>
-              </li>
-              <li>
-                <Link href="/erp" className="text-slate-400 transition hover:text-teal-300">
-                  LoopC ERP
-                </Link>
-              </li>
+              {serviceLinks.map(({ href, label }) => (
+                <li key={href}>
+                  <Link href={href} className="text-slate-400 transition hover:text-teal-300">
+                    {label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
-          <div className="lg:col-span-3">
-            <p className="text-xs font-bold uppercase tracking-[0.16em] text-slate-500">Company</p>
+          <div className="lg:col-span-2">
+            <p className="text-xs font-bold uppercase tracking-[0.16em] text-slate-500">ERP</p>
+            <ul className="mt-4 space-y-2.5 text-sm">
+              {erpLinks.map(({ href, label }) => (
+                <li key={href}>
+                  <Link href={href} className="text-slate-400 transition hover:text-teal-300">
+                    {label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="lg:col-span-1">
+            <p className="text-xs font-bold uppercase tracking-[0.16em] text-slate-500">Resources</p>
+            <ul className="mt-4 space-y-2.5 text-sm">
+              {resourceLinks.map(({ href, label }) => (
+                <li key={href + label}>
+                  <Link href={href} className="text-slate-400 transition hover:text-teal-300">
+                    {label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="lg:col-span-2">
+            <p className="text-xs font-bold uppercase tracking-[0.16em] text-slate-500">Contact</p>
             <address className="mt-4 not-italic text-sm leading-relaxed text-slate-400">
               {siteConfig.addressLines.map((line) => (
                 <span key={line} className="block">
@@ -147,9 +180,8 @@ export function SiteFooter() {
                 </span>
               ))}
             </address>
-            <div className="mt-5 space-y-2 text-sm">
+            <div className="mt-4 space-y-2 text-sm">
               <p>
-                <span className="text-slate-500">Sales: </span>
                 <a href={`mailto:${siteConfig.salesEmail}`} className="text-teal-400 hover:underline">
                   {siteConfig.salesEmail}
                 </a>
@@ -159,7 +191,6 @@ export function SiteFooter() {
                   {siteConfig.phoneDisplay}
                 </a>
               </p>
-              <p className="pt-1 text-xs leading-relaxed text-slate-500">{siteConfig.businessHours}</p>
             </div>
           </div>
         </div>
@@ -175,7 +206,6 @@ export function SiteFooter() {
             <Link href="/terms" className="text-slate-400 transition hover:text-teal-300">
               Terms of service
             </Link>
-            <span className="text-slate-500">{siteConfig.gstNumber}</span>
           </div>
         </div>
       </div>

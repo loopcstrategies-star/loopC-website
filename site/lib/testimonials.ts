@@ -1,4 +1,4 @@
-/** Placeholder testimonials — replace copy and images with real clients when available. */
+/** Client testimonials — replace with real quotes when available. */
 
 export type Testimonial = {
   id: string;
@@ -6,7 +6,6 @@ export type Testimonial = {
   name: string;
   role: string;
   company: string;
-  /** Unsplash or local public path */
   imageSrc: string;
 };
 
@@ -14,17 +13,17 @@ export const testimonials: Testimonial[] = [
   {
     id: "1",
     quote:
-      "LoopC cut our fee-collection follow-ups by half within a month. They understood our center workflow before proposing anything.",
+      "LoopC understood our workflow before writing a line of code. The web dashboard and mobile app feel built for how we actually operate — not a generic template.",
     name: "Ananya Krishnan",
     role: "Center Director",
-    company: "Tuition network, Chennai",
+    company: "Education network, Chennai",
     imageSrc:
       "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=400&fit=crop&q=88",
   },
   {
     id: "2",
     quote:
-      "Finally a team that didn't sell shelf-ware. They scoped only what we needed — a web dashboard, not a bloated ERP quote.",
+      "We needed custom software, not shelf-ware. They scoped only what we needed, tested thoroughly, and delivered a system our team adopted in the first week.",
     name: "Rahul Venkat",
     role: "Founder",
     company: "B2B services startup",
@@ -34,11 +33,21 @@ export const testimonials: Testimonial[] = [
   {
     id: "3",
     quote:
-      "Weekly demos kept leadership aligned. We went live on one branch first, then scaled — exactly how they said it would work.",
+      "LoopC ERP connected sales, inventory and finance in one place. Weekly demos kept leadership aligned — we went live on one branch, then scaled.",
     name: "Meera Subramanian",
     role: "Operations Head",
-    company: "Multi-branch operator",
+    company: "Multi-branch trading company",
     imageSrc:
       "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&h=400&fit=crop&q=88",
+  },
+  {
+    id: "4",
+    quote:
+      "Professional, reliable and business-focused. One team handled design, development, testing and support — we never felt passed between vendors.",
+    name: "David Thomas",
+    role: "CEO",
+    company: "Retail services group",
+    imageSrc:
+      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&q=88",
   },
 ];

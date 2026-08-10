@@ -14,12 +14,12 @@ export function ErpPricingTable({ showCustomBuild = true }: ErpPricingTableProps
 
   return (
     <div
-      className={`grid gap-8 ${tiers.length === 4 ? "lg:grid-cols-2 xl:grid-cols-4" : "lg:grid-cols-3"}`}
+      className={`pricing-grid grid gap-8 ${tiers.length === 4 ? "lg:grid-cols-2 xl:grid-cols-4" : "lg:grid-cols-3"}`}
     >
       {tiers.map((tier, i) => (
         <FadeIn key={tier.id} delay={0.08 * i}>
           <article
-            className={`glass-panel flex h-full flex-col rounded-2xl p-8 ${
+            className={`pricing-card glass-panel flex h-full flex-col rounded-2xl p-8 ${
               tier.featured
                 ? "border-2 border-teal-400/60 shadow-xl shadow-teal-600/10"
                 : "border border-slate-200/80"
@@ -45,10 +45,20 @@ export function ErpPricingTable({ showCustomBuild = true }: ErpPricingTableProps
             </ul>
             <p className="mt-6 text-sm font-semibold text-slate-500">{tier.priceNote}</p>
             <Link
-              href={tier.id === "custom-build" ? "/contact" : "/free-demo"}
-              className="interactive-shine mt-6 inline-flex items-center justify-center rounded-full bg-gradient-to-r from-teal-600 to-teal-500 px-5 py-3 text-sm font-semibold text-white shadow-md"
+              href={
+                tier.id === "custom-build" || tier.id === "enterprise"
+                  ? "/contact"
+                  : tier.id === "starter"
+                    ? "/contact"
+                    : "/free-demo"
+              }
+              className="btn-primary interactive-shine mt-6 inline-flex items-center justify-center rounded-full bg-gradient-to-r from-teal-600 to-teal-500 px-5 py-3 text-sm font-semibold text-white shadow-md"
             >
-              {tier.id === "custom-build" ? "Talk to us" : "Book demo"}
+              {tier.id === "custom-build" || tier.id === "enterprise"
+                ? "Talk to sales"
+                : tier.id === "business"
+                  ? "Request demo"
+                  : "Get started"}
             </Link>
           </article>
         </FadeIn>

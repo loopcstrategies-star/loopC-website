@@ -16,6 +16,18 @@ export const pageBanners = {
     src: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=1920&h=720&fit=crop&q=85",
     alt: "Modern office — contact LoopC Business Strategies",
   },
+  services: {
+    src: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1920&h=720&fit=crop&q=85",
+    alt: "Team collaborating on product strategy and software delivery",
+  },
+  work: {
+    src: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1920&h=720&fit=crop&q=85",
+    alt: "Product analytics dashboard on laptop — shipped software in production",
+  },
+  about: {
+    src: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=1920&h=720&fit=crop&q=85",
+    alt: "Founders reviewing strategy — solutions-first software house",
+  },
 } as const;
 
 export type PageBannerKey = keyof typeof pageBanners;

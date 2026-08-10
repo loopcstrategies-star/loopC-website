@@ -28,13 +28,13 @@ export const leadOffers: LeadOffer[] = [
     title: "Free Demo",
     headline: "Book a free demo or scoping call",
     description:
-      "Two paths: try LoopC ERP on your workflow, or get a custom build quote for web or mobile. Tell us which you need — we'll prep the right demo.",
+      "Two paths: try LoopC ERP on your workflow, or scope a custom web / mobile / software build. Tell us which you need — we'll prep the right conversation.",
     cta: "Book free demo",
     intent: "demo",
     bullets: [
       "LoopC ERP — live product walkthrough and plan recommendation",
-      "Custom build — scope, timeline, and stack (Next.js, Flutter, NestJS)",
-      "No obligation — honest answer if consulting beats code",
+      "Custom software — web, mobile, or internal systems scoped honestly",
+      "End-to-end: design, develop, test, deploy and support",
     ],
   },
   {

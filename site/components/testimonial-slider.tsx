@@ -9,13 +9,16 @@ import type { Testimonial } from "@/lib/testimonials";
 
 type Props = {
   items: Testimonial[];
+  /** Dark glass style for navy sections */
+  variant?: "light" | "dark";
 };
 
-export function TestimonialSlider({ items }: Props) {
+export function TestimonialSlider({ items, variant = "light" }: Props) {
+  const dark = variant === "dark";
   const [selected, setSelected] = useState(0);
   const [emblaRef, emblaApi] = useEmblaCarousel(
     { loop: true, align: "center", containScroll: "trimSnaps" },
-    [Autoplay({ delay: 7000, stopOnInteraction: true, stopOnMouseEnter: true })],
+    [Autoplay({ delay: 6500, stopOnInteraction: true, stopOnMouseEnter: true })],
   );
 
   const onSelect = useCallback(() => {
@@ -41,35 +44,57 @@ export function TestimonialSlider({ items }: Props) {
 
   return (
     <div className="relative px-1">
-      <div className="overflow-hidden rounded-3xl pb-1" ref={emblaRef}>
+      <div className="overflow-hidden pb-1" ref={emblaRef}>
         <div className="flex touch-pan-y">
           {items.map((t, index) => (
             <div
               key={t.id}
-              className="min-w-0 shrink-0 grow-0 pl-2 pr-2"
+              className="min-w-0 shrink-0 grow-0 px-2 sm:px-4"
               style={{ flex: "0 0 100%" }}
             >
               <motion.article
                 initial={false}
                 animate={{
-                  opacity: selected === index ? 1 : 0.78,
-                  scale: selected === index ? 1 : 0.985,
+                  opacity: selected === index ? 1 : 0.55,
+                  y: selected === index ? 0 : 6,
                 }}
                 transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-                className="glass-panel mx-auto flex min-h-[260px] max-w-3xl flex-col gap-6 rounded-3xl p-8 shadow-xl sm:min-h-[220px] sm:flex-row sm:p-10"
+                className="mx-auto flex min-h-[240px] max-w-3xl flex-col items-center gap-6 py-4 text-center sm:min-h-[220px] sm:flex-row sm:items-center sm:gap-10 sm:text-left"
               >
-                <div className="relative mx-auto h-20 w-20 shrink-0 overflow-hidden rounded-2xl ring-2 ring-teal-500/25 sm:mx-0 sm:h-24 sm:w-24">
-                  <Image src={t.imageSrc} alt="" fill sizes="96px" className="object-cover saturate-110" />
+                <div
+                  className={`relative mx-auto h-20 w-20 shrink-0 overflow-hidden rounded-full sm:mx-0 sm:h-24 sm:w-24 ${
+                    dark ? "ring-2 ring-teal-400/35" : "ring-2 ring-teal-500/25"
+                  }`}
+                >
+                  <Image
+                    src={t.imageSrc}
+                    alt=""
+                    fill
+                    sizes="96px"
+                    className="object-cover"
+                  />
                 </div>
-                <div className="flex min-w-0 flex-1 flex-col justify-center text-center sm:text-left">
-                  <blockquote className="text-base font-medium leading-relaxed text-slate-800 sm:text-lg">
-                    <span className="font-display text-2xl leading-none text-teal-600/90">&ldquo;</span>
+                <div className="flex min-w-0 flex-1 flex-col justify-center">
+                  <p
+                    className={`mb-3 text-sm tracking-[0.2em] ${
+                      dark ? "text-teal-300/80" : "text-teal-700/80"
+                    }`}
+                    aria-label="5 star rating"
+                  >
+                    ★★★★★
+                  </p>
+                  <blockquote
+                    className={`font-display text-xl font-medium leading-relaxed sm:text-2xl ${
+                      dark ? "text-slate-50" : "text-slate-800"
+                    }`}
+                  >
+                    <span className="text-teal-400/90">&ldquo;</span>
                     {t.quote}
-                    <span className="font-display text-2xl leading-none text-teal-600/90">&rdquo;</span>
+                    <span className="text-teal-400/90">&rdquo;</span>
                   </blockquote>
-                  <footer className="mt-6 border-t border-slate-200/80 pt-5">
-                    <p className="font-bold text-slate-900">{t.name}</p>
-                    <p className="text-sm text-slate-600">
+                  <footer className="mt-6">
+                    <p className={`font-bold ${dark ? "text-white" : "text-slate-900"}`}>{t.name}</p>
+                    <p className={`mt-0.5 text-sm ${dark ? "text-slate-400" : "text-slate-600"}`}>
                       {t.role} · {t.company}
                     </p>
                   </footer>
@@ -88,8 +113,12 @@ export function TestimonialSlider({ items }: Props) {
               type="button"
               onClick={() => scrollTo(i)}
               aria-label={`Go to testimonial ${i + 1}`}
-              className={`h-2 rounded-full transition-all ${
-                selected === i ? "w-8 bg-teal-600" : "w-2 bg-slate-300 hover:bg-slate-400"
+              className={`slider-dot h-2 rounded-full transition-all ${
+                selected === i
+                  ? "w-8 bg-teal-400"
+                  : dark
+                    ? "w-2 bg-white/25 hover:bg-teal-400/50"
+                    : "w-2 bg-slate-300"
               }`}
             />
           ))}
@@ -99,7 +128,11 @@ export function TestimonialSlider({ items }: Props) {
             type="button"
             onClick={scrollPrev}
             aria-label="Previous testimonial"
-            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 shadow-sm transition hover:border-teal-300 hover:text-teal-800"
+            className={`inline-flex h-11 w-11 items-center justify-center rounded-full border transition ${
+              dark
+                ? "border-white/15 bg-transparent text-white hover:border-teal-400/40"
+                : "border-slate-200 bg-white text-slate-700 hover:border-teal-300 hover:text-teal-800"
+            }`}
           >
             <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -109,7 +142,11 @@ export function TestimonialSlider({ items }: Props) {
             type="button"
             onClick={scrollNext}
             aria-label="Next testimonial"
-            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 shadow-sm transition hover:border-teal-300 hover:text-teal-800"
+            className={`inline-flex h-11 w-11 items-center justify-center rounded-full border transition ${
+              dark
+                ? "border-white/15 bg-transparent text-white hover:border-teal-400/40"
+                : "border-slate-200 bg-white text-slate-700 hover:border-teal-300 hover:text-teal-800"
+            }`}
           >
             <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />

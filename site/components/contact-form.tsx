@@ -15,13 +15,13 @@ type ContactFormProps = {
 const intentLabels: Record<FormIntent, { subject: string; button: string; intro: string }> = {
   contact: {
     subject: "Contact",
-    button: "Send message",
-    intro: "Tell us what you need — we'll route you to the right team.",
+    button: "Submit request",
+    intro: "Tell us about your next system — we'll recommend web, mobile, ERP or custom.",
   },
   demo: {
     subject: "Demo request",
     button: "Book free demo",
-    intro: "Custom build quote or LoopC ERP trial — tell us which you're interested in and we'll schedule a call.",
+    intro: "LoopC ERP demo or custom project scoping — tell us which and we'll schedule a call.",
   },
   audit: {
     subject: "Free audit request",
@@ -42,11 +42,12 @@ const intentLabels: Record<FormIntent, { subject: string; button: string; intro:
 
 const needOptions = [
   { value: "", label: "What do you need?" },
-  { value: "website", label: "Website / web app" },
-  { value: "mobile", label: "Mobile app (iOS / Android)" },
-  { value: "erp", label: "LoopC ERP" },
-  { value: "consulting", label: "Business consulting / audit" },
-  { value: "not-sure", label: "Not sure yet" },
+  { value: "web", label: "Web Application" },
+  { value: "mobile", label: "Mobile Application" },
+  { value: "erp", label: "ERP" },
+  { value: "custom", label: "Custom Software" },
+  { value: "improve", label: "Existing System Improvement" },
+  { value: "other", label: "Other" },
 ] as const;
 
 const employeeOptions = [

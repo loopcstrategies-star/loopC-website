@@ -20,8 +20,8 @@ export default function ContactPage() {
       <PageBanner
         banner="contact"
         eyebrow="Contact"
-        title="Tell us what you need"
-        description="Website, mobile app, ERP, or not sure yet — we'll route you to the right conversation."
+        title="Let's talk about your next system"
+        description="Web application, mobile app, LoopC ERP, or custom software — tell us what you're trying to solve."
         priority
       />
 

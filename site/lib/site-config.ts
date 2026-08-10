@@ -6,13 +6,12 @@ export const siteConfig = {
   /** Legal / full company name */
   name: "LoopC Business Strategies",
   legalName: "LoopC Business Strategies",
-  tagline:
-    "We turn business bottlenecks into software — websites, apps, and ERP systems built around how you actually work.",
+  tagline: "You bring the business. We build the technology.",
   description:
-    "LoopC diagnoses business problems, then builds the fix: custom web and mobile apps, business consulting, and LoopC ERP — our own SaaS product with transparent plans.",
+    "From custom web and mobile applications to complete ERP systems, LoopC helps businesses turn ideas, processes and challenges into reliable digital products.",
   /** One line for hero / CTAs */
   erpSalesLine:
-    "Web platforms, mobile apps, and our own ERP — designed around how your business actually works, not a generic template.",
+    "We design and build digital solutions that fit the way your business operates — from custom web applications and mobile apps to complete ERP platforms.",
   /** Short value props for badges, pills, and CTAs */
   customizationLine:
     "We customize the application to your workflows, reports, approvals, and integrations—not a one-size-fits-all template.",
