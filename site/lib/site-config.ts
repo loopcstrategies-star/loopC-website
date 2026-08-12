@@ -9,7 +9,7 @@ export const siteConfig = {
     "LoopC Business Strategies designs and builds mobile apps, websites, web platforms, dashboards and custom software that help businesses work smarter, serve customers better and grow.",
   supportingLine:
     "From websites and mobile apps to powerful web platforms, dashboards and custom software, LoopC turns business ideas and real-world workflows into digital products built to grow.",
-  productionUrl: "https://www.loopc.com",
+  productionUrl: "https://www.loopcstrategies.com",
 
   location: {
     area: "OMR",
