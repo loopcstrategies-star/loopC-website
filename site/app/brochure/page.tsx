@@ -1,75 +1,66 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { JsonLd } from "@/components/json-ld";
+import { PrintButton } from "@/components/print-button";
+import { Container } from "@/components/ui/container";
+import { footerServiceLinks } from "@/lib/services";
+import { getBreadcrumbSchema, pageMetadata } from "@/lib/seo";
 import { siteConfig } from "@/lib/site-config";
 
-export const metadata: Metadata = {
-  title: "ERP Product Brochure",
-  description: `LoopC ERP brochure for trading businesses — ${siteConfig.name}.`,
-};
+export const metadata: Metadata = pageMetadata({
+  title: "Company brochure",
+  description: `A printable overview of ${siteConfig.name} — software, apps, websites and custom systems from ${siteConfig.location.short}.`,
+  path: "/brochure",
+});
 
 export default function BrochurePage() {
   return (
-    <div className="mx-auto max-w-3xl px-4 py-12 font-sans text-slate-800 sm:px-6 sm:py-16 print:py-8">
-      <header className="border-b border-slate-200 pb-8">
-        <p className="text-xs font-bold uppercase tracking-[0.2em] text-teal-700">
-          {siteConfig.legalName}
-        </p>
-        <h1 className="mt-2 text-3xl font-extrabold text-slate-900">
-          ERP Software for Trading Businesses
-        </h1>
-        <p className="mt-3 text-lg text-slate-600">{siteConfig.erpSalesLine}</p>
-      </header>
+    <div className="bg-white">
+      <JsonLd
+        data={getBreadcrumbSchema([
+          { name: "Home", path: "/" },
+          { name: "Brochure", path: "/brochure" },
+        ])}
+      />
+      <div className="border-b border-slate-200 bg-slate-50 print:hidden">
+        <Container className="flex flex-wrap items-center justify-between gap-3 py-4">
+          <p className="text-sm text-slate-600">
+            This is a printable company overview — not a PDF file download.
+          </p>
+          <PrintButton>Print / Save as PDF</PrintButton>
+        </Container>
+      </div>
+      <Container className="max-w-3xl py-12 sm:py-16">
+        <p className="type-label text-teal-700">{siteConfig.location.short}</p>
+        <h1 className="type-h1 mt-3 font-bold text-slate-950">{siteConfig.name}</h1>
+        <p className="mt-4 text-lg text-slate-700">{siteConfig.tagline}</p>
+        <p className="mt-4 text-slate-600">{siteConfig.description}</p>
 
-      <section className="mt-10">
-        <h2 className="text-xl font-bold text-slate-900">Core modules</h2>
-        <ul className="mt-4 list-inside list-disc space-y-2 text-slate-700">
-          <li>
-            ERP dashboard — English, Arabic (SA), Uzbek, and Russian language support
-          </li>
-          <li>Inventory management — multi-warehouse, ageing, transfers</li>
-          <li>Purchase management — PO, GRN, vendor pricing</li>
-          <li>Sales management — orders, dispatch, invoicing, collections</li>
-          <li>Customer management — credit, territories, history</li>
-          <li>Accounting — GST invoicing, ledgers, financial reports</li>
-          <li>Reports &amp; analytics — margin, movement, executive dashboards</li>
+        <h2 className="type-h3 mt-10 font-semibold text-slate-950">What we build</h2>
+        <ul className="mt-4 grid gap-2 sm:grid-cols-2">
+          {footerServiceLinks.map((item) => (
+            <li key={item.href} className="rounded-xl border border-slate-200 px-4 py-3 text-sm">
+              {item.label}
+            </li>
+          ))}
         </ul>
-      </section>
 
-      <section className="mt-10">
-        <h2 className="text-xl font-bold text-slate-900">Industries</h2>
-        <p className="mt-3 text-slate-700">
-          Wholesale businesses · Distributors · Import export companies · Retail chains
+        <h2 className="type-h3 mt-10 font-semibold text-slate-950">How we work</h2>
+        <p className="mt-3 text-slate-600">
+          Strategy, UX, UI, development, testing, deployment and support — one team from idea to
+          launch.
         </p>
-      </section>
 
-      <section className="mt-10">
-        <h2 className="text-xl font-bold text-slate-900">Plans</h2>
-        <p className="mt-3 text-slate-700">
-          Starter · Business · Enterprise — customized to your requirements with low, scoped pricing
-          after discovery call and demo.
+        <h2 className="type-h3 mt-10 font-semibold text-slate-950">Start a conversation</h2>
+        <p className="mt-3 text-slate-600">
+          Visit the website contact page to describe your project. {siteConfig.location.display}.
         </p>
-      </section>
-
-      <section className="mt-10 rounded-xl border border-teal-200 bg-teal-50/50 p-6">
-        <h2 className="text-lg font-bold text-slate-900">Next steps</h2>
-        <p className="mt-2 text-sm text-slate-600">
-          Book a free demo or business process audit. Chennai HQ · Remote demos across India.
+        <p className="mt-6 print:hidden">
+          <Link href="/contact" className="font-semibold text-teal-700 hover:underline">
+            Start a Project
+          </Link>
         </p>
-        <p className="mt-4 text-sm">
-          <span className="font-semibold">Sales:</span>{" "}
-          <a href={`mailto:${siteConfig.salesEmail}`} className="text-teal-700">
-            {siteConfig.salesEmail}
-          </a>
-          {" · "}
-          <span className="font-semibold">Phone:</span> {siteConfig.phoneDisplay}
-        </p>
-      </section>
-
-      <p className="mt-10 text-center text-sm text-slate-500 print:hidden">
-        <Link href="/free-demo" className="font-semibold text-teal-700 hover:underline">
-          Book a free demo →
-        </Link>
-      </p>
+      </Container>
     </div>
   );
 }

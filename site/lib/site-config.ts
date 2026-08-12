@@ -1,60 +1,85 @@
-/** Site-wide copy and URLs. Swap placeholders when you have final details. */
+/** Site-wide company identity. Empty contact fields stay unpublished. */
 
 export const siteConfig = {
-  /** Short brand for UI where space is tight */
   brand: "LoopC",
-  /** Legal / full company name */
   name: "LoopC Business Strategies",
   legalName: "LoopC Business Strategies",
-  tagline: "You bring the business. We build the technology.",
+  tagline: "We build software around your business.",
   description:
-    "From custom web and mobile applications to complete ERP systems, LoopC helps businesses turn ideas, processes and challenges into reliable digital products.",
-  /** One line for hero / CTAs */
-  erpSalesLine:
-    "We design and build digital solutions that fit the way your business operates — from custom web applications and mobile apps to complete ERP platforms.",
-  /** Short value props for badges, pills, and CTAs */
-  customizationLine:
-    "We customize the application to your workflows, reports, approvals, and integrations—not a one-size-fits-all template.",
-  pricingLine:
-    "Low, transparent pricing scoped to your modules and team size—no enterprise-only price tags.",
-  /** ERP dashboard interface languages */
-  dashboardLanguages: [
-    { code: "EN", name: "English" },
-    { code: "SA", name: "Arabic (Saudi Arabia)" },
-    { code: "UZ", name: "Uzbek" },
-    { code: "RU", name: "Russian" },
-  ] as const,
-  dashboardLanguageLine:
-    "Our ERP dashboard is available in English, Arabic (SA), Uzbek, and Russian—switch language in one click.",
-  /** Product brochure PDF in /public — update when you have the final file */
-  brochurePath: "/loopc-erp-brochure.pdf",
-  /** Used for metadataBase and Open Graph when NEXT_PUBLIC_SITE_URL is unset */
+    "LoopC Business Strategies designs and builds mobile apps, websites, web platforms, dashboards and custom software that help businesses work smarter, serve customers better and grow.",
+  supportingLine:
+    "From websites and mobile apps to powerful web platforms, dashboards and custom software, LoopC turns business ideas and real-world workflows into digital products built to grow.",
   productionUrl: "https://www.loopc.com",
-  contactEmail: "hello@loopc.com",
-  salesEmail: "sales@loopc.com",
-  /** E.164 without + for wa.me links */
-  whatsappE164: "919876543210",
-  phoneDisplay: "+91 44 4000 0000",
-  phoneTel: "+914440000000",
-  /** Replace with your GSTIN when registered */
-  gstNumber: "GSTIN: 33AAAAA0000A1Z5 (placeholder — update in site-config)",
-  addressLines: [
-    "LoopC Business Strategies",
-    "Anna Salai, Nungambakkam",
-    "Chennai — 600034",
-    "Tamil Nadu, India",
-  ] as const,
-  businessHours: "Mon–Fri: 9:30 AM – 6:30 PM IST · Sat: By appointment · Sun: Closed",
-  /** Update these URLs to your real profiles */
-  social: {
-    linkedIn: "https://www.linkedin.com/company/loopc-business-strategies",
-    x: "https://x.com/loopc",
-    youTube: "https://www.youtube.com/@LoopCBusinessStrategies",
-  },
-};
 
-export function getWhatsAppUrl(): string {
-  return `https://wa.me/${siteConfig.whatsappE164}`;
+  location: {
+    area: "OMR",
+    city: "Chennai",
+    region: "Tamil Nadu",
+    country: "India",
+    countryCode: "IN",
+    display: "OMR, Chennai, Tamil Nadu, India",
+    short: "OMR, Chennai",
+  },
+
+  /**
+   * Public contact. Leave empty until verified.
+   * The UI and JSON-LD omit unpublished fields.
+   */
+  contactEmail: "",
+  salesEmail: "",
+  whatsappE164: "",
+  phoneDisplay: "",
+  phoneTel: "",
+  gstNumber: "",
+  businessHours: "",
+
+  social: {
+    linkedIn: "",
+    x: "",
+    youTube: "",
+  },
+
+  legal: {
+    lastUpdated: "2026-08-12",
+    lastUpdatedDisplay: "12 August 2026",
+    governingRegion: "Tamil Nadu, India",
+    enquiryRetention:
+      "We keep enquiry details only as long as needed to respond, and — if we work together — to deliver the engagement. We do not sell personal information.",
+  },
+} as const;
+
+const PLACEHOLDER_MARKERS = [
+  "placeholder",
+  "919876543210",
+  "9876543210",
+  "+91 44 4000 0000",
+  "+914440000000",
+  "hello@loopc.com",
+  "sales@loopc.com",
+  "aaaaa0000a1z5",
+  "nungambakkam",
+  "example.com",
+  "changeme",
+  "todo",
+] as const;
+
+export function isPublished(value: string | undefined | null): value is string {
+  if (!value || !value.trim()) return false;
+  const normalized = value.trim().toLowerCase();
+  return !PLACEHOLDER_MARKERS.some((marker) => normalized.includes(marker));
+}
+
+export function getPublishedEmail(): string | null {
+  if (isPublished(siteConfig.contactEmail)) return siteConfig.contactEmail;
+  if (isPublished(siteConfig.salesEmail)) return siteConfig.salesEmail;
+  return null;
+}
+
+export function getWhatsAppUrl(prefill?: string): string | null {
+  if (!isPublished(siteConfig.whatsappE164)) return null;
+  const base = `https://wa.me/${siteConfig.whatsappE164}`;
+  if (!prefill) return base;
+  return `${base}?text=${encodeURIComponent(prefill)}`;
 }
 
 export function getSiteUrl(): string {
@@ -64,6 +89,9 @@ export function getSiteUrl(): string {
   return siteConfig.productionUrl;
 }
 
-export function getDashboardLanguageCodes(): string {
-  return siteConfig.dashboardLanguages.map((lang) => lang.code).join(" · ");
+export function getAddressLines(): string[] {
+  return [siteConfig.legalName, siteConfig.location.display];
 }
+
+export const whatsappPrefill =
+  "Hello LoopC — I would like to discuss a software project.";

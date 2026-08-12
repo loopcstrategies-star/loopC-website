@@ -1,23 +1,41 @@
 import type { MetadataRoute } from "next";
-import { blogPosts } from "@/lib/blog-posts";
+import { insightPosts } from "@/lib/insights";
+import { industries } from "@/lib/industries";
+import { projects } from "@/lib/projects";
 import { getAbsoluteUrl, sitemapPaths } from "@/lib/seo";
+import { services } from "@/lib/services";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const lastModified = new Date();
-
-  const staticRoutes = sitemapPaths.map((path) => ({
+  const staticEntries: MetadataRoute.Sitemap = sitemapPaths.map((path) => ({
     url: getAbsoluteUrl(path),
-    lastModified,
-    changeFrequency: path === "/" ? ("weekly" as const) : ("monthly" as const),
-    priority: path === "/" ? 1 : path === "/features" || path === "/pricing" ? 0.9 : 0.7,
+    changeFrequency: path === "/" ? "weekly" : "monthly",
+    priority: path === "/" ? 1 : 0.7,
   }));
 
-  const blogRoutes = blogPosts.map((post) => ({
-    url: getAbsoluteUrl(`/blog/${post.slug}`),
-    lastModified: new Date(post.updatedAt),
-    changeFrequency: "monthly" as const,
+  const serviceEntries: MetadataRoute.Sitemap = services.map((service) => ({
+    url: getAbsoluteUrl(service.href),
+    changeFrequency: "monthly",
+    priority: 0.8,
+  }));
+
+  const industryEntries: MetadataRoute.Sitemap = industries.map((industry) => ({
+    url: getAbsoluteUrl(`/industries/${industry.slug}`),
+    changeFrequency: "monthly",
+    priority: 0.7,
+  }));
+
+  const workEntries: MetadataRoute.Sitemap = projects.map((project) => ({
+    url: getAbsoluteUrl(project.href),
+    changeFrequency: "monthly",
+    priority: 0.7,
+  }));
+
+  const insightEntries: MetadataRoute.Sitemap = insightPosts.map((post) => ({
+    url: getAbsoluteUrl(`/insights/${post.slug}`),
+    lastModified: post.updatedAt,
+    changeFrequency: "monthly",
     priority: 0.6,
   }));
 
-  return [...staticRoutes, ...blogRoutes];
+  return [...staticEntries, ...serviceEntries, ...industryEntries, ...workEntries, ...insightEntries];
 }

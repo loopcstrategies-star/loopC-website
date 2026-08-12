@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Source_Sans_3 } from "next/font/google";
 import "./globals.css";
-import { CustomCursor } from "@/components/custom-cursor";
 import { JsonLd } from "@/components/json-ld";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
@@ -10,23 +8,11 @@ import {
   defaultSiteDescription,
   defaultSiteTitle,
   getOrganizationSchema,
+  getWebSiteSchema,
   openGraphDescription,
   openGraphTitle,
   seoKeywords,
 } from "@/lib/seo";
-
-/** Corporate luxury: editorial headings + neutral body (Google Fonts, self-hosted by Next). */
-const playfair = Playfair_Display({
-  variable: "--font-playfair",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800", "900"],
-});
-
-const sourceSans = Source_Sans_3({
-  variable: "--font-source",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
-});
 
 const siteUrl = getSiteUrl();
 
@@ -40,7 +26,7 @@ export const metadata: Metadata = {
   keywords: [...seoKeywords],
   openGraph: {
     type: "website",
-    locale: "en_US",
+    locale: "en_IN",
     siteName: siteConfig.name,
     title: openGraphTitle,
     description: openGraphDescription,
@@ -68,13 +54,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${sourceSans.variable} ${playfair.variable} h-full scroll-smooth`}>
-      <body className="min-h-full flex flex-col font-sans antialiased">
+    <html
+      lang="en"
+      data-scroll-behavior="smooth"
+      className="h-full scroll-smooth"
+    >
+      <body className="flex min-h-full flex-col font-sans antialiased">
         <JsonLd data={getOrganizationSchema()} />
-        <CustomCursor />
+        <JsonLd data={getWebSiteSchema()} />
         <a
           href="#main"
-          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-white focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-slate-900 focus:shadow-lg"
+          className="skip-link sr-only focus:not-sr-only focus:rounded-lg focus:bg-white focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-slate-900 focus:shadow-lg"
         >
           Skip to content
         </a>
