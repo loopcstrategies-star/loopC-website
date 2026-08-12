@@ -1,0 +1,8 @@
+[build]
+builder = "nixpacks"
+buildCommand = "cd site && npm ci && npm run build"
+watchPatterns = ["site/**"]
+
+[deploy]
+startCommand = "cd site && npm run start"
+restartPolicyType = "ON_FAILURE"
