@@ -31,6 +31,14 @@ class MockProvider implements PaymentProvider {
     return true;
   }
 
+  verifyPaymentSignature(_input: {
+    orderId: string;
+    paymentId: string;
+    signature: string;
+  }): boolean {
+    return true;
+  }
+
   async cancelSubscription(_providerSubscriptionId: string): Promise<void> {
     return;
   }
@@ -105,6 +113,23 @@ class RazorpayProvider implements PaymentProvider {
     const expected = crypto.createHmac("sha256", secret).update(payload).digest("hex");
     const a = Buffer.from(expected);
     const b = Buffer.from(signature);
+    if (a.length !== b.length) return false;
+    return crypto.timingSafeEqual(a, b);
+  }
+
+  verifyPaymentSignature(input: {
+    orderId: string;
+    paymentId: string;
+    signature: string;
+  }): boolean {
+    if (!input.signature || !input.orderId || !input.paymentId) return false;
+    const body = `${input.orderId}|${input.paymentId}`;
+    const expected = crypto
+      .createHmac("sha256", this.keySecret)
+      .update(body)
+      .digest("hex");
+    const a = Buffer.from(expected);
+    const b = Buffer.from(input.signature);
     if (a.length !== b.length) return false;
     return crypto.timingSafeEqual(a, b);
   }

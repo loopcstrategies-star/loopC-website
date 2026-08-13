@@ -4,6 +4,8 @@ import { CheckoutForm } from "@/components/checkout/checkout-form";
 import { Card, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { requireAppSession } from "@/lib/session-guards";
+import { BillingCycle } from "@prisma/client";
+import { quoteSubscription } from "@/server/billing/quote";
 import { getPaymentProvider } from "@/server/billing/razorpay";
 import { prisma } from "@/server/db";
 
@@ -50,6 +52,10 @@ export default async function CheckoutPage({
   }
 
   const provider = getPaymentProvider();
+  const quote = await quoteSubscription({
+    planId: plan.id,
+    billingCycle: cycle as BillingCycle,
+  });
 
   return (
     <div className="flex min-h-full flex-col">
@@ -64,6 +70,7 @@ export default async function CheckoutPage({
           planName={plan.name}
           billingCycle={cycle}
           isMockProvider={provider.name === "mock"}
+          initialQuote={quote}
         />
       </main>
     </div>

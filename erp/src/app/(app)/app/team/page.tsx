@@ -1,5 +1,8 @@
+import Link from "next/link";
 import { Card, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { InviteMemberForm } from "@/components/app/invite-member-form";
 import { requireAppSession } from "@/lib/session-guards";
 import { getCompanySubscription } from "@/server/access/subscription";
 import { prisma } from "@/server/db";
@@ -22,6 +25,7 @@ export default async function TeamPage() {
 
   const userLimit =
     subscription?.plan.limits.find((l) => l.limitKey === "users")?.value ?? null;
+  const atLimit = userLimit != null && members.length >= userLimit;
 
   return (
     <div className="space-y-6">
@@ -32,11 +36,32 @@ export default async function TeamPage() {
             People with access to this workspace.
           </p>
         </div>
-        <Badge>
-          {members.length}
-          {userLimit != null ? ` / ${userLimit}` : ""} users
-        </Badge>
+        <div className="flex flex-wrap items-center gap-2">
+          <Badge>
+            {members.length}
+            {userLimit != null ? ` / ${userLimit}` : ""} users
+          </Badge>
+          {atLimit && (
+            <Link href="/pricing">
+              <Button size="sm">Upgrade plan</Button>
+            </Link>
+          )}
+        </div>
       </div>
+
+      <Card>
+        <CardTitle>Invite teammate</CardTitle>
+        <p className="mt-1 text-sm text-[var(--muted)]">
+          Seat limits are enforced on the server for your current plan.
+        </p>
+        <div className="mt-4">
+          <InviteMemberForm
+            atLimit={atLimit}
+            userLimit={userLimit}
+            memberCount={members.length}
+          />
+        </div>
+      </Card>
 
       <Card>
         <CardTitle>Members</CardTitle>

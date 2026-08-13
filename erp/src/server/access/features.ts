@@ -24,9 +24,44 @@ export async function assertFeature(companyId: string, moduleKey: ModuleKey | st
     throw new AccessError(
       "FEATURE_DISABLED",
       `Module "${moduleKey}" is not enabled on the current plan`,
+      { moduleKey },
     );
   }
   return true;
+}
+
+export async function getLimitUsage(
+  companyId: string,
+  limitKey: LimitKey | string,
+) {
+  const subscription = await assertSubscriptionActive(companyId);
+  const planLimit = subscription.plan.limits.find((l) => l.limitKey === limitKey);
+  const periodKey = currentPeriodKey(limitKey);
+
+  if (limitKey === "users") {
+    const used = await prisma.membership.count({ where: { companyId } });
+    return {
+      used,
+      limit: planLimit?.value ?? null,
+      periodKey,
+      remaining:
+        planLimit != null ? Math.max(0, planLimit.value - used) : null,
+    };
+  }
+
+  const counter = await prisma.usageCounter.findUnique({
+    where: {
+      companyId_limitKey_periodKey: { companyId, limitKey, periodKey },
+    },
+  });
+  const used = counter?.used ?? 0;
+  return {
+    used,
+    limit: planLimit?.value ?? null,
+    periodKey,
+    remaining:
+      planLimit != null ? Math.max(0, planLimit.value - used) : null,
+  };
 }
 
 export async function assertWithinLimit(
@@ -43,19 +78,55 @@ export async function assertWithinLimit(
   }
 
   const periodKey = currentPeriodKey(limitKey);
-  const counter = await prisma.usageCounter.findUnique({
-    where: {
-      companyId_limitKey_periodKey: { companyId, limitKey, periodKey },
-    },
-  });
+  let used = 0;
 
-  const used = counter?.used ?? 0;
+  if (limitKey === "users") {
+    used = await prisma.membership.count({ where: { companyId } });
+  } else {
+    const counter = await prisma.usageCounter.findUnique({
+      where: {
+        companyId_limitKey_periodKey: { companyId, limitKey, periodKey },
+      },
+    });
+    used = counter?.used ?? 0;
+  }
+
   if (used + increment > planLimit.value) {
     throw new AccessError(
       "LIMIT_EXCEEDED",
       `Limit "${limitKey}" exceeded (${used + increment}/${planLimit.value})`,
+      { limitKey, used, limit: planLimit.value },
     );
   }
 
   return { allowed: true as const, used, limit: planLimit.value, periodKey };
+}
+
+/**
+ * Atomically consume a usage counter after assertWithinLimit.
+ * For `users`, membership count is the source of truth — do not increment.
+ */
+export async function consumeLimit(
+  companyId: string,
+  limitKey: LimitKey | string,
+  increment = 1,
+) {
+  const check = await assertWithinLimit(companyId, limitKey, increment);
+  if (limitKey === "users" || check.limit == null) {
+    return check;
+  }
+
+  const periodKey = check.periodKey ?? currentPeriodKey(limitKey);
+  await prisma.usageCounter.upsert({
+    where: {
+      companyId_limitKey_periodKey: { companyId, limitKey, periodKey },
+    },
+    create: { companyId, limitKey, periodKey, used: increment },
+    update: { used: { increment } },
+  });
+
+  return {
+    ...check,
+    used: check.used + increment,
+  };
 }

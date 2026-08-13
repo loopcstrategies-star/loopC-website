@@ -4,8 +4,8 @@ import { jsonOkPublic, publicCorsPreflight, withPublicCors } from "@/lib/cors";
 
 export const runtime = "nodejs";
 
-export async function OPTIONS() {
-  return publicCorsPreflight();
+export async function OPTIONS(req: Request) {
+  return publicCorsPreflight(req.headers.get("origin"));
 }
 
 export async function GET(req: Request) {

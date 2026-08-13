@@ -1,8 +1,8 @@
 import { z } from "zod";
 import { prisma } from "@/server/db";
-import { rateLimit } from "@/server/rate-limit";
 import { writeAuditLog } from "@/server/audit";
 import { handleRouteError } from "@/lib/http";
+import { rateLimitDistributed } from "@/server/rate-limit";
 import {
   jsonErrorPublic,
   jsonOkPublic,
@@ -21,17 +21,18 @@ const contactSchema = z.object({
   message: z.string().trim().min(10).max(5000),
 });
 
-export async function OPTIONS() {
-  return publicCorsPreflight();
+export async function OPTIONS(req: Request) {
+  return publicCorsPreflight(req.headers.get("origin"));
 }
 
 export async function POST(req: Request) {
   try {
     const ip =
       req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
-    const limited = rateLimit(`website.contact:${ip}`, 5, 60_000);
+    const origin = req.headers.get("origin");
+    const limited = await rateLimitDistributed(`website.contact:${ip}`, 5, 60_000);
     if (!limited.success) {
-      return jsonErrorPublic("Too many requests", 429, "RATE_LIMITED");
+      return jsonErrorPublic("Too many requests", 429, "RATE_LIMITED", undefined, origin);
     }
 
     const body = contactSchema.parse(await req.json());
@@ -69,8 +70,8 @@ export async function POST(req: Request) {
       ip,
     });
 
-    return jsonOkPublic({ ok: true });
+    return jsonOkPublic({ ok: true }, undefined, origin);
   } catch (err) {
-    return withPublicCors(handleRouteError(err));
+    return withPublicCors(handleRouteError(err), req.headers.get("origin"));
   }
 }

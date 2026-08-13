@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState, type ReactNode } from "react";
+import { usePathname } from "next/navigation";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 
 export function ResponsiveSidebarLayout({
   sidebar,
@@ -13,7 +14,14 @@ export function ResponsiveSidebarLayout({
   headerActions?: ReactNode;
   children: ReactNode;
 }) {
+  const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const pathnameRef = useRef(pathname);
+
+  if (pathnameRef.current !== pathname) {
+    pathnameRef.current = pathname;
+    if (open) setOpen(false);
+  }
 
   useEffect(() => {
     if (!open) return;
@@ -43,8 +51,8 @@ export function ResponsiveSidebarLayout({
             aria-label="Close menu"
             onClick={() => setOpen(false)}
           />
-          <div className="fixed inset-y-0 left-0 z-50 flex w-[min(100%,18rem)] shadow-xl lg:hidden">
-            <div className="flex h-full w-full flex-col overflow-y-auto bg-[var(--surface)]">
+          <div className="fixed inset-y-0 left-0 z-50 flex h-dvh w-[min(100%,18rem)] max-w-[85vw] shadow-xl lg:hidden">
+            <div className="flex h-full w-full min-h-0 flex-col overflow-y-auto overscroll-contain bg-[var(--surface)]">
               {sidebar}
             </div>
           </div>

@@ -54,9 +54,10 @@ export function PricingPlans({
               ? "—"
               : `${formatInrFromPaise(amount)}${cycle === "yearly" ? "/yr" : "/mo"}`;
 
+          const billingCycle = cycle === "yearly" ? "YEARLY" : "MONTHLY";
           const href = isEnterprise
             ? "/contact"
-            : `${erpBase}/signup?plan=${encodeURIComponent(plan.slug)}`;
+            : `${erpBase}/signup?plan=${encodeURIComponent(plan.slug)}&cycle=${billingCycle}`;
 
           return (
             <article

@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardTitle } from "@/components/ui/card";
 import { FieldError, Input, Label } from "@/components/ui/input";
@@ -29,15 +29,17 @@ export function CheckoutForm({
   planName,
   billingCycle,
   isMockProvider,
+  initialQuote,
 }: {
   planId: string;
   planName: string;
   billingCycle: "MONTHLY" | "YEARLY";
   isMockProvider: boolean;
+  initialQuote: Quote | null;
 }) {
   const router = useRouter();
   const [coupon, setCoupon] = useState("");
-  const [quote, setQuote] = useState<Quote | null>(null);
+  const [quote, setQuote] = useState<Quote | null>(initialQuote);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [quoting, setQuoting] = useState(false);
@@ -65,11 +67,6 @@ export function CheckoutForm({
       setQuoting(false);
     }
   }
-
-  useEffect(() => {
-    void loadQuote();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [planId, billingCycle]);
 
   async function applyCoupon(e: FormEvent) {
     e.preventDefault();
@@ -124,7 +121,20 @@ export function CheckoutForm({
         name: "LoopC ERP",
         description: `${planName} (${billingCycle.toLowerCase()})`,
         order_id: data.order.orderId,
-        handler() {
+        async handler(response: {
+          razorpay_order_id: string;
+          razorpay_payment_id: string;
+          razorpay_signature: string;
+        }) {
+          const confirm = await fetch("/api/checkout/confirm", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(response),
+          });
+          const confirmData = await confirm.json().catch(() => ({}));
+          if (!confirm.ok) {
+            throw new Error(confirmData.error ?? "Payment verification failed");
+          }
           router.push("/checkout/success");
         },
         modal: {

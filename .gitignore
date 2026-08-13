@@ -20,3 +20,4 @@ yarn-error.log*
 
 # Prisma generated (if local)
 **/src/generated/
+.env*

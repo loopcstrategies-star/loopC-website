@@ -14,7 +14,8 @@
     "db:studio": "prisma studio",
     "jobs:billing": "tsx src/server/jobs/billing-jobs.ts",
     "smoke:billing": "tsx scripts/smoke-billing.ts",
-    "e2e:verify": "tsx scripts/e2e-verify.ts"
+    "e2e:verify": "tsx scripts/e2e-verify.ts",
+    "verify:saas": "tsx scripts/verify-saas-workflow.ts"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"

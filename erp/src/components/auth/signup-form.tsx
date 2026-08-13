@@ -82,7 +82,9 @@ export function SignupForm() {
     <Card className="w-full max-w-lg">
       <CardTitle>Create your LoopC workspace</CardTitle>
       <p className="mt-1 text-sm text-[var(--muted)]">
-        {plan ? `Selected plan: ${plan}` : "You can pick a plan after signup."}
+        {plan
+          ? `Selected plan: ${plan}${cycle ? ` · ${cycle === "YEARLY" ? "Yearly" : "Monthly"}` : ""}`
+          : "You can pick a plan after signup."}
       </p>
       <form onSubmit={onSubmit} className="mt-6 grid gap-4 sm:grid-cols-2">
         <div className="sm:col-span-2">

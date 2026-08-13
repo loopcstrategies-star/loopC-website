@@ -4,6 +4,7 @@ import { assertFeature } from "@/server/access/features";
 import { requireAppSession } from "@/lib/session-guards";
 import { Card, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { UpgradeRequired } from "@/components/app/upgrade-required";
 import type { ModuleKey } from "@/lib/constants";
 
 export async function ModuleStubPage({
@@ -16,19 +17,33 @@ export async function ModuleStubPage({
   description: string;
 }) {
   const session = await requireAppSession();
+  const companyId = session.user.companyId;
 
   try {
-    await assertFeature(session.user.companyId, moduleKey);
+    await assertFeature(companyId, moduleKey);
   } catch (err) {
+    if (err instanceof AccessError && err.code === "FEATURE_DISABLED") {
+      return (
+        <UpgradeRequired
+          companyId={companyId}
+          moduleKey={moduleKey}
+          title={title}
+        />
+      );
+    }
+
     const message =
       err instanceof AccessError ? err.message : "This module is not available";
     return (
       <Card className="max-w-xl">
         <CardTitle>{title}</CardTitle>
         <p className="mt-3 text-sm text-[var(--muted)]">{message}</p>
-        <div className="mt-4">
+        <div className="mt-4 flex flex-wrap gap-3">
+          <Link href="/app/billing">
+            <Button>Manage billing</Button>
+          </Link>
           <Link href="/pricing">
-            <Button>Upgrade plan</Button>
+            <Button variant="secondary">View plans</Button>
           </Link>
         </div>
       </Card>
@@ -42,9 +57,10 @@ export async function ModuleStubPage({
         <p className="mt-1 text-[var(--muted)]">{description}</p>
       </div>
       <Card>
-        <CardTitle>Coming soon</CardTitle>
+        <CardTitle>Module ready</CardTitle>
         <p className="mt-2 text-sm text-[var(--muted)]">
-          This module is enabled on your plan. Full workflows will land here.
+          This module is enabled on your plan. Use the workspace tools here as
+          workflows roll out.
         </p>
       </Card>
     </div>

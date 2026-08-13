@@ -33,7 +33,7 @@ function NavLink({ href, label }: { href: string; label: string }) {
 
 export function AdminSidebar() {
   return (
-    <aside className="flex h-full w-56 shrink-0 flex-col border-r border-[var(--border)] bg-[var(--surface)] p-4">
+    <aside className="flex h-full min-h-0 w-full shrink-0 flex-col border-r border-[var(--border)] bg-[var(--surface)] p-4 lg:w-56">
       <Link href="/admin" className="brand-mark text-lg">
         LoopC Admin
       </Link>

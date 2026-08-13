@@ -27,8 +27,12 @@ export function handleRouteError(err: unknown) {
 
   if (err instanceof AccessError) {
     const status =
-      err.code === "UNAUTHORIZED" || err.code === "USER_NOT_FOUND" ? 401 : 403;
-    return jsonError(err.message, status, err.code);
+      err.code === "UNAUTHORIZED" || err.code === "USER_NOT_FOUND"
+        ? 401
+        : err.code === "LIMIT_EXCEEDED" || err.code === "FEATURE_DISABLED"
+          ? 403
+          : 403;
+    return jsonError(err.message, status, err.code, err.meta);
   }
 
   if (err instanceof Error) {

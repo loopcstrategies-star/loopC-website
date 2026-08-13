@@ -46,6 +46,11 @@ export interface PaymentProvider {
   createCustomer(input: CreateCustomerInput): Promise<CreateCustomerResult>;
   createOrder(input: CreateOrderInput): Promise<CreateOrderResult>;
   verifyWebhookSignature(payload: string, signature: string): boolean;
+  verifyPaymentSignature(input: {
+    orderId: string;
+    paymentId: string;
+    signature: string;
+  }): boolean;
   cancelSubscription(providerSubscriptionId: string): Promise<void>;
   refund(input: RefundInput): Promise<RefundResult>;
 }

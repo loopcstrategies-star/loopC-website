@@ -118,6 +118,9 @@ model Company {
   invoices         Invoice[]
   usageCounters    UsageCounter[]
   auditLogs        AuditLog[]
+  parties          Party[]
+  catalogItems     CatalogItem[]
+  salesInvoices    SalesInvoice[]
 }
 
 model Role {
@@ -618,4 +621,108 @@ model ErpModule {
   path        String?
   isActive    Boolean @default(true)
   sortOrder   Int     @default(0)
+}
+
+/// Tenant CRM/accounting party (customer or vendor).
+model Party {
+  id        String   @id @default(cuid())
+  companyId String
+  type      String   @default("customer") // customer | vendor
+  name      String
+  email     String?
+  phone     String?
+  gstin     String?
+  notes     String?
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  company       Company        @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  salesInvoices SalesInvoice[]
+
+  @@index([companyId, type])
+  @@index([companyId, name])
+}
+
+/// Tenant products / services catalog.
+model CatalogItem {
+  id          String   @id @default(cuid())
+  companyId   String
+  kind        String   @default("service") // product | service
+  sku         String?
+  name        String
+  description String?
+  unitPriceInr Int     @default(0) // paise
+  taxPercent  Float    @default(18)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  company Company            @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  lines   SalesInvoiceLine[]
+
+  @@index([companyId, kind])
+  @@unique([companyId, sku])
+}
+
+enum SalesInvoiceStatus {
+  DRAFT
+  SENT
+  PAID
+  VOID
+  OVERDUE
+}
+
+/// Tenant business invoice (distinct from SaaS billing Invoice).
+model SalesInvoice {
+  id            String             @id @default(cuid())
+  companyId     String
+  partyId       String
+  number        String
+  status        SalesInvoiceStatus @default(DRAFT)
+  issueDate     DateTime           @default(now())
+  dueDate       DateTime?
+  currency      String             @default("INR")
+  subtotalInr   Int                @default(0)
+  taxInr        Int                @default(0)
+  totalInr      Int                @default(0)
+  notes         String?
+  createdAt     DateTime           @default(now())
+  updatedAt     DateTime           @updatedAt
+
+  company Company            @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  party   Party              @relation(fields: [partyId], references: [id], onDelete: Restrict)
+  lines   SalesInvoiceLine[]
+
+  @@unique([companyId, number])
+  @@index([companyId, status])
+  @@index([companyId, issueDate])
+}
+
+model SalesInvoiceLine {
+  id             String @id @default(cuid())
+  salesInvoiceId String
+  catalogItemId  String?
+  description    String
+  quantity       Float  @default(1)
+  unitPriceInr   Int    @default(0)
+  taxPercent     Float  @default(0)
+  lineTotalInr   Int    @default(0)
+
+  salesInvoice SalesInvoice @relation(fields: [salesInvoiceId], references: [id], onDelete: Cascade)
+  catalogItem  CatalogItem? @relation(fields: [catalogItemId], references: [id], onDelete: SetNull)
+
+  @@index([salesInvoiceId])
+}
+
+/// Distributed-friendly fixed-window rate limit buckets (Postgres-backed).
+model RateLimitBucket {
+  id        String   @id @default(cuid())
+  key       String
+  windowStart DateTime
+  count     Int      @default(0)
+  updatedAt DateTime @updatedAt
+
+  @@unique([key, windowStart])
+  @@index([windowStart])
 }

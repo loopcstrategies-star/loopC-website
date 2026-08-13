@@ -99,10 +99,21 @@ async function main() {
 
   const permissions = [
     { key: "billing.manage", name: "Manage billing" },
+    { key: "team.view", name: "View team" },
     { key: "team.manage", name: "Manage team" },
     { key: "settings.manage", name: "Manage settings" },
     { key: "modules.use", name: "Use ERP modules" },
     { key: "reports.view", name: "View reports" },
+    { key: "customers.view", name: "View customers" },
+    { key: "customers.manage", name: "Manage customers" },
+    { key: "products.view", name: "View products" },
+    { key: "products.manage", name: "Manage products" },
+    { key: "invoices.view", name: "View sales invoices" },
+    { key: "invoices.manage", name: "Manage sales invoices" },
+    { key: "inventory.view", name: "View inventory" },
+    { key: "inventory.manage", name: "Manage inventory" },
+    { key: "crm.view", name: "View CRM" },
+    { key: "crm.manage", name: "Manage CRM" },
   ];
 
   for (const p of permissions) {
@@ -130,10 +141,41 @@ async function main() {
     return role;
   }
 
-  await ensureSystemRole("company_admin", "Company Admin", permissions.map((p) => p.key));
-  await ensureSystemRole("manager", "Manager", ["modules.use", "reports.view", "team.manage"]);
-  await ensureSystemRole("employee", "Employee", ["modules.use"]);
-  await ensureSystemRole("accountant", "Accountant", ["modules.use", "reports.view"]);
+  const allKeys = permissions.map((p) => p.key);
+  await ensureSystemRole("company_admin", "Company Admin", allKeys);
+  await ensureSystemRole("manager", "Manager", [
+    "modules.use",
+    "reports.view",
+    "team.view",
+    "team.manage",
+    "customers.view",
+    "customers.manage",
+    "products.view",
+    "products.manage",
+    "invoices.view",
+    "invoices.manage",
+    "inventory.view",
+    "inventory.manage",
+    "crm.view",
+    "crm.manage",
+  ]);
+  await ensureSystemRole("employee", "Employee", [
+    "modules.use",
+    "team.view",
+    "customers.view",
+    "products.view",
+    "invoices.view",
+  ]);
+  await ensureSystemRole("accountant", "Accountant", [
+    "modules.use",
+    "reports.view",
+    "team.view",
+    "customers.view",
+    "customers.manage",
+    "products.view",
+    "invoices.view",
+    "invoices.manage",
+  ]);
 
   await upsertPlan({
     slug: "starter",
