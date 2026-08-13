@@ -66,7 +66,7 @@ export default async function IndustryDetailPage({ params }: { params: Promise<P
 
         <section>
           <h2 className="type-h3 font-semibold text-slate-950">Workflow examples</h2>
-          <ul className="mt-4 grid gap-3 sm:grid-cols-3">
+          <ul className="mt-4 grid gap-3 md:grid-cols-3">
             {industry.workflows.map((item) => (
               <li key={item} className="rounded-2xl bg-slate-50 p-4 text-sm text-slate-700">
                 {item}
@@ -81,7 +81,7 @@ export default async function IndustryDetailPage({ params }: { params: Promise<P
             Illustrative only: the views that usually matter first are volume, exceptions and
             money in motion. We design the real board after we see your definitions.
           </p>
-          <div className="mt-4 grid gap-3 sm:grid-cols-3">
+          <div className="mt-4 grid gap-3 md:grid-cols-3">
             {["Today’s volume", "Exceptions", "Outstanding"].map((label) => (
               <div key={label} className="rounded-xl bg-white p-4">
                 <p className="text-xs text-slate-500">{label}</p>

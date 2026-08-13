@@ -1,0 +1,15 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_USER: erp
+      POSTGRES_PASSWORD: erp
+      POSTGRES_DB: loopc_erp
+    volumes:
+      - erp_pg_data:/var/lib/postgresql/data
+
+volumes:
+  erp_pg_data:

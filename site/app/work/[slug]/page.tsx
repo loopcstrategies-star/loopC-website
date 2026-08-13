@@ -22,7 +22,7 @@ export async function generateMetadata({
   const project = getProject(slug);
   if (!project) return {};
   return pageMetadata({
-    title: `${project.title} case study`,
+    title: `${project.title} — LoopC work`,
     description: getProjectDescription(project),
     path: project.href,
   });

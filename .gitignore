@@ -1,0 +1,22 @@
+.vercel
+.env
+.env.*
+!.env.example
+!**/env.example
+
+node_modules/
+.next/
+out/
+build/
+dist/
+
+*.tsbuildinfo
+next-env.d.ts
+
+.DS_Store
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Prisma generated (if local)
+**/src/generated/

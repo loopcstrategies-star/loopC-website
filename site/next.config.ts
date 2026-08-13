@@ -23,13 +23,11 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       { source: "/service", destination: "/services", permanent: true },
-      { source: "/erp", destination: "/services/custom-software", permanent: true },
-      { source: "/erp/pricing", destination: "/services/custom-software", permanent: true },
-      { source: "/features", destination: "/services/dashboard-development", permanent: true },
-      { source: "/pricing", destination: "/contact", permanent: true },
-      { source: "/blog", destination: "/insights", permanent: true },
-      { source: "/blog/:slug", destination: "/insights", permanent: true },
+      { source: "/erp/pricing", destination: "/pricing", permanent: false },
+      { source: "/insights", destination: "/blog", permanent: true },
+      { source: "/insights/:slug", destination: "/blog/:slug", permanent: false },
       { source: "/case-studies", destination: "/work", permanent: true },
+      { source: "/case-studies/:slug", destination: "/work/:slug", permanent: false },
       { source: "/demo", destination: "/contact", permanent: true },
       { source: "/request-demo", destination: "/contact", permanent: true },
       { source: "/free-demo", destination: "/contact", permanent: true },

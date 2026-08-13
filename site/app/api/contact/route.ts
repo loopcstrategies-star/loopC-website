@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { contactServices } from "@/lib/contact";
+import { getErpApiUrl } from "@/lib/erp-api";
 import { siteConfig } from "@/lib/site-config";
 
 const MAX_BODY_BYTES = 20_000;
@@ -73,6 +74,77 @@ async function verifyTurnstile(token: string, ip: string): Promise<boolean> {
   return Boolean(data.success);
 }
 
+async function forwardToErp(data: z.infer<typeof contactSchema>): Promise<boolean> {
+  const base = getErpApiUrl();
+  try {
+    const res = await fetch(`${base}/api/public/contact`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({
+        name: data.name,
+        email: data.email,
+        phone: data.phone,
+        company: data.company,
+        service: data.service,
+        message: [
+          data.message,
+          data.budget ? `\n\nBudget: ${data.budget}` : "",
+          data.intent ? `\nIntent: ${data.intent}` : "",
+        ]
+          .join("")
+          .trim(),
+      }),
+      cache: "no-store",
+    });
+    return res.ok;
+  } catch {
+    return false;
+  }
+}
+
+async function forwardToFormspreeFallback(
+  data: z.infer<typeof contactSchema>,
+): Promise<boolean> {
+  const formspreeId = process.env.FORMSPREE_FORM_ID?.trim();
+  const contactEmail = process.env.CONTACT_TO_EMAIL?.trim();
+  if (!formspreeId && !contactEmail) return false;
+
+  const payload = {
+    name: data.name,
+    company: data.company,
+    email: data.email,
+    phone: data.phone,
+    service: data.service,
+    budget: data.budget,
+    message: data.message,
+    intent: data.intent,
+    _subject: `[${siteConfig.brand}] ${data.service} from ${data.company}`,
+    _template: "table",
+    _replyto: data.email,
+  };
+
+  const endpoint = formspreeId
+    ? `https://formspree.io/f/${formspreeId}`
+    : `https://formsubmit.co/ajax/${encodeURIComponent(contactEmail!)}`;
+
+  try {
+    const res = await fetch(endpoint, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+    return res.ok;
+  } catch {
+    return false;
+  }
+}
+
 export async function POST(request: Request) {
   if (!originAllowed(request)) {
     return NextResponse.json({ error: "Invalid request." }, { status: 403 });
@@ -114,57 +186,26 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Verification failed. Please try again." }, { status: 400 });
   }
 
-  const formspreeId = process.env.FORMSPREE_FORM_ID?.trim();
-  const contactEmail = process.env.CONTACT_TO_EMAIL?.trim();
-
-  if (!formspreeId && !contactEmail) {
-    console.error("Contact form is not configured (missing FORMSPREE_FORM_ID or CONTACT_TO_EMAIL).");
-    return NextResponse.json(
-      { error: "The contact form is temporarily unavailable. Please try again later." },
-      { status: 503 },
-    );
-  }
-
-  const payload = {
-    name: data.name,
-    company: data.company,
-    email: data.email,
-    phone: data.phone,
-    service: data.service,
-    budget: data.budget,
-    message: data.message,
-    intent: data.intent,
-    _subject: `[${siteConfig.brand}] ${data.service} from ${data.company}`,
-    _template: "table",
-    _replyto: data.email,
-  };
-
-  const endpoint = formspreeId
-    ? `https://formspree.io/f/${formspreeId}`
-    : `https://formsubmit.co/ajax/${encodeURIComponent(contactEmail!)}`;
-
-  try {
-    const res = await fetch(endpoint, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      body: JSON.stringify(payload),
-    });
-
-    if (!res.ok) {
-      console.error("Contact delivery failed", { service: data.service, intent: data.intent, status: res.status });
-      return NextResponse.json(
-        { error: "Could not send your message. Please try again." },
-        { status: 502 },
-      );
-    }
-
-    console.info("Contact enquiry received", { service: data.service, intent: data.intent });
+  const erpOk = await forwardToErp(data);
+  if (erpOk) {
+    console.info("Contact enquiry stored via ERP", { service: data.service, intent: data.intent });
     return NextResponse.json({ ok: true });
-  } catch {
-    console.error("Contact delivery network error", { service: data.service });
-    return NextResponse.json({ error: "Network error. Please try again." }, { status: 500 });
   }
+
+  const fallbackOk = await forwardToFormspreeFallback(data);
+  if (fallbackOk) {
+    console.info("Contact enquiry delivered via Formspree fallback", {
+      service: data.service,
+      intent: data.intent,
+    });
+    return NextResponse.json({ ok: true });
+  }
+
+  console.error("Contact delivery failed (ERP and Formspree unavailable)", {
+    service: data.service,
+  });
+  return NextResponse.json(
+    { error: "Could not send your message. Please try again." },
+    { status: 502 },
+  );
 }

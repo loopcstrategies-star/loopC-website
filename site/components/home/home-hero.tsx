@@ -7,9 +7,27 @@ import { Container } from "@/components/ui/container";
 import { siteConfig } from "@/lib/site-config";
 import { HeroStage } from "@/components/home/hero-stage";
 
-const pills = ["Mobile apps", "Websites", "Web applications", "Dashboards", "Custom software"];
+const defaultPills = ["ERP", "Mobile apps", "Websites", "Web applications", "Custom software"];
 
-export function HomeHero() {
+export type HomeHeroProps = {
+  title?: string;
+  subtitle?: string;
+  ctaLabel?: string;
+  ctaHref?: string;
+  secondaryCtaLabel?: string;
+  secondaryCtaHref?: string;
+  pills?: string[];
+};
+
+export function HomeHero({
+  title = siteConfig.tagline,
+  subtitle = siteConfig.supportingLine,
+  ctaLabel = "Explore ERP",
+  ctaHref = "/pricing",
+  secondaryCtaLabel = "Talk to Us",
+  secondaryCtaHref = "/contact",
+  pills = defaultPills,
+}: HomeHeroProps) {
   const reduce = useReducedMotion();
   const [offset, setOffset] = useState({ x: 0, y: 0 });
 
@@ -42,21 +60,19 @@ export function HomeHero() {
 
       <Container className="relative grid items-center gap-12 py-16 lg:grid-cols-[1.05fr_0.95fr] lg:py-24">
         <div>
-          <p className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold tracking-wide text-teal-200">
+          <p className="inline-flex max-w-full flex-wrap items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold tracking-wide text-teal-200">
             <span>{siteConfig.name}</span>
             <span className="text-slate-500">·</span>
             <span>{siteConfig.location.short}</span>
           </p>
-          <h1 className="type-display mt-6 font-bold text-white">
-            We build software around your business.
-          </h1>
+          <h1 className="type-display mt-6 font-bold text-white">{title}</h1>
           <p className="mt-6 max-w-xl text-base leading-relaxed text-slate-300 sm:text-lg">
-            {siteConfig.supportingLine}
+            {subtitle}
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
-            <MagneticButton href="/contact">Start a Project</MagneticButton>
-            <MagneticButton href="/work" variant="secondary">
-              Explore Our Work
+            <MagneticButton href={ctaHref}>{ctaLabel}</MagneticButton>
+            <MagneticButton href={secondaryCtaHref} variant="secondary">
+              {secondaryCtaLabel}
             </MagneticButton>
           </div>
           <ul className="mt-8 flex flex-wrap gap-2">
@@ -72,7 +88,7 @@ export function HomeHero() {
         </div>
 
         <div
-          className="relative min-h-[22rem] sm:min-h-[26rem]"
+          className="relative min-h-[24rem] sm:min-h-[26rem] lg:min-h-[22rem]"
           style={{
             transform: reduce ? undefined : `translate3d(${offset.x * 0.35}px, ${offset.y * 0.35}px, 0)`,
           }}

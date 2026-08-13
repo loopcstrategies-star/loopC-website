@@ -29,7 +29,7 @@ export function WorkProofCta() {
               <p className="type-label text-teal-700">{project.sector}</p>
               <h3 className="type-h3 mt-3 font-semibold text-slate-950">{project.title}</h3>
               <p className="mt-3 max-w-2xl text-slate-600">{project.summary}</p>
-              <p className="mt-5 text-sm font-semibold text-teal-700">Read the case study</p>
+              <p className="mt-5 text-sm font-semibold text-teal-700">View the product</p>
             </Link>
           ) : null}
         </Container>
@@ -64,7 +64,7 @@ export function WorkProofCta() {
                   before screens, software that matches the workflow, and a team that stays after
                   launch.
                 </p>
-                <ul className="mt-8 grid gap-4 sm:grid-cols-3">
+                <ul className="mt-8 grid gap-4 md:grid-cols-3">
                   <li className="rounded-2xl border border-slate-200 bg-[#f4f6fa] p-5">
                     <p className="font-semibold text-slate-900">Process you can follow</p>
                     <p className="mt-2 text-sm text-slate-600">

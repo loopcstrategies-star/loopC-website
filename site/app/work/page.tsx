@@ -7,7 +7,7 @@ import { projects } from "@/lib/projects";
 import { getBreadcrumbSchema, pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
-  title: "Work and case studies",
+  title: "Our work",
   description:
     "Selected LoopC work. We only publish projects we can stand behind — starting with Coacher Max, a live education product.",
   path: "/work",
@@ -39,7 +39,7 @@ export default function WorkPage() {
               <p className="type-label text-teal-700">{project.sector}</p>
               <h2 className="type-h3 mt-3 font-semibold text-slate-950">{project.title}</h2>
               <p className="mt-3 max-w-2xl text-slate-600">{project.summary}</p>
-              <p className="mt-5 text-sm font-semibold text-teal-700">Read case study</p>
+              <p className="mt-5 text-sm font-semibold text-teal-700">View the product</p>
             </Link>
           ))}
         </div>

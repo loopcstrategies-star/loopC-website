@@ -34,12 +34,16 @@ export const openGraphDescription =
 
 export const sitemapPaths = [
   "/",
+  "/about",
   "/services",
   "/solutions",
+  "/erp",
+  "/features",
+  "/pricing",
   "/work",
+  "/blog",
+  "/faq",
   "/industries",
-  "/about",
-  "/insights",
   "/contact",
   "/privacy",
   "/terms",

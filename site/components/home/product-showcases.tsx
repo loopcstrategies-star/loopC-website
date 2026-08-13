@@ -176,7 +176,7 @@ function DashboardMock() {
           Product UI concept
         </p>
       </div>
-      <div className="mt-4 grid gap-3 sm:grid-cols-4">
+      <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
         {[
           { label: "Revenue", value: "₹18.4L" },
           { label: "Orders", value: "1,248" },

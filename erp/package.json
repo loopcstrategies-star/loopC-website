@@ -1,0 +1,53 @@
+{
+  "name": "erp",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --port 3001",
+    "build": "prisma generate && next build",
+    "start": "next start --port 3001",
+    "lint": "eslint",
+    "db:migrate": "prisma migrate dev",
+    "db:seed": "tsx prisma/seed.ts",
+    "db:seed:cms": "tsx prisma/seed-cms.ts",
+    "db:push": "prisma db push",
+    "db:studio": "prisma studio",
+    "jobs:billing": "tsx src/server/jobs/billing-jobs.ts",
+    "smoke:billing": "tsx scripts/smoke-billing.ts",
+    "e2e:verify": "tsx scripts/e2e-verify.ts"
+  },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
+  },
+  "dependencies": {
+    "@prisma/adapter-pg": "^7.9.1",
+    "@prisma/client": "^7.9.1",
+    "@types/bcryptjs": "^2.4.6",
+    "@types/pdfkit": "^0.17.6",
+    "bcryptjs": "^3.0.3",
+    "date-fns": "^4.4.0",
+    "dotenv": "^17.4.2",
+    "nanoid": "^6.0.1",
+    "next": "16.2.6",
+    "next-auth": "^5.0.0-beta.32",
+    "pdfkit": "^0.19.1",
+    "pg": "^8.23.0",
+    "prisma": "^7.9.1",
+    "razorpay": "^2.9.8",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "tsx": "^4.23.12",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/pg": "^8.21.0",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.2.6",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}

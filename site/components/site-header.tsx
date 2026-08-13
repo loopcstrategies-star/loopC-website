@@ -4,12 +4,39 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useId, useRef, useState } from "react";
 import { Logo } from "@/components/logo";
-import { ctaNav, primaryNav } from "@/lib/navigation";
+import { getCtaNav, getLoginNav, primaryNav } from "@/lib/navigation";
 import { getWhatsAppUrl, siteConfig, whatsappPrefill } from "@/lib/site-config";
 
 function isActivePath(pathname: string, href: string) {
   if (href === "/") return pathname === "/";
   return pathname === href || pathname.startsWith(`${href}/`);
+}
+
+function NavAnchor({
+  href,
+  external,
+  className,
+  children,
+  onClick,
+}: {
+  href: string;
+  external?: boolean;
+  className?: string;
+  children: React.ReactNode;
+  onClick?: () => void;
+}) {
+  if (external || href.startsWith("http")) {
+    return (
+      <a href={href} className={className} onClick={onClick}>
+        {children}
+      </a>
+    );
+  }
+  return (
+    <Link href={href} className={className} onClick={onClick}>
+      {children}
+    </Link>
+  );
 }
 
 export function SiteHeader() {
@@ -20,6 +47,8 @@ export function SiteHeader() {
   const panelId = useId();
   const closeRef = useRef<HTMLButtonElement>(null);
   const whatsapp = getWhatsAppUrl(whatsappPrefill);
+  const cta = getCtaNav();
+  const login = getLoginNav();
 
   if (menuPath !== pathname) {
     setMenuPath(pathname);
@@ -64,8 +93,11 @@ export function SiteHeader() {
         }`}
       >
         <Logo variant="footer" />
-        <div className="flex items-center gap-3 lg:gap-5">
-          <nav className="hidden items-center gap-4 text-[0.8125rem] xl:gap-5 2xl:gap-6 lg:flex" aria-label="Main">
+        <div className="flex items-center gap-3 lg:gap-4">
+          <nav
+            className="hidden items-center gap-3 text-[0.75rem] xl:gap-4 2xl:gap-5 lg:flex"
+            aria-label="Main"
+          >
             {primaryNav.map(({ href, label }) => {
               const active = isActivePath(pathname, href);
               return (
@@ -84,12 +116,20 @@ export function SiteHeader() {
               );
             })}
           </nav>
-          <Link
-            href={ctaNav.href}
-            className="btn-primary interactive-shine hidden items-center rounded-full bg-gradient-to-r from-teal-600 to-teal-500 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-teal-700/20 md:inline-flex"
+          <NavAnchor
+            href={login.href}
+            external={login.external}
+            className="hidden text-sm font-medium text-slate-300 transition-colors hover:text-white lg:inline-flex"
           >
-            {ctaNav.label}
-          </Link>
+            {login.label}
+          </NavAnchor>
+          <NavAnchor
+            href={cta.href}
+            external={cta.external}
+            className="btn-primary interactive-shine hidden items-center rounded-full bg-gradient-to-r from-teal-600 to-teal-500 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-teal-700/20 lg:inline-flex"
+          >
+            {cta.label}
+          </NavAnchor>
           <button
             type="button"
             className="inline-flex rounded-xl border border-white/15 bg-white/5 p-2.5 text-white lg:hidden"
@@ -149,13 +189,22 @@ export function SiteHeader() {
                 {label}
               </Link>
             ))}
-            <Link
-              href={ctaNav.href}
-              className="mt-6 rounded-full bg-gradient-to-r from-teal-600 to-teal-500 px-4 py-3.5 text-center text-sm font-semibold text-white"
+            <NavAnchor
+              href={login.href}
+              external={login.external}
+              className="mt-4 rounded-full border border-white/20 px-4 py-3.5 text-center text-sm font-semibold text-white"
               onClick={() => setOpen(false)}
             >
-              {ctaNav.label}
-            </Link>
+              {login.label}
+            </NavAnchor>
+            <NavAnchor
+              href={cta.href}
+              external={cta.external}
+              className="mt-2 rounded-full bg-gradient-to-r from-teal-600 to-teal-500 px-4 py-3.5 text-center text-sm font-semibold text-white"
+              onClick={() => setOpen(false)}
+            >
+              {cta.label}
+            </NavAnchor>
             {whatsapp ? (
               <a
                 href={whatsapp}

@@ -70,7 +70,7 @@ export function ProcessSection() {
               <p className="type-label text-teal-300">{current.num}</p>
               <h3 className="type-h3 mt-3 font-semibold">{current.title}</h3>
               <p className="mt-4 leading-relaxed text-slate-300">{current.detail}</p>
-              <div className="mt-8 grid grid-cols-3 gap-2">
+              <div className="mt-8 grid grid-cols-7 gap-1">
                 {deliveryProcess.map((step, index) => (
                   <div
                     key={step.id}

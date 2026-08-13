@@ -25,17 +25,23 @@ export default function sitemap(): MetadataRoute.Sitemap {
   }));
 
   const workEntries: MetadataRoute.Sitemap = projects.map((project) => ({
-    url: getAbsoluteUrl(project.href),
+    url: getAbsoluteUrl(`/work/${project.slug}`),
     changeFrequency: "monthly",
     priority: 0.7,
   }));
 
-  const insightEntries: MetadataRoute.Sitemap = insightPosts.map((post) => ({
-    url: getAbsoluteUrl(`/insights/${post.slug}`),
+  const blogEntries: MetadataRoute.Sitemap = insightPosts.map((post) => ({
+    url: getAbsoluteUrl(`/blog/${post.slug}`),
     lastModified: post.updatedAt,
     changeFrequency: "monthly",
     priority: 0.6,
   }));
 
-  return [...staticEntries, ...serviceEntries, ...industryEntries, ...workEntries, ...insightEntries];
+  return [
+    ...staticEntries,
+    ...serviceEntries,
+    ...industryEntries,
+    ...workEntries,
+    ...blogEntries,
+  ];
 }

@@ -26,6 +26,7 @@ export function MagneticButton({
   variant = "primary",
 }: MagneticButtonProps) {
   const ref = useRef<HTMLAnchorElement>(null);
+  const external = /^https?:\/\//i.test(href);
 
   function onMove(event: MouseEvent<HTMLAnchorElement>) {
     const node = ref.current;
@@ -43,14 +44,32 @@ export function MagneticButton({
     node.style.transform = "translate(0, 0)";
   }
 
+  const classNames = `${variants[variant]} ${className}`;
+  const style = { transition: "transform 160ms ease-out" };
+
+  if (external) {
+    return (
+      <a
+        ref={ref}
+        href={href}
+        className={classNames}
+        onMouseMove={onMove}
+        onMouseLeave={onLeave}
+        style={style}
+      >
+        {children}
+      </a>
+    );
+  }
+
   return (
     <Link
       ref={ref}
       href={href}
-      className={`${variants[variant]} ${className}`}
+      className={classNames}
       onMouseMove={onMove}
       onMouseLeave={onLeave}
-      style={{ transition: "transform 160ms ease-out" }}
+      style={style}
     >
       {children}
     </Link>
