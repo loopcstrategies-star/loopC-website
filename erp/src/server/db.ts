@@ -7,12 +7,23 @@ const globalForPrisma = globalThis as unknown as {
   pgPool?: Pool;
 };
 
+function poolOptions(connectionString: string) {
+  // Railway public TCP proxies present a self-signed cert chain.
+  const allowInsecureSsl =
+    process.env.DATABASE_SSL_REJECT_UNAUTHORIZED === "0" ||
+    /proxy\.rlwy\.net|railway\.(app|internal)/i.test(connectionString);
+  return {
+    connectionString,
+    ...(allowInsecureSsl ? { ssl: { rejectUnauthorized: false as const } } : {}),
+  };
+}
+
 function createPrisma() {
   const connectionString = process.env.DATABASE_URL;
   if (!connectionString) {
     throw new Error("DATABASE_URL is not set");
   }
-  const pool = globalForPrisma.pgPool ?? new Pool({ connectionString });
+  const pool = globalForPrisma.pgPool ?? new Pool(poolOptions(connectionString));
   if (process.env.NODE_ENV !== "production") globalForPrisma.pgPool = pool;
   const adapter = new PrismaPg(pool);
   return new PrismaClient({
