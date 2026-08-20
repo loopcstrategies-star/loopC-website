@@ -9,12 +9,24 @@ const globalForPrisma = globalThis as unknown as {
 
 function poolOptions(connectionString: string) {
   // Railway public TCP proxies present a self-signed cert chain.
+  // URL sslmode=require is treated as verify-full by node-pg, so strip it
+  // and force rejectUnauthorized:false when talking to Railway proxies.
   const allowInsecureSsl =
     process.env.DATABASE_SSL_REJECT_UNAUTHORIZED === "0" ||
     /proxy\.rlwy\.net|railway\.(app|internal)/i.test(connectionString);
+
+  if (!allowInsecureSsl) {
+    return { connectionString };
+  }
+
+  const cleaned = connectionString
+    .replace(/([?&])sslmode=[^&]*/gi, "$1")
+    .replace(/[?&]$/, "")
+    .replace(/\?&/, "?");
+
   return {
-    connectionString,
-    ...(allowInsecureSsl ? { ssl: { rejectUnauthorized: false as const } } : {}),
+    connectionString: cleaned,
+    ssl: { rejectUnauthorized: false as const },
   };
 }
 
