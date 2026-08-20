@@ -10,7 +10,7 @@ export function CustomSoftwareSection() {
   const customCta = getCustomSoftwareCta();
 
   return (
-    <section className="section-dark relative overflow-hidden py-20 sm:py-28">
+    <section className="section-dark on-dark relative overflow-hidden py-20 sm:py-28">
       <div className="pointer-events-none absolute inset-0 grid-bg opacity-25" />
       <div className="grain-overlay" />
       <Container className="relative">

@@ -9,7 +9,7 @@ export function HomeFinalCta() {
   const projectCta = getCustomSoftwareCta();
 
   return (
-    <section className="section-dark relative overflow-hidden py-20 sm:py-28">
+    <section className="section-dark on-dark relative overflow-hidden py-20 sm:py-28">
       <div className="pointer-events-none absolute inset-0 grid-bg opacity-20" />
       <div className="pointer-events-none absolute left-1/2 top-0 h-72 w-72 -translate-x-1/2 rounded-full bg-blue-600/25 blur-3xl" />
       <div className="grain-overlay" />

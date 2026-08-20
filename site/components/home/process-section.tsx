@@ -31,7 +31,7 @@ export function ProcessSection() {
   const current = deliveryProcess[active] ?? deliveryProcess[0];
 
   return (
-    <section className="relative overflow-hidden bg-[var(--dark)] py-20 text-white sm:py-24">
+    <section className="section-dark on-dark relative overflow-hidden bg-[var(--dark)] py-20 text-white sm:py-24">
       <div className="pointer-events-none absolute inset-0 grid-bg opacity-30" />
       <div className="pointer-events-none absolute right-0 top-20 h-64 w-64 rounded-full bg-blue-600/20 blur-3xl" />
       <div className="grain-overlay" />

@@ -114,7 +114,7 @@ export default async function ErpPage() {
       />
 
       {/* ERP showcase */}
-      <section className="section-dark relative overflow-hidden py-20 sm:py-28">
+      <section className="section-dark on-dark relative overflow-hidden py-20 sm:py-28">
         <div className="pointer-events-none absolute inset-0 opacity-20" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px)", backgroundSize: "48px 48px" }} />
         <Container className="relative grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
           <FadeIn>
@@ -216,7 +216,7 @@ export default async function ErpPage() {
       )}
 
       {/* CTA */}
-      <section className="section-dark py-20 sm:py-24">
+      <section className="section-dark on-dark py-20 sm:py-24">
         <Container className="text-center">
           <FadeIn>
             <h2 className="type-h2 font-bold text-white">

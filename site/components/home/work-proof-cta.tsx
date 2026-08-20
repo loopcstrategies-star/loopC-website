@@ -29,7 +29,7 @@ export function WorkProofCta() {
                 <p className="mt-4 max-w-xl text-base leading-relaxed text-slate-600">{project.summary}</p>
                 <p className="mt-6 text-sm font-semibold text-[var(--primary)]">Read the case study →</p>
               </div>
-              <div className="relative min-h-[16rem] border-t border-slate-200/80 bg-[#050b16] p-6 lg:border-l lg:border-t-0">
+              <div className="on-dark relative min-h-[16rem] border-t border-slate-200/80 bg-[#050b16] p-6 lg:border-l lg:border-t-0">
                 <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
                   <p className="text-xs font-semibold uppercase tracking-wider text-blue-300">Product snapshot</p>
                   <p className="mt-2 text-sm text-slate-300">{project.galleryNote}</p>

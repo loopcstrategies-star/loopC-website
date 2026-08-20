@@ -94,7 +94,7 @@ export function ErpShowcaseSection() {
   const erpCta = getExploreErpCta();
 
   return (
-    <section className="section-dark relative overflow-hidden py-20 sm:py-28">
+    <section className="section-dark on-dark relative overflow-hidden py-20 sm:py-28">
       <div className="pointer-events-none absolute inset-0 grid-bg opacity-25" />
       <div className="pointer-events-none absolute left-1/4 top-0 h-72 w-72 rounded-full bg-blue-600/20 blur-3xl" />
       <div className="pointer-events-none absolute bottom-0 right-1/4 h-64 w-64 rounded-full bg-violet-600/15 blur-3xl" />
@@ -129,7 +129,7 @@ export function ErpShowcaseSection() {
 
 export function ErpValueProps() {
   return (
-    <section className="section-dark py-20 sm:py-24">
+    <section className="section-dark on-dark py-20 sm:py-24">
       <Container>
         <FadeIn>
           <p className="type-label mx-auto text-center text-blue-300">Why LoopC ERP</p>

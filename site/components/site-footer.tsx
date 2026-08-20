@@ -64,7 +64,7 @@ export function SiteFooter() {
   const youTube = isPublished(siteConfig.social.youTube) ? siteConfig.social.youTube : null;
 
   return (
-    <footer className="relative mt-auto overflow-hidden border-t border-white/10 bg-[var(--dark)] text-slate-300">
+    <footer className="on-dark relative mt-auto overflow-hidden border-t border-white/10 bg-[var(--dark)] text-slate-300">
       <div className="pointer-events-none absolute -left-24 bottom-0 h-64 w-64 rounded-full bg-blue-600/15 blur-3xl" />
       <div className="pointer-events-none absolute -right-16 top-0 h-56 w-56 rounded-full bg-violet-600/10 blur-3xl" />
       <div className="relative mx-auto max-w-6xl px-4 py-14 sm:px-6 lg:py-16">

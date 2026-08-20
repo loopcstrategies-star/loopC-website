@@ -3,7 +3,7 @@ import { siteConfig } from "@/lib/site-config";
 
 export default function NotFound() {
   return (
-    <section className="relative overflow-hidden bg-[#050b16] px-4 py-24 sm:px-6 sm:py-32">
+    <section className="on-dark relative overflow-hidden bg-[#050b16] px-4 py-24 sm:px-6 sm:py-32">
       <div className="pointer-events-none absolute inset-0 grid-bg opacity-40" />
       <div className="pointer-events-none absolute right-10 top-10 h-40 w-64 rounded-2xl border border-white/10 bg-white/5 p-4 opacity-60">
         <div className="h-2 w-24 rounded bg-teal-400/40" />

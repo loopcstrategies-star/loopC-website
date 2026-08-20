@@ -23,7 +23,7 @@ export type HomeHeroProps = {
 function HeroTitle({ title }: { title: string }) {
   const parts = title.split(/(Operate Smarter)/i);
   if (parts.length === 1) {
-    return <>{title}</>;
+    return <span className="text-white">{title}</span>;
   }
   return (
     <>
@@ -33,7 +33,9 @@ function HeroTitle({ title }: { title: string }) {
             {part}
           </span>
         ) : (
-          <span key={i}>{part}</span>
+          <span key={i} className="text-white">
+            {part}
+          </span>
         ),
       )}
     </>
@@ -67,7 +69,7 @@ export function HomeHero({
   }, [reduce]);
 
   return (
-    <section className="relative overflow-hidden bg-[var(--dark)] text-white">
+    <section className="section-dark on-dark relative overflow-hidden bg-[var(--dark)] text-white">
       <div className="pointer-events-none absolute inset-0 grid-bg opacity-40" />
       <div
         className="hero-glow-drift pointer-events-none absolute -left-24 top-10 h-80 w-80 rounded-full bg-blue-500/25 blur-3xl"

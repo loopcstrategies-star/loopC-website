@@ -13,7 +13,7 @@ export function PageHero({
 }) {
   if (dark) {
     return (
-      <section className="relative overflow-hidden bg-[var(--dark)] py-16 sm:py-20">
+      <section className="section-dark on-dark relative overflow-hidden bg-[var(--dark)] py-16 sm:py-20">
         <div className="pointer-events-none absolute inset-0 grid-bg opacity-40" />
         <div className="pointer-events-none absolute -left-24 top-0 h-64 w-64 rounded-full bg-blue-500/20 blur-3xl" />
         <div className="pointer-events-none absolute right-0 top-10 h-56 w-56 rounded-full bg-violet-500/15 blur-3xl" />

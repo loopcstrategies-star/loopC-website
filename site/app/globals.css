@@ -77,10 +77,10 @@ html h6 {
   font-family: var(--font-display);
   font-weight: 700;
   letter-spacing: -0.02em;
-  color: var(--text);
+  /* Color inherits from body / parent so Tailwind text-white works on dark bands */
 }
 
-/* Dark sections: override forced heading ink so titles stay readable */
+/* Dark sections: force white headings even if utilities lose specificity */
 .section-dark h1,
 .section-dark h2,
 .section-dark h3,
@@ -91,6 +91,19 @@ html h6 {
 .section-dark .type-h1,
 .section-dark .type-h2,
 .section-dark .type-h3 {
+  color: #fff;
+}
+
+.on-dark h1,
+.on-dark h2,
+.on-dark h3,
+.on-dark h4,
+.on-dark h5,
+.on-dark h6,
+.on-dark .type-display,
+.on-dark .type-h1,
+.on-dark .type-h2,
+.on-dark .type-h3 {
   color: #fff;
 }
 

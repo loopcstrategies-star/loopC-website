@@ -137,7 +137,7 @@ export default function AboutPage() {
       </section>
 
       {/* CTA */}
-      <section className="section-dark py-20 sm:py-24">
+      <section className="section-dark on-dark py-20 sm:py-24">
         <Container className="text-center">
           <FadeIn>
             <h2 className="type-h2 font-bold text-white">Ready to build something better?</h2>

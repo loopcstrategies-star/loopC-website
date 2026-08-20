@@ -64,7 +64,7 @@ export default async function WorkDetailPage({ params }: { params: Promise<Param
           </div>
 
           <aside className="space-y-6">
-            <div className="rounded-2xl border border-slate-200/80 bg-[#050b16] p-6 text-white">
+            <div className="on-dark rounded-2xl border border-slate-200/80 bg-[#050b16] p-6 text-white">
               <p className="text-xs font-semibold uppercase tracking-wider text-teal-300">Gallery</p>
               <p className="mt-3 text-sm text-slate-300">{project.galleryNote}</p>
               <div className="mt-4 rounded-xl border border-white/10 bg-white/5 p-8 text-center text-sm text-slate-400">
@@ -87,7 +87,7 @@ export default async function WorkDetailPage({ params }: { params: Promise<Param
           </aside>
         </div>
 
-        <section className="mt-16 rounded-3xl bg-[#050b16] p-8 text-white">
+        <section className="on-dark mt-16 rounded-3xl bg-[#050b16] p-8 text-white">
           <SectionHeader
             eyebrow="Next step"
             title="Have a similar challenge?"

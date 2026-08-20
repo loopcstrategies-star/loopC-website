@@ -154,7 +154,7 @@ export default async function IndustryDetailPage({ params }: { params: Promise<P
           </div>
         </section>
 
-        <section className="rounded-3xl bg-[#050b16] px-6 py-10 text-white">
+        <section className="on-dark rounded-3xl bg-[#050b16] px-6 py-10 text-white">
           <h2 className="text-2xl font-semibold text-white">
             Discuss software for {industry.title.toLowerCase()}
           </h2>

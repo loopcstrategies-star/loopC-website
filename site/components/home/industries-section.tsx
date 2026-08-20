@@ -5,7 +5,7 @@ import { industries } from "@/lib/industries";
 
 export function IndustriesSection() {
   return (
-    <section className="bg-[#050b16] py-20 text-white sm:py-24">
+    <section className="on-dark bg-[#050b16] py-20 text-white sm:py-24">
       <Container>
         <FadeIn>
           <SectionLabelLight>09 — Industries</SectionLabelLight>
