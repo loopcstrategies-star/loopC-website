@@ -6,31 +6,33 @@ import type { Service } from "@/lib/services";
 import { getPublishedEmail, getSiteUrl, isPublished, siteConfig } from "@/lib/site-config";
 
 export const seoKeywords = [
-  "software development company Chennai",
-  "mobile app development Chennai",
-  "web development Chennai",
-  "custom software development Chennai",
+  "ERP software India",
+  "custom ERP development",
+  "business software company Chennai",
+  "SaaS development",
+  "ERP customization",
   "business dashboard development",
-  "web application development",
-  "website development Chennai",
-  "software company OMR Chennai",
+  "custom business software",
+  "web application development Chennai",
+  "mobile app development Chennai",
+  "LoopC ERP",
 ] as const;
 
 export const defaultSiteTitle =
-  "LoopC Business Strategies | Software Development Company in Chennai";
+  "LoopC Business Strategies | ERP & Custom Business Software";
 
 export const defaultSiteDescription =
-  "LoopC Business Strategies designs and builds mobile apps, websites, web platforms, dashboards and custom software from OMR, Chennai.";
+  "LoopC builds LoopC ERP and custom business software — web applications, mobile apps, dashboards and integrations for growing companies.";
 
 export const homePageTitle =
-  "LoopC Business Strategies | We build software around your business";
+  "LoopC | ERP & Custom Business Software";
 
 export const homePageDescription = siteConfig.supportingLine;
 
 export const openGraphTitle = "LoopC Business Strategies";
 
 export const openGraphDescription =
-  "Mobile apps, websites, web applications, dashboards and custom software — designed and built in OMR, Chennai.";
+  "LoopC ERP plus custom web, mobile and dashboard software — built around the way your business works.";
 
 export const sitemapPaths = [
   "/",
@@ -197,7 +199,7 @@ export function getArticleSchema(post: InsightPost) {
 }
 
 export function getIndustryDescription(industry: Industry): string {
-  return `${industry.summary} LoopC builds software for ${industry.title.toLowerCase()} businesses from OMR, Chennai.`;
+  return `${industry.summary} LoopC delivers ERP and custom software for ${industry.title.toLowerCase()} businesses.`;
 }
 
 export function getProjectDescription(project: Project): string {

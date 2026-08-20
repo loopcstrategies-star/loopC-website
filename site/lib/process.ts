@@ -90,3 +90,54 @@ export const customSoftwareCapabilities = [
   "Business intelligence dashboards",
   "Industry-specific software",
 ] as const;
+
+export const customSoftwareJourney: ProcessStep[] = [
+  {
+    id: "requirements",
+    num: "01",
+    title: "Requirements",
+    summary: "Understand the workflow, users and constraints.",
+    detail:
+      "We map how work happens today — approvals, exceptions, data sources — before proposing screens or architecture.",
+  },
+  {
+    id: "design",
+    num: "02",
+    title: "Design",
+    summary: "Flows, UX and UI aligned to the business.",
+    detail:
+      "Wireframes and interfaces that match how people actually work, not generic admin templates.",
+  },
+  {
+    id: "development",
+    num: "03",
+    title: "Development",
+    summary: "Build the product with room to grow.",
+    detail:
+      "Web, mobile and backend against a shared model — modular where the business will change.",
+  },
+  {
+    id: "testing",
+    num: "04",
+    title: "Testing",
+    summary: "Prove it works in real scenarios.",
+    detail:
+      "Roles, devices and edge cases — especially the awkward Tuesday-morning path.",
+  },
+  {
+    id: "launch",
+    num: "05",
+    title: "Launch",
+    summary: "Go live with a clear handover.",
+    detail:
+      "Deployment, access, training and a go-live sequence your team can follow.",
+  },
+  {
+    id: "support",
+    num: "06",
+    title: "Support",
+    summary: "Stay on as the product evolves.",
+    detail:
+      "Fixes, improvements and the next features as the business changes.",
+  },
+];

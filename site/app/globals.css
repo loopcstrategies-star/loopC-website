@@ -341,3 +341,17 @@ html h6 {
     animation: none;
   }
 }
+
+/* Section rhythm */
+.section-light {
+  background: #f4f6fa;
+}
+
+.section-dark {
+  background: #050b16;
+  color: #fff;
+}
+
+.section-white {
+  background: #ffffff;
+}

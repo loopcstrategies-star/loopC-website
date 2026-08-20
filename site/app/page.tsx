@@ -1,11 +1,16 @@
 import type { Metadata } from "next";
 import { CustomSoftwareSection } from "@/components/home/custom-software-section";
+import { DualOfferingSection } from "@/components/home/dual-offering-section";
+import {
+  ErpModulesGrid,
+  ErpShowcaseSection,
+  ErpValueProps,
+} from "@/components/home/erp-showcase-section";
+import { HomeFinalCta, TrustProofSection } from "@/components/home/home-final-cta";
 import { HomeHero } from "@/components/home/home-hero";
 import { HomePricingPreview } from "@/components/home/home-pricing-preview";
 import { IndustriesSection } from "@/components/home/industries-section";
 import { ProcessSection } from "@/components/home/process-section";
-import { ProductShowcases } from "@/components/home/product-showcases";
-import { ProductStory } from "@/components/home/product-story";
 import { ServicesSection } from "@/components/home/services-section";
 import { TechnologySection } from "@/components/home/technology-section";
 import { WorkProofCta } from "@/components/home/work-proof-cta";
@@ -16,9 +21,9 @@ import {
   type ErpWebsitePage,
   asStringArray,
   erpFetch,
-  getErpPublicUrl,
   sectionByKey,
 } from "@/lib/erp-api";
+import { getCustomSoftwareCta, getExploreErpCta } from "@/lib/navigation";
 import { getOrganizationSchema, homePageDescription, homePageTitle, pageMetadata } from "@/lib/seo";
 import { siteConfig } from "@/lib/site-config";
 
@@ -40,7 +45,8 @@ type ServicesPayload = { services: ErpCmsService[] };
 type PlansPayload = { plans: ErpPlan[] };
 
 export default async function HomePage() {
-  const erp = getErpPublicUrl();
+  const erpCta = getExploreErpCta();
+  const customCta = getCustomSoftwareCta();
   const [siteData, servicesData, plansData] = await Promise.all([
     erpFetch<SitePayload>("/api/public/site"),
     erpFetch<ServicesPayload>("/api/public/services"),
@@ -54,9 +60,11 @@ export default async function HomePage() {
       : {};
 
   const secondaryCtaLabel =
-    typeof heroJson.secondaryCtaLabel === "string" ? heroJson.secondaryCtaLabel : "Talk to Us";
+    typeof heroJson.secondaryCtaLabel === "string"
+      ? heroJson.secondaryCtaLabel
+      : customCta.label;
   const secondaryCtaHref =
-    typeof heroJson.secondaryCtaHref === "string" ? heroJson.secondaryCtaHref : "/contact";
+    typeof heroJson.secondaryCtaHref === "string" ? heroJson.secondaryCtaHref : customCta.href;
 
   return (
     <div>
@@ -64,8 +72,8 @@ export default async function HomePage() {
       <HomeHero
         title={hero?.title || siteData?.site?.tagline || siteConfig.tagline}
         subtitle={hero?.subtitle || siteConfig.supportingLine}
-        ctaLabel={hero?.ctaLabel || "Explore ERP"}
-        ctaHref={hero?.ctaHref || `${erp}/pricing`}
+        ctaLabel={hero?.ctaLabel || erpCta.label}
+        ctaHref={hero?.ctaHref || erpCta.href}
         secondaryCtaLabel={secondaryCtaLabel}
         secondaryCtaHref={secondaryCtaHref}
         pills={
@@ -74,15 +82,19 @@ export default async function HomePage() {
             : undefined
         }
       />
-      <ServicesSection services={servicesData?.services} />
-      <HomePricingPreview plans={plansData?.plans} />
-      <ProcessSection />
-      <ProductStory />
+      <DualOfferingSection />
+      <ErpShowcaseSection />
+      <ErpModulesGrid />
+      <ErpValueProps />
       <CustomSoftwareSection />
-      <ProductShowcases />
-      <TechnologySection />
+      <ServicesSection services={servicesData?.services} />
       <IndustriesSection />
       <WorkProofCta />
+      <TechnologySection />
+      <ProcessSection />
+      <TrustProofSection />
+      <HomePricingPreview plans={plansData?.plans} />
+      <HomeFinalCta />
     </div>
   );
 }

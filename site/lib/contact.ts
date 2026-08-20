@@ -1,12 +1,15 @@
 export const contactServices = [
+  { value: "erp", label: "ERP" },
+  { value: "custom-software", label: "Custom Software" },
+  { value: "web-application", label: "Web Application" },
   { value: "mobile-app", label: "Mobile App" },
   { value: "website", label: "Website" },
-  { value: "web-application", label: "Web Application" },
   { value: "dashboard", label: "Dashboard" },
-  { value: "custom-software", label: "Custom Software" },
-  { value: "ui-ux", label: "UI/UX" },
   { value: "automation", label: "Automation" },
-  { value: "other", label: "Other" },
+  { value: "erp-customization", label: "ERP Customization" },
+  { value: "saas", label: "SaaS Platform" },
+  { value: "ui-ux", label: "UI/UX Design" },
+  { value: "other", label: "Something Else" },
 ] as const;
 
 export const budgetRanges = [
@@ -18,7 +21,7 @@ export const budgetRanges = [
   { value: "not-sure", label: "Not sure yet" },
 ] as const;
 
-export type ContactIntent = "contact" | "project";
+export type ContactIntent = "contact" | "project" | "expert";
 
 const slugToService: Record<string, string> = {
   "mobile-app-development": "mobile-app",
@@ -28,12 +31,20 @@ const slugToService: Record<string, string> = {
   "custom-software": "custom-software",
   "ui-ux": "ui-ux",
   "business-automation": "automation",
-  "api-integrations": "other",
+  "api-integrations": "automation",
   "support-growth": "other",
+  erp: "erp",
+  "erp-customization": "erp-customization",
+  saas: "saas",
 };
 
 export function mapServiceQuery(value?: string): string {
   if (!value) return "";
   if (contactServices.some((item) => item.value === value)) return value;
   return slugToService[value] ?? "";
+}
+
+export function mapIntentQuery(value?: string): ContactIntent {
+  if (value === "expert" || value === "project") return value;
+  return "contact";
 }

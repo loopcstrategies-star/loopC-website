@@ -4,10 +4,11 @@ import { useReducedMotion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { MagneticButton } from "@/components/motion/magnetic-button";
 import { Container } from "@/components/ui/container";
-import { siteConfig } from "@/lib/site-config";
 import { HeroStage } from "@/components/home/hero-stage";
+import { getCustomSoftwareCta, getExploreErpCta } from "@/lib/navigation";
+import { siteConfig } from "@/lib/site-config";
 
-const defaultPills = ["ERP", "Mobile apps", "Websites", "Web applications", "Custom software"];
+const defaultPills = ["ERP", "Web apps", "Mobile apps", "Dashboards", "Custom software"];
 
 export type HomeHeroProps = {
   title?: string;
@@ -22,10 +23,10 @@ export type HomeHeroProps = {
 export function HomeHero({
   title = siteConfig.tagline,
   subtitle = siteConfig.supportingLine,
-  ctaLabel = "Explore ERP",
-  ctaHref = "/pricing",
-  secondaryCtaLabel = "Talk to Us",
-  secondaryCtaHref = "/contact",
+  ctaLabel = getExploreErpCta().label,
+  ctaHref = getExploreErpCta().href,
+  secondaryCtaLabel = getCustomSoftwareCta().label,
+  secondaryCtaHref = getCustomSoftwareCta().href,
   pills = defaultPills,
 }: HomeHeroProps) {
   const reduce = useReducedMotion();
@@ -61,14 +62,13 @@ export function HomeHero({
       <Container className="relative grid items-center gap-12 py-16 lg:grid-cols-[1.05fr_0.95fr] lg:py-24">
         <div>
           <p className="inline-flex max-w-full flex-wrap items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold tracking-wide text-teal-200">
-            <span>{siteConfig.name}</span>
-            <span className="text-slate-500">·</span>
-            <span>{siteConfig.location.short}</span>
+            {siteConfig.positioning.eyebrow}
           </p>
           <h1 className="type-display mt-6 font-bold text-white">{title}</h1>
           <p className="mt-6 max-w-xl text-base leading-relaxed text-slate-300 sm:text-lg">
             {subtitle}
           </p>
+          <p className="mt-4 max-w-xl text-sm text-slate-400">{siteConfig.positioning.heroSupport}</p>
           <div className="mt-8 flex flex-wrap gap-3">
             <MagneticButton href={ctaHref}>{ctaLabel}</MagneticButton>
             <MagneticButton href={secondaryCtaHref} variant="secondary">

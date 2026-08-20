@@ -11,6 +11,10 @@ export type Industry = {
   workflows: string[];
   relevantServices: string[];
   faqs: { q: string; a: string }[];
+  /** Alias-friendly field for detail template */
+  problems?: string[];
+  erpModules?: string[];
+  customSoftwareOpportunities?: string[];
 };
 
 export const industries: Industry[] = [
@@ -330,6 +334,20 @@ export const industries: Industry[] = [
     ],
   },
 ];
+
+const defaultErpModules = ["Accounting", "Invoicing", "Inventory", "Sales", "CRM", "Reports"];
+
+export function getIndustryProblems(industry: Industry): string[] {
+  return industry.problems ?? industry.challenges;
+}
+
+export function getIndustryErpModules(industry: Industry): string[] {
+  return industry.erpModules ?? defaultErpModules;
+}
+
+export function getIndustryCustomOpportunities(industry: Industry): string[] {
+  return industry.customSoftwareOpportunities ?? industry.capabilities;
+}
 
 export function getIndustry(slug: string): Industry | undefined {
   return industries.find((industry) => industry.slug === slug);

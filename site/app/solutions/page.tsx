@@ -3,13 +3,14 @@ import Link from "next/link";
 import { JsonLd } from "@/components/json-ld";
 import { PageHero } from "@/components/page-hero";
 import { Container } from "@/components/ui/container";
+import { SectionHeader } from "@/components/ui/section-header";
 import { getBreadcrumbSchema, pageMetadata } from "@/lib/seo";
 import { solutions } from "@/lib/solutions";
 
 export const metadata: Metadata = pageMetadata({
-  title: "Software solutions for growing businesses",
+  title: "Business software solutions | ERP & custom systems",
   description:
-    "Custom business systems, dashboards, digital products, and automation — assembled around how your company actually operates.",
+    "LoopC ERP, custom business software, web and mobile applications, dashboards, automation and ERP customization.",
   path: "/solutions",
 });
 
@@ -24,25 +25,35 @@ export default function SolutionsPage() {
       />
       <PageHero
         eyebrow="Solutions"
-        title="Systems we assemble around the work."
-        description="Not a catalogue of modules. Four ways LoopC turns a business problem into software people will use."
+        title="Software solutions for growing businesses."
+        description="LoopC ERP for connected operations — or custom software when your workflow needs something built around it."
         dark
       />
-      <Container className="grid gap-4 py-16 sm:py-20 md:grid-cols-2">
-        {solutions.map((solution) => (
-          <article key={solution.slug} className="rounded-2xl border border-slate-200 bg-white p-6">
-            <h2 className="text-xl font-semibold text-slate-950">{solution.title}</h2>
-            <p className="mt-3 text-slate-600">{solution.summary}</p>
-            <ul className="mt-4 space-y-1.5 text-sm text-slate-600">
-              {solution.points.map((point) => (
-                <li key={point}>— {point}</li>
-              ))}
-            </ul>
-            <Link href={solution.href} className="mt-5 inline-block text-sm font-semibold text-teal-700">
-              Explore this path
-            </Link>
-          </article>
-        ))}
+      <Container className="py-16 sm:py-20">
+        <SectionHeader
+          eyebrow="Explore"
+          title="Choose the path that fits your business."
+          description="Every solution links to a product page, service or conversation with our team."
+        />
+        <div className="mt-12 grid gap-4 md:grid-cols-2">
+          {solutions.map((solution) => (
+            <article
+              key={solution.slug}
+              className="lift-card rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm"
+            >
+              <h2 className="text-xl font-semibold text-slate-950">{solution.title}</h2>
+              <p className="mt-3 text-slate-600">{solution.summary}</p>
+              <ul className="mt-4 space-y-1.5 text-sm text-slate-600">
+                {solution.points.map((point) => (
+                  <li key={point}>— {point}</li>
+                ))}
+              </ul>
+              <Link href={solution.href} className="mt-5 inline-block text-sm font-semibold text-teal-700">
+                Explore {solution.title} →
+              </Link>
+            </article>
+          ))}
+        </div>
       </Container>
     </div>
   );

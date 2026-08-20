@@ -27,9 +27,11 @@ const initial: FormState = {
 
 export function ContactForm({
   defaultService = "",
+  defaultIntent = "project",
   turnstileSiteKey = "",
 }: {
   defaultService?: string;
+  defaultIntent?: "contact" | "project" | "expert";
   turnstileSiteKey?: string;
 }) {
   const [form, setForm] = useState<FormState>({ ...initial, service: defaultService });
@@ -77,7 +79,7 @@ export function ContactForm({
           budget: form.budget,
           message: form.message,
           companyWebsite: form.companyWebsite,
-          intent: "project",
+          intent: defaultIntent,
           turnstileToken,
         }),
       });
@@ -230,7 +232,11 @@ export function ContactForm({
         disabled={!canSubmit}
         className="btn-primary inline-flex rounded-full bg-gradient-to-r from-teal-700 to-teal-600 px-6 py-3 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-60"
       >
-        {status === "submitting" ? "Sending…" : "Send project details"}
+        {status === "submitting"
+          ? "Sending…"
+          : defaultIntent === "expert"
+            ? "Talk to an expert"
+            : "Send project details"}
       </button>
     </form>
   );

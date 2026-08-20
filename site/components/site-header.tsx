@@ -2,10 +2,11 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useId, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState, useSyncExternalStore } from "react";
 import { createPortal } from "react-dom";
 import { Logo } from "@/components/logo";
-import { getCtaNav, getLoginNav, primaryNav } from "@/lib/navigation";
+import { MobileSolutionsGroup, SolutionsMenu } from "@/components/navigation/solutions-menu";
+import { getExpertCta, getLoginNav, primaryNav } from "@/lib/navigation";
 import { getWhatsAppUrl, siteConfig, whatsappPrefill } from "@/lib/site-config";
 
 function isActivePath(pathname: string, href: string) {
@@ -44,22 +45,16 @@ export function SiteHeader() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [mounted, setMounted] = useState(false);
   const panelId = useId();
   const closeRef = useRef<HTMLButtonElement>(null);
-  const pathnameRef = useRef(pathname);
   const whatsapp = getWhatsAppUrl(whatsappPrefill);
-  const cta = getCtaNav();
+  const expertCta = getExpertCta();
   const login = getLoginNav();
-
-  if (pathnameRef.current !== pathname) {
-    pathnameRef.current = pathname;
-    if (open) setOpen(false);
-  }
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const mounted = useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false,
+  );
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -111,7 +106,22 @@ export function SiteHeader() {
         className="flex min-h-0 flex-1 flex-col gap-1 overflow-y-auto px-4 py-6"
         aria-label="Mobile"
       >
-        {primaryNav.map(({ href, label }) => (
+        {primaryNav.slice(0, 1).map(({ href, label }) => (
+          <Link
+            key={href}
+            href={href}
+            className={`rounded-xl px-4 py-3 text-lg ${
+              isActivePath(pathname, href)
+                ? "bg-white/10 font-semibold text-teal-300"
+                : "font-medium text-slate-200"
+            }`}
+            onClick={() => setOpen(false)}
+          >
+            {label}
+          </Link>
+        ))}
+        <MobileSolutionsGroup onNavigate={() => setOpen(false)} />
+        {primaryNav.slice(1).map(({ href, label }) => (
           <Link
             key={href}
             href={href}
@@ -126,20 +136,19 @@ export function SiteHeader() {
           </Link>
         ))}
         <NavAnchor
+          href={expertCta.href}
+          className="mt-4 rounded-full bg-gradient-to-r from-teal-600 to-teal-500 px-4 py-3.5 text-center text-sm font-semibold text-white"
+          onClick={() => setOpen(false)}
+        >
+          {expertCta.label}
+        </NavAnchor>
+        <NavAnchor
           href={login.href}
           external={login.external}
-          className="mt-4 rounded-full border border-white/20 px-4 py-3.5 text-center text-sm font-semibold text-white"
+          className="mt-2 rounded-full border border-white/20 px-4 py-3.5 text-center text-sm font-semibold text-white"
           onClick={() => setOpen(false)}
         >
           {login.label}
-        </NavAnchor>
-        <NavAnchor
-          href={cta.href}
-          external={cta.external}
-          className="mt-2 rounded-full bg-gradient-to-r from-teal-600 to-teal-500 px-4 py-3.5 text-center text-sm font-semibold text-white"
-          onClick={() => setOpen(false)}
-        >
-          {cta.label}
         </NavAnchor>
         {whatsapp ? (
           <a
@@ -176,7 +185,25 @@ export function SiteHeader() {
             className="hidden items-center gap-3 text-[0.75rem] xl:flex xl:gap-4 2xl:gap-5"
             aria-label="Main"
           >
-            {primaryNav.map(({ href, label }) => {
+            {primaryNav.slice(0, 1).map(({ href, label }) => {
+              const active = isActivePath(pathname, href);
+              return (
+                <Link
+                  key={href}
+                  href={href}
+                  data-active={active ? "true" : undefined}
+                  className={`nav-link whitespace-nowrap ${
+                    active
+                      ? "font-semibold text-teal-300"
+                      : "font-medium text-slate-300 transition-colors hover:text-white"
+                  }`}
+                >
+                  {label}
+                </Link>
+              );
+            })}
+            <SolutionsMenu />
+            {primaryNav.slice(1).map(({ href, label }) => {
               const active = isActivePath(pathname, href);
               return (
                 <Link
@@ -195,18 +222,10 @@ export function SiteHeader() {
             })}
           </nav>
           <NavAnchor
-            href={login.href}
-            external={login.external}
-            className="hidden whitespace-nowrap text-sm font-medium text-slate-300 transition-colors hover:text-white xl:inline-flex"
-          >
-            {login.label}
-          </NavAnchor>
-          <NavAnchor
-            href={cta.href}
-            external={cta.external}
+            href={expertCta.href}
             className="btn-primary interactive-shine hidden items-center whitespace-nowrap rounded-full bg-gradient-to-r from-teal-600 to-teal-500 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-teal-700/20 xl:inline-flex"
           >
-            {cta.label}
+            {expertCta.label}
           </NavAnchor>
           <button
             type="button"

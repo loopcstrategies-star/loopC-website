@@ -1,7 +1,11 @@
 import Link from "next/link";
 import { Logo } from "@/components/logo";
-import { footerLegal, footerNav } from "@/lib/navigation";
-import { footerServiceLinks } from "@/lib/services";
+import {
+  footerCompany,
+  footerLegal,
+  footerProduct,
+  footerServices,
+} from "@/lib/navigation";
 import {
   getPublishedEmail,
   getWhatsAppUrl,
@@ -32,6 +36,23 @@ function SocialButton({
   );
 }
 
+function FooterColumn({ title, links }: { title: string; links: { href: string; label: string }[] }) {
+  return (
+    <div>
+      <p className="type-label text-slate-500">{title}</p>
+      <ul className="mt-4 space-y-2.5 text-sm">
+        {links.map(({ href, label }) => (
+          <li key={href}>
+            <Link href={href} className="text-slate-400 transition hover:text-teal-300">
+              {label}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
 export function SiteFooter() {
   const year = new Date().getFullYear();
   const email = getPublishedEmail();
@@ -49,7 +70,7 @@ export function SiteFooter() {
           <div className="lg:col-span-4">
             <Logo variant="footer" />
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-slate-400">
-              {siteConfig.description}
+              {siteConfig.footerTagline}
             </p>
             <p className="mt-4 text-sm font-medium text-teal-100/90">{siteConfig.location.display}</p>
             <div className="mt-6 flex flex-wrap gap-2">
@@ -85,32 +106,18 @@ export function SiteFooter() {
           </div>
 
           <div className="lg:col-span-2">
-            <p className="type-label text-slate-500">Navigate</p>
-            <ul className="mt-4 space-y-2.5 text-sm">
-              {footerNav.map(({ href, label }) => (
-                <li key={href}>
-                  <Link href={href} className="text-slate-400 transition hover:text-teal-300">
-                    {label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+            <FooterColumn title="Product" links={footerProduct} />
           </div>
 
-          <div className="lg:col-span-3">
-            <p className="type-label text-slate-500">Services</p>
-            <ul className="mt-4 space-y-2.5 text-sm">
-              {footerServiceLinks.map(({ href, label }) => (
-                <li key={href}>
-                  <Link href={href} className="text-slate-400 transition hover:text-teal-300">
-                    {label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+          <div className="lg:col-span-2">
+            <FooterColumn title="Services" links={footerServices} />
           </div>
 
-          <div className="lg:col-span-3">
+          <div className="lg:col-span-2">
+            <FooterColumn title="Company" links={footerCompany} />
+          </div>
+
+          <div className="lg:col-span-2">
             <p className="type-label text-slate-500">Contact</p>
             <address className="mt-4 not-italic text-sm leading-relaxed text-slate-400">
               <span className="block text-slate-200">{siteConfig.legalName}</span>
@@ -125,8 +132,8 @@ export function SiteFooter() {
                 </p>
               ) : (
                 <p>
-                  <Link href="/contact" className="text-teal-400 hover:underline">
-                    Start a project
+                  <Link href="/contact?intent=expert" className="text-teal-400 hover:underline">
+                    Talk to an expert
                   </Link>
                 </p>
               )}

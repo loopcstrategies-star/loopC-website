@@ -98,11 +98,15 @@ export default async function PricingPage() {
       />
       <PageHero
         eyebrow="Pricing"
-        title="Simple plans for serious operations."
-        description="Subscribe monthly or yearly. Enterprise teams can talk to us for custom limits and support."
+        title="Plans that grow with your business."
+        description="Subscribe monthly or yearly. Enterprise teams can talk to us for custom modules, limits and support."
         dark
       />
       <Container className="py-16 sm:py-20">
+        <p className="mx-auto mb-10 max-w-2xl text-center text-slate-600">
+          LoopC ERP plans include the modules your team needs today — with room to upgrade as
+          operations expand. Enterprise pricing covers customization, integrations and priority support.
+        </p>
         <PricingPlans plans={plans} erpBase={erp} />
         <p className="mt-10 text-center text-sm text-slate-500">
           Prefer to browse on the app?{" "}

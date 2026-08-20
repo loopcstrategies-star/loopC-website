@@ -4,12 +4,30 @@ export const siteConfig = {
   brand: "LoopC",
   name: "LoopC Business Strategies",
   legalName: "LoopC Business Strategies",
-  tagline: "We build software around your business.",
+  tagline: "Software built around the way your business works.",
   description:
-    "LoopC Business Strategies designs and builds mobile apps, websites, web platforms, dashboards and custom software that help businesses work smarter, serve customers better and grow.",
+    "LoopC builds and delivers ERP, web applications, mobile apps, dashboards and custom business software for growing companies.",
   supportingLine:
-    "From websites and mobile apps to powerful web platforms, dashboards and custom software, LoopC turns business ideas and real-world workflows into digital products built to grow.",
+    "LoopC builds and delivers ERP, web applications, mobile apps, dashboards and custom business software for growing companies.",
+  footerTagline:
+    "Business software built around the way your business works.",
   productionUrl: "https://www.loopcstrategies.com",
+
+  positioning: {
+    eyebrow: "BUSINESS SOFTWARE • ERP • WEB • MOBILE",
+    heroSupport:
+      "From strategy and design to development, launch and long-term support.",
+    erpHeadline: "One workspace for your entire business.",
+    erpCopy:
+      "Bring finance, sales, inventory, customers and people into one connected system. Start with the modules you need and expand as your business grows.",
+    customSoftwareHeadline: "Your business is different. Your software can be too.",
+    customSoftwareCopy:
+      "Not every business can operate inside a standard workflow. We design and build custom software around your processes, data and customers.",
+    dualOfferingHeadline: "One company. Two ways to work with us.",
+    finalCtaHeadline: "Ready to build software that works the way your business does?",
+    finalCtaCopy:
+      "Start with LoopC ERP or tell us what you need to build. We'll help you find the right path.",
+  },
 
   location: {
     area: "OMR",
@@ -95,3 +113,35 @@ export function getAddressLines(): string[] {
 
 export const whatsappPrefill =
   "Hello LoopC — I would like to discuss a software project.";
+
+export const erpModules = [
+  "Accounting",
+  "Invoicing",
+  "Inventory",
+  "Sales",
+  "Purchasing",
+  "CRM",
+  "HR",
+  "Payroll",
+  "Reports",
+  "Analytics",
+] as const;
+
+export const erpValueProps = [
+  {
+    title: "Modular",
+    description: "Pay for the capabilities your business needs and expand as you grow.",
+  },
+  {
+    title: "Connected",
+    description: "Finance, sales, inventory, customers and operations work from shared data.",
+  },
+  {
+    title: "Flexible",
+    description: "Configure roles, workflows and business rules around your organization.",
+  },
+  {
+    title: "Scalable",
+    description: "Start with a small team and grow into a complete business platform.",
+  },
+] as const;
