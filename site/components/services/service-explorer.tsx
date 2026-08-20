@@ -145,13 +145,13 @@ export function ServiceExplorer() {
   return (
     <div className="mt-12 flex flex-col gap-8 lg:flex-row lg:gap-12">
       {/* Tabs */}
-      <div className="flex flex-wrap gap-2 lg:w-52 lg:flex-col lg:flex-nowrap lg:shrink-0">
+      <div className="-mx-1 flex gap-2 overflow-x-auto pb-1 max-lg:snap-x max-lg:snap-mandatory lg:mx-0 lg:w-52 lg:shrink-0 lg:flex-col lg:overflow-visible lg:pb-0">
         {explorerServices.map((service, i) => (
           <button
             key={service.id}
             type="button"
             onClick={() => setActive(i)}
-            className={`rounded-xl px-4 py-2.5 text-sm font-medium text-left transition-all duration-150 ${
+            className={`shrink-0 snap-start whitespace-nowrap rounded-xl px-4 py-2.5 text-left text-sm font-medium transition-all duration-150 lg:w-full lg:whitespace-normal ${
               active === i
                 ? "bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)] text-white shadow-md"
                 : "bg-slate-100 text-slate-700 hover:bg-blue-50 hover:text-blue-800"

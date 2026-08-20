@@ -223,7 +223,7 @@ export function ContactForm({
         />
       </div>
       {turnstileSiteKey ? (
-        <div className="cf-turnstile" data-sitekey={turnstileSiteKey} />
+        <div className="cf-turnstile max-w-full overflow-x-auto" data-sitekey={turnstileSiteKey} />
       ) : null}
       {status === "error" ? (
         <p role="alert" className="text-sm font-medium text-red-700">

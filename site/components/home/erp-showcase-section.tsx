@@ -66,7 +66,7 @@ function ErpDashboardMock() {
         <p className="mt-3 text-[10px] text-slate-500">Illustrative demo data · Product UI concept</p>
       </div>
 
-      <ul className="mt-4 flex flex-wrap justify-center gap-2 lg:absolute lg:-left-4 lg:top-8 lg:mt-0 lg:flex-col">
+      <ul className="mt-4 flex flex-wrap justify-center gap-2 lg:absolute lg:left-0 lg:top-8 lg:mt-0 lg:flex-col">
         {floatingFeatures.slice(0, 3).map((f) => (
           <li
             key={f}
@@ -76,7 +76,7 @@ function ErpDashboardMock() {
           </li>
         ))}
       </ul>
-      <ul className="mt-2 flex flex-wrap justify-center gap-2 lg:absolute lg:-right-4 lg:bottom-12 lg:mt-0 lg:flex-col">
+      <ul className="mt-2 flex flex-wrap justify-center gap-2 lg:absolute lg:right-0 lg:bottom-12 lg:mt-0 lg:flex-col">
         {floatingFeatures.slice(3).map((f) => (
           <li
             key={f}

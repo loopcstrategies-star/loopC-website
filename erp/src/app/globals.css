@@ -96,6 +96,14 @@ a {
   color: transparent;
 }
 
+.brand-mark-on-dark {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: #fff;
+}
+
 .fade-up {
   animation: fadeUp 0.55s ease both;
 }

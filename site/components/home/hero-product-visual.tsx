@@ -95,23 +95,19 @@ export function HeroProductVisual() {
         <p className="mt-3 text-[10px] text-slate-500">Illustrative product UI · marketing mock</p>
       </motion.div>
 
-      <div
-        className={`hero-float absolute -left-2 top-8 z-20 hidden w-40 rounded-xl border border-white/10 bg-[#0f172a]/95 p-3 shadow-xl sm:block ${
-          reduce ? "" : ""
-        }`}
-      >
+      <div className="hero-float absolute left-2 top-8 z-20 hidden w-40 rounded-xl border border-white/10 bg-[#0f172a]/95 p-3 shadow-xl lg:block">
         <p className="text-[10px] font-semibold text-cyan-300">Revenue</p>
         <p className="mt-1 text-lg font-bold text-white">+18.4%</p>
         <p className="text-[10px] text-slate-400">vs last month</p>
       </div>
 
-      <div className="hero-float-alt absolute -right-1 bottom-16 z-20 hidden w-44 rounded-xl border border-white/10 bg-[#0f172a]/95 p-3 shadow-xl sm:block">
+      <div className="hero-float-alt absolute right-2 bottom-16 z-20 hidden w-44 rounded-xl border border-white/10 bg-[#0f172a]/95 p-3 shadow-xl lg:block">
         <p className="text-[10px] font-semibold text-violet-300">Notification</p>
         <p className="mt-1 text-xs text-slate-200">Invoice #1042 paid</p>
         <p className="text-[10px] text-slate-500">2 min ago</p>
       </div>
 
-      <div className="hero-float absolute bottom-2 left-8 z-20 hidden rounded-xl border border-white/10 bg-[#0f172a]/95 px-3 py-2 shadow-xl md:flex md:items-center md:gap-2">
+      <div className="hero-float absolute bottom-2 left-8 z-20 hidden rounded-xl border border-white/10 bg-[#0f172a]/95 px-3 py-2 shadow-xl lg:flex lg:items-center lg:gap-2">
         <span className="flex h-7 w-7 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-violet-500 text-[10px] font-bold text-white">
           A
         </span>

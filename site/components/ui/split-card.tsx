@@ -29,7 +29,9 @@ export function SplitCard({
       }`}
     >
       <p className={`type-label ${isDark ? "text-blue-300" : "text-[var(--primary)]"}`}>{eyebrow}</p>
-      <h3 className="type-h3 mt-3 font-semibold">{title}</h3>
+      <h3 className={`type-h3 mt-3 font-semibold ${isDark ? "text-white" : "text-slate-950"}`}>
+        {title}
+      </h3>
       <p className={`mt-3 flex-1 text-sm leading-relaxed ${isDark ? "text-slate-300" : "text-slate-600"}`}>
         {description}
       </p>

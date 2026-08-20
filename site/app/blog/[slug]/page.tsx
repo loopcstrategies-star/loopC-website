@@ -75,7 +75,7 @@ export default async function BlogPostPage({ params }: { params: Promise<Params>
       <header className="bg-[#050b16] py-16 text-white sm:py-20">
         <Container className="max-w-3xl">
           <p className="type-label text-teal-300">{category}</p>
-          <h1 className="type-h1 mt-3 font-bold">{title}</h1>
+          <h1 className="type-h1 mt-3 font-bold text-white">{title}</h1>
           {description ? <p className="mt-5 text-slate-300">{description}</p> : null}
           <p className="mt-6 text-sm text-slate-400">
             {author}
@@ -121,7 +121,7 @@ export default async function BlogPostPage({ params }: { params: Promise<Params>
           </div>
         ) : null}
         <section className="mt-12 rounded-3xl bg-[#050b16] p-8 text-white">
-          <h2 className="text-2xl font-semibold">Want this applied to your business?</h2>
+          <h2 className="text-2xl font-semibold text-white">Want this applied to your business?</h2>
           <Link
             href="/contact"
             className="mt-5 inline-flex rounded-full bg-teal-500 px-5 py-2.5 text-sm font-semibold text-slate-950"

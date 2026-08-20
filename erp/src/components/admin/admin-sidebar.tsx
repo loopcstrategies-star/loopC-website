@@ -76,7 +76,7 @@ function NavLink({ href, label, icon }: { href: string; label: string; icon: str
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
-    <p className="mt-5 px-3 text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-500">
+    <p className="mt-5 px-3 text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-400">
       {children}
     </p>
   );
@@ -85,7 +85,7 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
 export function AdminSidebar() {
   return (
     <aside className="admin-sidebar flex h-full min-h-0 w-full shrink-0 flex-col border-r p-4 lg:w-60">
-      <Link href="/admin" className="brand-mark text-lg text-white">
+      <Link href="/admin" className="font-[family-name:var(--font-display)] text-lg font-bold tracking-tight text-white">
         LoopC Admin
       </Link>
       <nav className="mt-6 flex-1 space-y-0.5 overflow-y-auto text-sm">

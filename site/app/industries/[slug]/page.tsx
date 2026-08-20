@@ -155,7 +155,9 @@ export default async function IndustryDetailPage({ params }: { params: Promise<P
         </section>
 
         <section className="rounded-3xl bg-[#050b16] px-6 py-10 text-white">
-          <h2 className="text-2xl font-semibold">Discuss software for {industry.title.toLowerCase()}</h2>
+          <h2 className="text-2xl font-semibold text-white">
+            Discuss software for {industry.title.toLowerCase()}
+          </h2>
           <p className="mt-2 max-w-xl text-slate-300">
             Bring the workflow. We will help you choose ERP, custom software, or both.
           </p>

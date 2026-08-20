@@ -38,7 +38,7 @@ export function ProcessSection() {
       <Container className="relative">
         <FadeIn>
           <p className="type-label text-blue-300">Our process</p>
-          <h2 className="type-h2 mt-3 max-w-2xl font-bold">One team. From idea to launch.</h2>
+          <h2 className="type-h2 mt-3 max-w-2xl font-bold text-white">One team. From idea to launch.</h2>
           <p className="mt-4 max-w-2xl text-slate-300">
             Strategy through support, without handing you between vendors.
           </p>
@@ -68,7 +68,7 @@ export function ProcessSection() {
           <div className="lg:sticky lg:top-24">
             <div className="glass-dark rounded-3xl p-6 sm:p-8">
               <p className="type-label text-blue-300">{current.num}</p>
-              <h3 className="type-h3 mt-3 font-semibold">{current.title}</h3>
+              <h3 className="type-h3 mt-3 font-semibold text-white">{current.title}</h3>
               <p className="mt-4 leading-relaxed text-slate-300">{current.detail}</p>
               <div className="mt-8 grid grid-cols-7 gap-1">
                 {deliveryProcess.map((step, index) => (

@@ -53,7 +53,7 @@ export default async function InsightArticlePage({ params }: { params: Promise<P
       <header className="bg-[#050b16] py-16 text-white sm:py-20">
         <Container className="max-w-3xl">
           <p className="type-label text-teal-300">{post.category}</p>
-          <h1 className="type-h1 mt-3 font-bold">{post.title}</h1>
+          <h1 className="type-h1 mt-3 font-bold text-white">{post.title}</h1>
           <p className="mt-5 text-slate-300">{post.description}</p>
           <p className="mt-6 text-sm text-slate-400">
             {insightAuthor} · {formatInsightDate(post.publishedAt)}
@@ -104,7 +104,7 @@ export default async function InsightArticlePage({ params }: { params: Promise<P
           </section>
         ) : null}
         <section className="mt-12 rounded-3xl bg-[#050b16] p-8 text-white">
-          <h2 className="text-2xl font-semibold">Want this applied to your business?</h2>
+          <h2 className="text-2xl font-semibold text-white">Want this applied to your business?</h2>
           <Link
             href="/contact"
             className="mt-5 inline-flex rounded-full bg-teal-500 px-5 py-2.5 text-sm font-semibold text-slate-950"

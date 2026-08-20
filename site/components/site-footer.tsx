@@ -39,7 +39,7 @@ function SocialButton({
 function FooterColumn({ title, links }: { title: string; links: { href: string; label: string }[] }) {
   return (
     <div>
-      <p className="type-label text-slate-500">{title}</p>
+      <p className="type-label text-slate-400">{title}</p>
       <ul className="mt-4 space-y-2.5 text-sm">
         {links.map(({ href, label }) => (
           <li key={href}>
@@ -120,7 +120,7 @@ export function SiteFooter() {
           </div>
 
           <div className="lg:col-span-2">
-            <p className="type-label text-slate-500">Contact</p>
+            <p className="type-label text-slate-400">Contact</p>
             <address className="mt-4 not-italic text-sm leading-relaxed text-slate-400">
               <span className="block text-slate-200">{siteConfig.legalName}</span>
               <span className="mt-1 block">{siteConfig.location.display}</span>

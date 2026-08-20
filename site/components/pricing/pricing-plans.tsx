@@ -44,15 +44,15 @@ export function PricingPlans({
 
   return (
     <div>
-      <div className="mb-10 flex flex-col items-center gap-3">
+      <div className="mb-10 flex flex-col items-center gap-2 px-1">
         <div
-          className="inline-flex rounded-xl border border-[var(--border)] bg-white p-1 shadow-sm"
+          className="inline-flex max-w-full flex-wrap justify-center rounded-xl border border-[var(--border)] bg-white p-1 shadow-sm"
           role="group"
           aria-label="Billing cycle"
         >
           <button
             type="button"
-            className={`rounded-lg px-5 py-2 text-sm font-semibold transition ${
+            className={`rounded-lg px-3 py-2 text-sm font-semibold transition sm:px-5 ${
               cycle === "monthly"
                 ? "bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)] text-white shadow"
                 : "text-slate-600 hover:text-slate-900"
@@ -63,7 +63,7 @@ export function PricingPlans({
           </button>
           <button
             type="button"
-            className={`rounded-lg px-5 py-2 text-sm font-semibold transition ${
+            className={`rounded-lg px-3 py-2 text-sm font-semibold transition sm:px-5 ${
               cycle === "yearly"
                 ? "bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)] text-white shadow"
                 : "text-slate-600 hover:text-slate-900"
@@ -72,12 +72,17 @@ export function PricingPlans({
           >
             Yearly
             {maxSavings > 0 ? (
-              <span className="ml-1.5 rounded-full bg-white/20 px-1.5 py-0.5 text-[10px] font-bold text-inherit">
+              <span className="ml-1.5 hidden rounded-full bg-white/20 px-1.5 py-0.5 text-[10px] font-bold text-inherit sm:inline">
                 Save up to {maxSavings}%
               </span>
             ) : null}
           </button>
         </div>
+        {maxSavings > 0 ? (
+          <p className="text-xs font-semibold text-[var(--secondary)] sm:hidden">
+            Save up to {maxSavings}% yearly
+          </p>
+        ) : null}
       </div>
 
       <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">

@@ -85,7 +85,7 @@ export function SiteHeader() {
       role="dialog"
       aria-modal="true"
       aria-label="Menu"
-      className="fixed inset-0 z-[100] flex h-dvh flex-col bg-[var(--dark)] text-white xl:hidden"
+      className="fixed inset-0 z-[100] flex h-dvh flex-col bg-[var(--dark)] pt-[env(safe-area-inset-top)] text-white xl:hidden"
     >
       <div className="flex h-16 shrink-0 items-center justify-between border-b border-white/10 px-4">
         <Logo variant="footer" />
@@ -169,7 +169,7 @@ export function SiteHeader() {
           scrolled ? "h-14" : "h-[4.25rem]"
         }`}
       >
-        <Logo variant="footer" className="min-w-0 shrink" />
+        <Logo variant="footer" className="shrink-0" />
         <div className="flex min-w-0 shrink-0 items-center gap-2 sm:gap-3">
           <nav
             className="hidden items-center gap-3 text-[0.75rem] xl:flex xl:gap-4 2xl:gap-5"

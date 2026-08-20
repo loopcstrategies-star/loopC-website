@@ -9,7 +9,7 @@ export function IndustriesSection() {
       <Container>
         <FadeIn>
           <SectionLabelLight>09 — Industries</SectionLabelLight>
-          <h2 className="type-h2 mt-3 max-w-2xl font-bold">
+          <h2 className="type-h2 mt-3 max-w-2xl font-bold text-white">
             Technology that understands the business behind it.
           </h2>
           <p className="mt-4 max-w-2xl text-slate-300">

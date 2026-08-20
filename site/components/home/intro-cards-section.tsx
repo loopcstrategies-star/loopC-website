@@ -63,7 +63,7 @@ export function IntroCardsSection() {
           </p>
         </div>
 
-        <div className="mt-12 grid gap-6 sm:grid-cols-3">
+        <div className="mt-12 grid gap-6 md:grid-cols-3">
           {cards.map((card, i) => (
             <motion.div
               key={card.id}
@@ -84,7 +84,7 @@ export function IntroCardsSection() {
               <p className="mt-4 text-xs font-bold tracking-widest text-[var(--primary)]">{card.label}</p>
               <h3 className="mt-1 text-xl font-bold text-[var(--text)]">{card.title}</h3>
               <p className="mt-3 flex-1 text-sm leading-relaxed text-[var(--muted)]">{card.description}</p>
-              <div className="mt-4 flex items-center gap-1 text-sm font-semibold text-[var(--primary)] opacity-0 transition-all duration-300 group-hover:translate-x-1 group-hover:opacity-100">
+              <div className="mt-4 flex items-center gap-1 text-sm font-semibold text-[var(--primary)] transition-all duration-300 group-hover:translate-x-1 max-lg:opacity-100 lg:opacity-0 lg:group-hover:opacity-100">
                 Learn more
                 <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />

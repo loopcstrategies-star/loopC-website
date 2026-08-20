@@ -92,7 +92,7 @@ export default async function ContactPage({
               </div>
             </div>
           </aside>
-          <div className="relative rounded-3xl border border-[var(--border)] bg-white/90 p-6 shadow-xl shadow-blue-500/5 backdrop-blur sm:p-8">
+          <div className="relative rounded-3xl border border-[var(--border)] bg-white/90 p-4 shadow-xl shadow-blue-500/5 backdrop-blur sm:p-8">
             <ContactForm
               defaultService={mapServiceQuery(params.service)}
               defaultIntent={intent}
