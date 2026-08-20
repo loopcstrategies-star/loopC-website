@@ -54,11 +54,10 @@ export function getSalesCta(): NavItem {
 }
 
 export function getCtaNav(): NavItem {
-  const erp = getErpPublicUrl();
+  // Purchase entry is on the marketing site; ERP hosts signup/checkout.
   return {
-    href: `${erp}/pricing`,
+    href: "/pricing",
     label: "Get Started",
-    external: true,
   };
 }
 

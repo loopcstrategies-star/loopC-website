@@ -109,9 +109,9 @@ export default async function PricingPage() {
         </p>
         <PricingPlans plans={plans} erpBase={erp} />
         <p className="mt-10 text-center text-sm text-slate-500">
-          Prefer to browse on the app?{" "}
-          <a href={`${erp}/pricing`} className="font-semibold text-teal-700 hover:underline">
-            Open ERP pricing
+          Already have an account?{" "}
+          <a href={`${erp}/login`} className="font-semibold text-teal-700 hover:underline">
+            Log in to LoopC ERP
           </a>
         </p>
       </Container>
