@@ -29,7 +29,7 @@ function SocialButton({
       target="_blank"
       rel="noopener noreferrer"
       aria-label={label}
-      className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-slate-200 transition hover:border-teal-400/40 hover:bg-teal-500/15 hover:text-white"
+      className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-slate-200 transition hover:border-blue-400/40 hover:bg-blue-500/15 hover:text-white"
     >
       {children}
     </a>
@@ -43,7 +43,7 @@ function FooterColumn({ title, links }: { title: string; links: { href: string; 
       <ul className="mt-4 space-y-2.5 text-sm">
         {links.map(({ href, label }) => (
           <li key={href}>
-            <Link href={href} className="text-slate-400 transition hover:text-teal-300">
+            <Link href={href} className="text-slate-400 transition hover:text-blue-300">
               {label}
             </Link>
           </li>
@@ -64,15 +64,17 @@ export function SiteFooter() {
   const youTube = isPublished(siteConfig.social.youTube) ? siteConfig.social.youTube : null;
 
   return (
-    <footer className="mt-auto border-t border-white/10 bg-slate-950 text-slate-300">
-      <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6 lg:py-16">
+    <footer className="relative mt-auto overflow-hidden border-t border-white/10 bg-[var(--dark)] text-slate-300">
+      <div className="pointer-events-none absolute -left-24 bottom-0 h-64 w-64 rounded-full bg-blue-600/15 blur-3xl" />
+      <div className="pointer-events-none absolute -right-16 top-0 h-56 w-56 rounded-full bg-violet-600/10 blur-3xl" />
+      <div className="relative mx-auto max-w-6xl px-4 py-14 sm:px-6 lg:py-16">
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-12 lg:gap-8">
           <div className="lg:col-span-4">
             <Logo variant="footer" />
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-slate-400">
               {siteConfig.footerTagline}
             </p>
-            <p className="mt-4 text-sm font-medium text-teal-100/90">{siteConfig.location.display}</p>
+            <p className="mt-4 text-sm font-medium text-blue-100/90">{siteConfig.location.display}</p>
             <div className="mt-6 flex flex-wrap gap-2">
               {linkedIn ? (
                 <SocialButton href={linkedIn} label="LoopC on LinkedIn">
@@ -126,20 +128,20 @@ export function SiteFooter() {
             <div className="mt-4 space-y-2 text-sm">
               {email ? (
                 <p>
-                  <a href={`mailto:${email}`} className="text-teal-400 hover:underline">
+                  <a href={`mailto:${email}`} className="text-blue-400 hover:underline">
                     {email}
                   </a>
                 </p>
               ) : (
                 <p>
-                  <Link href="/contact?intent=expert" className="text-teal-400 hover:underline">
+                  <Link href="/contact?intent=expert" className="text-blue-400 hover:underline">
                     Talk to an expert
                   </Link>
                 </p>
               )}
               {phone && phoneTel ? (
                 <p>
-                  <a href={`tel:${phoneTel}`} className="font-medium text-white hover:text-teal-300">
+                  <a href={`tel:${phoneTel}`} className="font-medium text-white hover:text-blue-300">
                     {phone}
                   </a>
                 </p>
@@ -154,7 +156,7 @@ export function SiteFooter() {
           </p>
           <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
             {footerLegal.map(({ href, label }) => (
-              <Link key={href} href={href} className="text-slate-400 transition hover:text-teal-300">
+              <Link key={href} href={href} className="text-slate-400 transition hover:text-blue-300">
                 {label}
               </Link>
             ))}

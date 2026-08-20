@@ -6,17 +6,17 @@ export const siteConfig = {
   legalName: "LoopC Business Strategies",
   tagline: "Build Better. Operate Smarter. Grow Faster.",
   description:
-    "We design and build powerful digital products for modern businesses — from custom web and mobile applications to scalable business software and complete ERP solutions.",
+    "We design and build powerful digital products for modern businesses — from web and mobile applications to scalable SaaS platforms and business software.",
   supportingLine:
-    "We design and build powerful digital products for modern businesses — from custom web and mobile applications to scalable business software and complete ERP solutions.",
+    "We design and build powerful digital products for modern businesses — from web and mobile applications to scalable SaaS platforms and business software.",
   footerTagline:
     "Technology built around the way your business works.",
   productionUrl: "https://www.loopcstrategies.com",
 
   positioning: {
-    eyebrow: "ERP • WEB • MOBILE • CUSTOM SOFTWARE",
+    eyebrow: "WEB • MOBILE • SAAS • ERP • CUSTOM SOFTWARE",
     heroSupport:
-      "We design and build powerful digital products for modern businesses — from custom web and mobile applications to scalable business software and complete ERP solutions.",
+      "We design and build powerful digital products for modern businesses — from web and mobile applications to scalable SaaS platforms and business software.",
     erpHeadline: "One Powerful ERP for Your Entire Business.",
     erpCopy:
       "Bring your business operations together with a powerful ERP platform designed to help teams manage their everyday operations from one connected system.",

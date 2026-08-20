@@ -31,7 +31,7 @@ export default function BrochurePage() {
         </Container>
       </div>
       <Container className="max-w-3xl py-12 sm:py-16">
-        <p className="type-label text-teal-700">{siteConfig.location.short}</p>
+        <p className="type-label text-[var(--primary)]">{siteConfig.location.short}</p>
         <h1 className="type-h1 mt-3 font-bold text-slate-950">{siteConfig.name}</h1>
         <p className="mt-4 text-lg text-slate-700">{siteConfig.tagline}</p>
         <p className="mt-4 text-slate-600">{siteConfig.description}</p>
@@ -56,7 +56,7 @@ export default function BrochurePage() {
           Visit the website contact page to describe your project. {siteConfig.location.display}.
         </p>
         <p className="mt-6 print:hidden">
-          <Link href="/contact" className="font-semibold text-teal-700 hover:underline">
+          <Link href="/contact" className="font-semibold text-[var(--primary)] hover:underline">
             Start a Project
           </Link>
         </p>

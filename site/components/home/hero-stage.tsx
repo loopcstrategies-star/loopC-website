@@ -10,7 +10,7 @@ export function HeroStage() {
   return (
     <div className="relative flex flex-col gap-4 lg:block lg:h-full">
       <div className="hero-float glass-dark relative hidden w-full max-w-[10rem] rounded-2xl p-3 sm:block lg:absolute lg:left-0 lg:top-6 lg:w-40">
-        <p className="text-[10px] font-semibold uppercase tracking-wider text-teal-300">Analytics</p>
+        <p className="text-[10px] font-semibold uppercase tracking-wider text-blue-300">Analytics</p>
         <p className="mt-1 text-xs text-slate-400">Dashboard view</p>
         <div className="relative mt-3 h-12 overflow-hidden rounded-lg bg-white/5">
           <Image

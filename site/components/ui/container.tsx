@@ -9,9 +9,9 @@ export function Container({
 }
 
 export function SectionLabel({ children }: { children: React.ReactNode }) {
-  return <p className="type-label text-teal-600">{children}</p>;
+  return <p className="type-label text-blue-600">{children}</p>;
 }
 
 export function SectionLabelLight({ children }: { children: React.ReactNode }) {
-  return <p className="type-label text-teal-300/90">{children}</p>;
+  return <p className="type-label text-blue-300/90">{children}</p>;
 }

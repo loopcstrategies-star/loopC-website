@@ -10,11 +10,10 @@ export default async function AdminLayout({
   await requireAdminSession();
 
   return (
-    <ResponsiveSidebarLayout
-      sidebar={<AdminSidebar />}
-      title="LoopC Admin"
-    >
-      {children}
-    </ResponsiveSidebarLayout>
+    <div className="admin-shell min-h-full">
+      <ResponsiveSidebarLayout sidebar={<AdminSidebar />} title="LoopC Admin" variant="admin">
+        {children}
+      </ResponsiveSidebarLayout>
+    </div>
   );
 }

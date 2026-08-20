@@ -5,7 +5,7 @@ type Size = "sm" | "md" | "lg";
 
 const variantClass: Record<Variant, string> = {
   primary:
-    "bg-[var(--accent)] text-white hover:bg-[var(--accent-hover)] border-transparent",
+    "bg-gradient-to-r from-[var(--accent)] to-[var(--secondary,#7c3aed)] text-white hover:brightness-105 border-transparent shadow-sm shadow-blue-600/20",
   secondary:
     "bg-[var(--surface)] text-[var(--ink)] border-[var(--border)] hover:bg-[var(--surface-2)]",
   ghost:
@@ -33,7 +33,7 @@ export function Button({
 }) {
   return (
     <button
-      className={`inline-flex items-center justify-center gap-2 rounded-md border font-medium transition disabled:opacity-50 disabled:pointer-events-none ${variantClass[variant]} ${sizeClass[size]} ${className}`}
+      className={`inline-flex items-center justify-center gap-2 rounded-lg border font-medium transition disabled:opacity-50 disabled:pointer-events-none ${variantClass[variant]} ${sizeClass[size]} ${className}`}
       {...props}
     >
       {children}

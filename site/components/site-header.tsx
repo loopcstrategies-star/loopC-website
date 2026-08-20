@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useId, useRef, useState, useSyncExternalStore } from "react";
 import { createPortal } from "react-dom";
 import { Logo } from "@/components/logo";
-import { getExpertCta, getLoginNav, primaryNav } from "@/lib/navigation";
+import { getCtaNav, getLoginNav, primaryNav } from "@/lib/navigation";
 import { getWhatsAppUrl, siteConfig, whatsappPrefill } from "@/lib/site-config";
 
 function isActivePath(pathname: string, href: string) {
@@ -47,7 +47,7 @@ export function SiteHeader() {
   const panelId = useId();
   const closeRef = useRef<HTMLButtonElement>(null);
   const whatsapp = getWhatsAppUrl(whatsappPrefill);
-  const expertCta = getExpertCta();
+  const cta = getCtaNav();
   const login = getLoginNav();
   const mounted = useSyncExternalStore(
     () => () => {},
@@ -85,7 +85,7 @@ export function SiteHeader() {
       role="dialog"
       aria-modal="true"
       aria-label="Menu"
-      className="fixed inset-0 z-[100] flex h-dvh flex-col bg-[#050b16] text-white xl:hidden"
+      className="fixed inset-0 z-[100] flex h-dvh flex-col bg-[var(--dark)] text-white xl:hidden"
     >
       <div className="flex h-16 shrink-0 items-center justify-between border-b border-white/10 px-4">
         <Logo variant="footer" />
@@ -101,17 +101,23 @@ export function SiteHeader() {
           </svg>
         </button>
       </div>
-      <nav
-        className="flex min-h-0 flex-1 flex-col gap-1 overflow-y-auto px-4 py-6"
-        aria-label="Mobile"
-      >
+      <nav className="flex min-h-0 flex-1 flex-col gap-1 overflow-y-auto px-4 py-6" aria-label="Mobile">
+        <Link
+          href="/"
+          className={`rounded-xl px-4 py-3 text-lg ${
+            pathname === "/" ? "bg-white/10 font-semibold text-blue-300" : "font-medium text-slate-200"
+          }`}
+          onClick={() => setOpen(false)}
+        >
+          Home
+        </Link>
         {primaryNav.map(({ href, label }) => (
           <Link
             key={href}
             href={href}
             className={`rounded-xl px-4 py-3 text-lg ${
               isActivePath(pathname, href)
-                ? "bg-white/10 font-semibold text-teal-300"
+                ? "bg-white/10 font-semibold text-blue-300"
                 : "font-medium text-slate-200"
             }`}
             onClick={() => setOpen(false)}
@@ -120,16 +126,16 @@ export function SiteHeader() {
           </Link>
         ))}
         <NavAnchor
-          href={expertCta.href}
-          className="mt-4 rounded-full bg-gradient-to-r from-teal-600 to-teal-500 px-4 py-3.5 text-center text-sm font-semibold text-white"
+          href={cta.href}
+          className="btn-primary mt-4 rounded-xl bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)] px-4 py-3.5 text-center text-sm font-semibold text-white"
           onClick={() => setOpen(false)}
         >
-          {expertCta.label}
+          {cta.label}
         </NavAnchor>
         <NavAnchor
           href={login.href}
           external={login.external}
-          className="mt-2 rounded-full border border-white/20 px-4 py-3.5 text-center text-sm font-semibold text-white"
+          className="mt-2 rounded-xl border border-white/20 px-4 py-3.5 text-center text-sm font-semibold text-white"
           onClick={() => setOpen(false)}
         >
           {login.label}
@@ -139,7 +145,7 @@ export function SiteHeader() {
             href={whatsapp}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-2 rounded-full border border-teal-400/40 px-4 py-3.5 text-center text-sm font-semibold text-teal-200"
+            className="mt-2 rounded-xl border border-cyan-400/40 px-4 py-3.5 text-center text-sm font-semibold text-cyan-200"
             onClick={() => setOpen(false)}
           >
             WhatsApp
@@ -152,10 +158,10 @@ export function SiteHeader() {
 
   return (
     <header
-      className={`sticky top-0 z-50 border-b transition-[background-color,height,box-shadow] duration-300 ${
+      className={`sticky top-0 z-50 border-b transition-[background-color,height,box-shadow,backdrop-filter] duration-300 ${
         scrolled
-          ? "border-white/10 bg-slate-950/90 shadow-lg shadow-black/20 backdrop-blur-xl"
-          : "border-white/10 bg-[#050b16]/95 backdrop-blur-xl"
+          ? "border-white/10 bg-[var(--dark)]/85 shadow-lg shadow-blue-950/30 backdrop-blur-xl"
+          : "border-white/10 bg-[var(--dark)]/95 backdrop-blur-xl"
       }`}
     >
       <div
@@ -169,6 +175,17 @@ export function SiteHeader() {
             className="hidden items-center gap-3 text-[0.75rem] xl:flex xl:gap-4 2xl:gap-5"
             aria-label="Main"
           >
+            <Link
+              href="/"
+              data-active={pathname === "/" ? "true" : undefined}
+              className={`nav-link whitespace-nowrap ${
+                pathname === "/"
+                  ? "font-semibold text-blue-300"
+                  : "font-medium text-slate-300 transition-colors hover:text-white"
+              }`}
+            >
+              Home
+            </Link>
             {primaryNav.map(({ href, label }) => {
               const active = isActivePath(pathname, href);
               return (
@@ -178,7 +195,7 @@ export function SiteHeader() {
                   data-active={active ? "true" : undefined}
                   className={`nav-link whitespace-nowrap ${
                     active
-                      ? "font-semibold text-teal-300"
+                      ? "font-semibold text-blue-300"
                       : "font-medium text-slate-300 transition-colors hover:text-white"
                   }`}
                 >
@@ -188,15 +205,15 @@ export function SiteHeader() {
             })}
           </nav>
           <NavAnchor
-            href={expertCta.href}
-            className="btn-primary interactive-shine hidden items-center whitespace-nowrap rounded-full bg-gradient-to-r from-teal-600 to-teal-500 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-teal-700/20 xl:inline-flex"
+            href={cta.href}
+            className="btn-primary interactive-shine hidden items-center whitespace-nowrap rounded-xl bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)] px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-blue-600/25 xl:inline-flex"
           >
-            {expertCta.label}
+            {cta.label}
           </NavAnchor>
           <NavAnchor
             href={login.href}
             external={login.external}
-            className="hidden items-center whitespace-nowrap rounded-full border border-white/20 px-4 py-2 text-sm font-semibold text-white transition hover:border-white/40 hover:bg-white/5 xl:inline-flex"
+            className="hidden items-center whitespace-nowrap rounded-xl border border-white/20 px-4 py-2 text-sm font-semibold text-white transition hover:border-white/40 hover:bg-white/5 xl:inline-flex"
           >
             {login.label}
           </NavAnchor>

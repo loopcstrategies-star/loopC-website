@@ -11,10 +11,10 @@ export function Logo({ className = "", variant = "default" }: LogoProps) {
   const isFooter = variant === "footer";
   const loopColor = isFooter ? "text-white" : "text-slate-900";
   const subColor = isFooter ? "text-slate-400" : "text-slate-600";
-  /** Gradient “C”: mint → teal → blue (default); brighter on dark footer */
+  /** Gradient “C”: blue → violet (default); brighter on dark footer */
   const cGradient = isFooter
-    ? "bg-gradient-to-b from-teal-200 via-teal-300 to-sky-400"
-    : "bg-gradient-to-b from-emerald-300 via-teal-500 to-blue-600";
+    ? "bg-gradient-to-b from-blue-300 via-violet-300 to-cyan-300"
+    : "bg-gradient-to-b from-blue-500 via-violet-500 to-cyan-500";
 
   const brand = siteConfig.brand;
   const loopLetters = brand.length > 1 ? brand.slice(0, -1) : brand;
@@ -25,7 +25,7 @@ export function Logo({ className = "", variant = "default" }: LogoProps) {
       href="/"
       aria-label={siteConfig.name}
       title={siteConfig.name}
-      className={`group inline-flex flex-col items-start gap-0.5 py-1 font-sans transition hover:opacity-90 ${className}`}
+      className={`group inline-flex flex-col items-start gap-0.5 py-1 font-[family-name:var(--font-display)] transition hover:opacity-90 ${className}`}
     >
       <span className="flex items-baseline text-[1.35rem] font-bold leading-none tracking-tight sm:text-2xl">
         <span className={loopColor}>{loopLetters}</span>

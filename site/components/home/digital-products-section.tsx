@@ -5,6 +5,18 @@ import { motion, useReducedMotion } from "framer-motion";
 import { Container } from "@/components/ui/container";
 import { homeServices } from "@/lib/site-config";
 
+const accents = [
+  "from-blue-500/20 to-cyan-400/10",
+  "from-violet-500/20 to-pink-400/10",
+  "from-cyan-500/20 to-blue-400/10",
+  "from-teal-500/20 to-cyan-400/10",
+  "from-indigo-500/20 to-violet-400/10",
+  "from-blue-600/20 to-violet-500/10",
+  "from-pink-500/20 to-violet-400/10",
+  "from-cyan-600/20 to-teal-400/10",
+  "from-violet-600/20 to-blue-400/10",
+];
+
 const iconMap: Record<string, React.ReactNode> = {
   browser: (
     <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} aria-hidden>
@@ -53,6 +65,15 @@ const iconMap: Record<string, React.ReactNode> = {
   ),
 };
 
+const servicesWithSupport = [
+  ...homeServices.slice(0, 8),
+  {
+    title: "Support & Maintenance",
+    description: "Ongoing updates, monitoring and improvements so your products stay reliable.",
+    icon: "shield",
+  },
+];
+
 export function DigitalProductsSection() {
   const reduce = useReducedMotion();
 
@@ -60,31 +81,36 @@ export function DigitalProductsSection() {
     <section className="section-light py-20 sm:py-28">
       <Container>
         <div className="max-w-2xl">
-          <p className="type-label text-teal-600">What we build</p>
-          <h2 className="type-h2 mt-3 font-bold text-slate-950">Digital Products We Build</h2>
-          <p className="mt-4 text-slate-600 leading-relaxed">
-            From websites and mobile applications to complex business platforms — we design and
-            develop digital solutions built around your goals.
+          <p className="type-label text-[var(--primary)]">Services</p>
+          <h2 className="type-h2 mt-3 font-bold text-[var(--text)]">Digital Products We Build</h2>
+          <p className="mt-4 leading-relaxed text-[var(--muted)]">
+            Web, mobile, SaaS, ERP and automation — interactive product capabilities for modern
+            businesses.
           </p>
         </div>
 
         <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {homeServices.map((service, i) => (
+          {servicesWithSupport.map((service, i) => (
             <motion.div
               key={service.title}
               initial={reduce ? {} : { opacity: 0, y: 16 }}
               whileInView={reduce ? {} : { opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.08 }}
               transition={{ duration: 0.45, delay: i * 0.05, ease: [0.22, 1, 0.36, 1] }}
-              className="group relative flex flex-col rounded-2xl border border-slate-200/80 bg-white p-5 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:border-teal-300/50 hover:shadow-md"
+              className="group relative flex flex-col overflow-hidden rounded-2xl border border-[var(--border)] bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:border-blue-300/50 hover:shadow-lg hover:shadow-blue-500/10"
             >
-              <div className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-teal-50 text-teal-700 transition-transform duration-200 group-hover:scale-110">
+              <div
+                className={`absolute inset-x-0 top-0 h-24 bg-gradient-to-br ${accents[i % accents.length]} opacity-70 transition-transform duration-300 group-hover:scale-105`}
+              />
+              <div className="relative inline-flex h-10 w-10 items-center justify-center rounded-xl bg-white text-[var(--primary)] shadow-sm transition-transform duration-300 group-hover:scale-110">
                 {iconMap[service.icon]}
               </div>
-              <h3 className="mt-4 font-semibold text-slate-950">{service.title}</h3>
-              <p className="mt-2 flex-1 text-sm leading-relaxed text-slate-600">{service.description}</p>
-              <div className="mt-4 flex items-center gap-1 text-sm font-semibold text-teal-700 opacity-0 transition-all duration-200 group-hover:translate-x-0.5 group-hover:opacity-100">
-                Learn more
+              <h3 className="relative mt-4 font-semibold text-[var(--text)]">{service.title}</h3>
+              <p className="relative mt-2 flex-1 text-sm leading-relaxed text-[var(--muted)]">
+                {service.description}
+              </p>
+              <div className="relative mt-4 flex items-center gap-1 text-sm font-semibold text-[var(--primary)] transition-transform duration-300 group-hover:translate-x-1">
+                Explore
                 <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5} aria-hidden>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
                 </svg>
@@ -96,7 +122,7 @@ export function DigitalProductsSection() {
         <div className="mt-10 text-center">
           <Link
             href="/services"
-            className="inline-flex items-center gap-1.5 text-sm font-semibold text-teal-700 hover:underline"
+            className="inline-flex items-center gap-1.5 text-sm font-semibold text-[var(--primary)] hover:underline"
           >
             View all services
             <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden>

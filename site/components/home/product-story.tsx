@@ -24,7 +24,7 @@ export function ProductStory() {
                 key={step}
                 className="flex w-36 flex-col rounded-2xl border border-slate-200 bg-[#f4f6fa] p-4 sm:w-auto"
               >
-                <span className="text-[11px] font-semibold text-teal-700">
+                <span className="text-[11px] font-semibold text-[var(--primary)]">
                   {String(index + 1).padStart(2, "0")}
                 </span>
                 <span className="mt-2 text-sm font-semibold text-slate-900">{step}</span>

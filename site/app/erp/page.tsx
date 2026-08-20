@@ -51,7 +51,7 @@ function ErpDashboardMock() {
       </div>
       <div className="mt-3 grid gap-2 sm:grid-cols-2">
         <div className="rounded-lg bg-white/5 p-3">
-          <p className="text-[10px] font-semibold uppercase tracking-wider text-teal-300">Recent sales</p>
+          <p className="text-[10px] font-semibold uppercase tracking-wider text-blue-300">Recent sales</p>
           <div className="mt-2 space-y-1.5">
             {["INV-1042 · Acme Traders", "INV-1041 · Metro Supplies", "INV-1040 · Green Foods"].map((row) => (
               <div key={row} className="rounded border border-white/5 px-2 py-1.5 text-[11px] text-slate-300">
@@ -61,12 +61,12 @@ function ErpDashboardMock() {
           </div>
         </div>
         <div className="rounded-lg bg-white/5 p-3">
-          <p className="text-[10px] font-semibold uppercase tracking-wider text-teal-300">Inventory</p>
+          <p className="text-[10px] font-semibold uppercase tracking-wider text-blue-300">Inventory</p>
           <div className="mt-3 flex h-16 items-end gap-1">
             {[55, 72, 48, 85, 60, 90].map((h, i) => (
               <span
                 key={i}
-                className="w-full origin-bottom rounded-sm bg-teal-400/60"
+                className="w-full origin-bottom rounded-sm bg-blue-400/60"
                 style={{ height: `${h}%` }}
               />
             ))}
@@ -118,7 +118,7 @@ export default async function ErpPage() {
         <div className="pointer-events-none absolute inset-0 opacity-20" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px)", backgroundSize: "48px 48px" }} />
         <Container className="relative grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
           <FadeIn>
-            <p className="type-label text-teal-300">What&apos;s included</p>
+            <p className="type-label text-blue-300">What&apos;s included</p>
             <h2 className="type-h2 mt-3 font-bold text-white">
               Everything your business needs, connected.
             </h2>
@@ -132,7 +132,7 @@ export default async function ErpPage() {
                   key={mod}
                   className="flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2.5 text-sm text-slate-200"
                 >
-                  <span className="h-1.5 w-1.5 rounded-full bg-teal-400 shrink-0" aria-hidden />
+                  <span className="h-1.5 w-1.5 rounded-full bg-blue-400 shrink-0" aria-hidden />
                   {mod}
                 </li>
               ))}
@@ -140,7 +140,7 @@ export default async function ErpPage() {
             <div className="mt-8 flex flex-wrap gap-3">
               <Link
                 href="/pricing"
-                className="inline-flex rounded-full bg-teal-500 px-5 py-2.5 text-sm font-semibold text-slate-950 transition hover:bg-teal-400"
+                className="inline-flex rounded-full bg-blue-500 px-5 py-2.5 text-sm font-semibold text-slate-950 transition hover:bg-blue-400"
               >
                 View Pricing
               </Link>
@@ -165,7 +165,7 @@ export default async function ErpPage() {
       <section className="bg-white py-20 sm:py-24">
         <Container>
           <FadeIn>
-            <p className="type-label text-teal-600">ERP modules</p>
+            <p className="type-label text-[var(--primary)]">ERP modules</p>
             <h2 className="type-h2 mt-3 max-w-xl font-bold text-slate-950">
               Start with what you need. Expand when you are ready.
             </h2>
@@ -184,7 +184,7 @@ export default async function ErpPage() {
           </ul>
           <p className="mt-6 text-center text-sm text-slate-500">
             Module availability depends on your plan.{" "}
-            <Link href="/pricing" className="font-semibold text-teal-700 hover:underline">
+            <Link href="/pricing" className="font-semibold text-[var(--primary)] hover:underline">
               Compare pricing
             </Link>
           </p>
@@ -196,7 +196,7 @@ export default async function ErpPage() {
         <section className="section-light py-20 sm:py-24">
           <Container>
             <FadeIn>
-              <p className="type-label text-teal-600">Frequently asked</p>
+              <p className="type-label text-[var(--primary)]">Frequently asked</p>
               <h2 className="type-h2 mt-3 max-w-xl font-bold text-slate-950">
                 Questions about LoopC ERP
               </h2>
@@ -228,7 +228,7 @@ export default async function ErpPage() {
             <div className="mt-8 flex flex-wrap justify-center gap-4">
               <Link
                 href="/pricing"
-                className="inline-flex rounded-full bg-teal-500 px-6 py-3 text-sm font-semibold text-slate-950 transition hover:bg-teal-400"
+                className="inline-flex rounded-full bg-blue-500 px-6 py-3 text-sm font-semibold text-slate-950 transition hover:bg-blue-400"
               >
                 View Pricing
               </Link>

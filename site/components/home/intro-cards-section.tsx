@@ -5,11 +5,12 @@ import { Container } from "@/components/ui/container";
 
 const cards = [
   {
-    id: "understand",
+    id: "discover",
     label: "01",
-    title: "Understand",
-    description:
-      "We learn how your business works — the workflows, the teams, the data and the goals — before a single line of code is written.",
+    title: "Discover",
+    description: "Understand business goals and requirements.",
+    accent: "from-blue-500 to-cyan-400",
+    iconBg: "bg-blue-50 text-blue-600",
     icon: (
       <svg className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} aria-hidden>
         <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.964-7.178z" />
@@ -18,26 +19,28 @@ const cards = [
     ),
   },
   {
-    id: "build",
+    id: "design",
     label: "02",
-    title: "Build",
-    description:
-      "We design and develop modern digital products — web applications, mobile apps, ERP systems and custom software — built around your exact requirements.",
+    title: "Design",
+    description: "Create intuitive user experiences and scalable product architecture.",
+    accent: "from-violet-500 to-pink-400",
+    iconBg: "bg-violet-50 text-violet-600",
     icon: (
       <svg className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} aria-hidden>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.62m-5.043-.025a15.994 15.994 0 011.622-3.395m3.42 3.42a15.995 15.995 0 004.764-4.648l3.876-5.814a1.151 1.151 0 00-1.597-1.597L14.146 6.32a15.996 15.996 0 00-4.649 4.763m3.42 3.42a6.776 6.776 0 00-3.42-3.42" />
       </svg>
     ),
   },
   {
-    id: "grow",
+    id: "build",
     label: "03",
-    title: "Grow",
-    description:
-      "We support your product after launch — monitoring, updates, new features and improvements — as your business scales and evolves.",
+    title: "Build",
+    description: "Develop reliable, high-performance digital products.",
+    accent: "from-teal-500 to-cyan-400",
+    iconBg: "bg-blue-50 text-[var(--primary)]",
     icon: (
       <svg className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} aria-hidden>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" />
       </svg>
     ),
   },
@@ -50,14 +53,13 @@ export function IntroCardsSection() {
     <section className="bg-white py-20 sm:py-28">
       <Container>
         <div className="max-w-2xl">
-          <p className="type-label text-teal-600">Our approach</p>
-          <h2 className="type-h2 mt-3 font-bold text-slate-950">
-            Technology Built Around Your Business
+          <p className="type-label text-[var(--primary)]">What we do</p>
+          <h2 className="type-h2 mt-3 font-bold text-[var(--text)]">
+            Technology That Turns Ideas Into Products
           </h2>
-          <p className="mt-4 text-slate-600 leading-relaxed">
-            Every business works differently. We create digital solutions around your workflows, your
-            teams and your goals — helping you replace disconnected tools and manual processes with
-            technology that works for your business.
+          <p className="mt-4 leading-relaxed text-[var(--muted)]">
+            From discovery to launch, we partner with businesses to design and ship software that
+            fits how they actually work.
           </p>
         </div>
 
@@ -69,17 +71,22 @@ export function IntroCardsSection() {
               whileInView={reduce ? {} : { opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.1 }}
               transition={{ duration: 0.5, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
-              className="group relative flex flex-col rounded-2xl border border-slate-200 bg-[#f8faf9] p-6 transition-all duration-200 hover:-translate-y-1 hover:border-teal-300/60 hover:shadow-lg hover:shadow-teal-50"
+              className="group relative flex flex-col overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--background)] p-6 transition-all duration-300 hover:-translate-y-1.5 hover:border-blue-300/60 hover:shadow-xl hover:shadow-blue-500/10"
             >
-              <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-teal-50 text-teal-700 transition-transform duration-200 group-hover:scale-110">
+              <div
+                className={`pointer-events-none absolute -right-8 -top-8 h-28 w-28 rounded-full bg-gradient-to-br ${card.accent} opacity-0 blur-2xl transition-opacity duration-300 group-hover:opacity-30`}
+              />
+              <div
+                className={`inline-flex h-12 w-12 items-center justify-center rounded-xl ${card.iconBg} transition-transform duration-300 group-hover:rotate-6 group-hover:scale-110`}
+              >
                 {card.icon}
               </div>
-              <p className="mt-4 text-xs font-bold tracking-widest text-teal-600">{card.label}</p>
-              <h3 className="mt-1 text-xl font-bold text-slate-950">{card.title}</h3>
-              <p className="mt-3 flex-1 text-sm leading-relaxed text-slate-600">{card.description}</p>
-              <div className="mt-4 flex items-center gap-1 text-sm font-semibold text-teal-700 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+              <p className="mt-4 text-xs font-bold tracking-widest text-[var(--primary)]">{card.label}</p>
+              <h3 className="mt-1 text-xl font-bold text-[var(--text)]">{card.title}</h3>
+              <p className="mt-3 flex-1 text-sm leading-relaxed text-[var(--muted)]">{card.description}</p>
+              <div className="mt-4 flex items-center gap-1 text-sm font-semibold text-[var(--primary)] opacity-0 transition-all duration-300 group-hover:translate-x-1 group-hover:opacity-100">
                 Learn more
-                <svg className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden>
+                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
                 </svg>
               </div>

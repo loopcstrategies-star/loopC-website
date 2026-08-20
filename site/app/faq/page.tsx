@@ -67,7 +67,7 @@ export default async function FaqPage() {
             <summary className="cursor-pointer list-none font-semibold text-slate-950 marker:content-none">
               <span className="flex items-center justify-between gap-4">
                 {item.question}
-                <span className="text-teal-700 transition group-open:rotate-45">+</span>
+                <span className="text-[var(--primary)] transition group-open:rotate-45">+</span>
               </span>
             </summary>
             <p className="mt-3 leading-relaxed text-slate-600">{item.answer}</p>

@@ -37,7 +37,7 @@ export default function IndustriesPage() {
           >
             <h2 className="text-xl font-semibold text-slate-950">{industry.title}</h2>
             <p className="mt-2 text-slate-600">{industry.summary}</p>
-            <p className="mt-4 text-sm font-semibold text-teal-700">View industry</p>
+            <p className="mt-4 text-sm font-semibold text-[var(--primary)]">View industry</p>
           </Link>
         ))}
       </Container>

@@ -85,14 +85,14 @@ export default function PrivacyPage() {
           <h2 className="type-h3 font-semibold text-slate-950">How to reach us</h2>
           <p className="mt-3">
             Use the{" "}
-            <Link href="/contact" className="font-medium text-teal-700 hover:underline">
+            <Link href="/contact" className="font-medium text-[var(--primary)] hover:underline">
               contact form
             </Link>
             {email ? (
               <>
                 {" "}
                 or email{" "}
-                <a href={`mailto:${email}`} className="font-medium text-teal-700 hover:underline">
+                <a href={`mailto:${email}`} className="font-medium text-[var(--primary)] hover:underline">
                   {email}
                 </a>
               </>

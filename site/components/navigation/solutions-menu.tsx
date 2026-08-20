@@ -41,7 +41,7 @@ export function SolutionsMenu({ onNavigate }: { onNavigate?: () => void }) {
         type="button"
         className={`nav-link inline-flex items-center gap-1 whitespace-nowrap ${
           active
-            ? "font-semibold text-teal-300"
+            ? "font-semibold text-blue-300"
             : "font-medium text-slate-300 transition-colors hover:text-white"
         }`}
         aria-expanded={open}
@@ -86,7 +86,7 @@ export function SolutionsMenu({ onNavigate }: { onNavigate?: () => void }) {
           <Link
             href="/solutions"
             role="menuitem"
-            className="mt-1 block rounded-lg border-t border-white/10 px-3 py-2.5 text-xs font-semibold text-teal-300 transition hover:bg-white/5"
+            className="mt-1 block rounded-lg border-t border-white/10 px-3 py-2.5 text-xs font-semibold text-blue-300 transition hover:bg-white/5"
             onClick={() => {
               setOpen(false);
               onNavigate?.();
@@ -136,7 +136,7 @@ export function MobileSolutionsGroup({ onNavigate }: { onNavigate?: () => void }
           ))}
           <Link
             href="/solutions"
-            className="block rounded-lg px-3 py-2.5 text-sm font-semibold text-teal-300 hover:bg-white/5"
+            className="block rounded-lg px-3 py-2.5 text-sm font-semibold text-blue-300 hover:bg-white/5"
             onClick={onNavigate}
           >
             View all solutions

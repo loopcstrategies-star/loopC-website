@@ -62,7 +62,7 @@ export default function AboutPage() {
       <section className="bg-white py-20 sm:py-24">
         <Container className="grid gap-12 lg:grid-cols-2 lg:gap-20">
           <FadeIn>
-            <p className="type-label text-teal-600">Our story</p>
+            <p className="type-label text-[var(--primary)]">Our story</p>
             <h2 className="type-h2 mt-3 font-bold text-slate-950">
               From Business Problems to Digital Solutions
             </h2>
@@ -91,7 +91,7 @@ export default function AboutPage() {
       <section className="section-light py-20 sm:py-24">
         <Container>
           <FadeIn>
-            <p className="type-label text-teal-600">Our approach</p>
+            <p className="type-label text-[var(--primary)]">Our approach</p>
             <h2 className="type-h2 mt-3 max-w-xl font-bold text-slate-950">
               How we work with you
             </h2>
@@ -102,8 +102,8 @@ export default function AboutPage() {
           <ol className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {deliveryProcess.map((step, i) => (
               <FadeIn key={step.id} delay={i * 0.06}>
-                <li className="group flex flex-col rounded-2xl border border-slate-200/80 bg-white p-5 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:border-teal-300/60 hover:shadow-md">
-                  <p className="text-3xl font-bold text-teal-100">{step.num}</p>
+                <li className="group flex flex-col rounded-2xl border border-slate-200/80 bg-white p-5 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:border-blue-300/60 hover:shadow-md">
+                  <p className="text-3xl font-bold text-blue-100">{step.num}</p>
                   <p className="mt-2 font-semibold text-slate-950">{step.title}</p>
                   <p className="mt-2 text-sm leading-relaxed text-slate-600">{step.summary}</p>
                 </li>
@@ -117,7 +117,7 @@ export default function AboutPage() {
       <section className="bg-white py-20 sm:py-24">
         <Container>
           <FadeIn>
-            <p className="type-label text-teal-600">What we stand for</p>
+            <p className="type-label text-[var(--primary)]">What we stand for</p>
             <h2 className="type-h2 mt-3 max-w-xl font-bold text-slate-950">
               Principles that guide everything we build
             </h2>
@@ -125,8 +125,8 @@ export default function AboutPage() {
           <ul className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {values.map((value, i) => (
               <FadeIn key={value.title} delay={i * 0.07}>
-                <li className="group flex flex-col rounded-2xl border border-slate-200/80 bg-[#f8faf9] p-6 transition-all duration-200 hover:-translate-y-1 hover:border-teal-300/60 hover:shadow-md">
-                  <span className="text-2xl text-teal-600" aria-hidden>{value.icon}</span>
+                <li className="group flex flex-col rounded-2xl border border-slate-200/80 bg-[#f8faf9] p-6 transition-all duration-200 hover:-translate-y-1 hover:border-blue-300/60 hover:shadow-md">
+                  <span className="text-2xl text-[var(--primary)]" aria-hidden>{value.icon}</span>
                   <p className="mt-3 font-bold text-slate-950">{value.title}</p>
                   <p className="mt-2 text-sm leading-relaxed text-slate-600">{value.copy}</p>
                 </li>
@@ -147,7 +147,7 @@ export default function AboutPage() {
             <div className="mt-8 flex flex-wrap justify-center gap-4">
               <Link
                 href="/contact"
-                className="inline-flex rounded-full bg-teal-500 px-6 py-3 text-sm font-semibold text-slate-950 transition hover:bg-teal-400"
+                className="btn-primary inline-flex rounded-xl bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)] px-6 py-3 text-sm font-semibold text-white transition hover:brightness-105"
               >
                 Start a Project
               </Link>

@@ -125,7 +125,7 @@ function PhoneFrame({
     >
       <div className="rounded-[1.2rem] bg-[#071018] p-3">
         <div className="mx-auto mb-3 h-1.5 w-10 rounded-full bg-white/20" />
-        <p className="text-[10px] font-semibold text-teal-300">Product UI concept</p>
+        <p className="text-[10px] font-semibold text-blue-300">Product UI concept</p>
         <p className="mt-1 text-sm font-semibold text-white">{title}</p>
         <div className="mt-3 space-y-2">
           {rows.map((row) => (
@@ -172,7 +172,7 @@ function DashboardMock() {
     <div className="rounded-3xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <p className="text-sm font-semibold text-slate-900">Operations overview</p>
-        <p className="text-[11px] font-semibold uppercase tracking-wider text-teal-700">
+        <p className="text-[11px] font-semibold uppercase tracking-wider text-[var(--primary)]">
           Product UI concept
         </p>
       </div>
@@ -194,7 +194,7 @@ function DashboardMock() {
           {[40, 55, 38, 72, 60, 88, 70, 92, 64, 80].map((h, i) => (
             <span
               key={i}
-              className="w-full rounded-sm bg-teal-500/70"
+              className="w-full rounded-sm bg-blue-500/70"
               style={{ height: `${h}%` }}
             />
           ))}

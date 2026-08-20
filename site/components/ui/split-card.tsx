@@ -28,7 +28,7 @@ export function SplitCard({
           : "border-slate-200/80 bg-white text-slate-950 shadow-sm"
       }`}
     >
-      <p className={`type-label ${isDark ? "text-teal-300" : "text-teal-600"}`}>{eyebrow}</p>
+      <p className={`type-label ${isDark ? "text-blue-300" : "text-[var(--primary)]"}`}>{eyebrow}</p>
       <h3 className="type-h3 mt-3 font-semibold">{title}</h3>
       <p className={`mt-3 flex-1 text-sm leading-relaxed ${isDark ? "text-slate-300" : "text-slate-600"}`}>
         {description}
@@ -36,7 +36,7 @@ export function SplitCard({
       <ul className={`mt-5 space-y-2 text-sm ${isDark ? "text-slate-300" : "text-slate-600"}`}>
         {points.map((point) => (
           <li key={point} className="flex gap-2">
-            <span className={isDark ? "text-teal-400" : "text-teal-600"} aria-hidden>
+            <span className={isDark ? "text-teal-400" : "text-[var(--primary)]"} aria-hidden>
               —
             </span>
             <span>{point}</span>
@@ -68,14 +68,14 @@ export function PremiumCard({
   const body = (
     <>
       {icon ? (
-        <div className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-teal-50 text-teal-700">
+        <div className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-blue-50 text-[var(--primary)]">
           {icon}
         </div>
       ) : null}
       <h3 className="type-h3 mt-4 font-semibold text-slate-950">{title}</h3>
       <p className="mt-2 text-sm leading-relaxed text-slate-600">{description}</p>
       {href && linkLabel ? (
-        <span className="mt-4 inline-block text-sm font-semibold text-teal-700">{linkLabel}</span>
+        <span className="mt-4 inline-block text-sm font-semibold text-[var(--primary)]">{linkLabel}</span>
       ) : null}
     </>
   );

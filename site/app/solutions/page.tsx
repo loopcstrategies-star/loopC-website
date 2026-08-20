@@ -48,7 +48,7 @@ export default function SolutionsPage() {
                   <li key={point}>— {point}</li>
                 ))}
               </ul>
-              <Link href={solution.href} className="mt-5 inline-block text-sm font-semibold text-teal-700">
+              <Link href={solution.href} className="mt-5 inline-block text-sm font-semibold text-[var(--primary)]">
                 Explore {solution.title} →
               </Link>
             </article>

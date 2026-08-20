@@ -11,7 +11,7 @@ export default function NotFound() {
         <div className="mt-2 h-2 w-full rounded bg-white/10" />
       </div>
       <div className="relative mx-auto max-w-xl text-center">
-        <p className="type-label text-teal-300">404</p>
+        <p className="type-label text-blue-300">404</p>
         <h1 className="type-h1 mt-4 font-bold text-white">Looks like this page went offline.</h1>
         <p className="mt-4 text-slate-300">
           The interface you asked for is not on this site. {siteConfig.brand} is still here —

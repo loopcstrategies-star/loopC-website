@@ -37,7 +37,7 @@ export default function InsightsPage() {
             href={`/insights/${post.slug}`}
             className="lift-card rounded-2xl border border-slate-200 bg-white p-6"
           >
-            <p className="text-xs font-semibold uppercase tracking-wider text-teal-700">
+            <p className="text-xs font-semibold uppercase tracking-wider text-[var(--primary)]">
               {post.category}
             </p>
             <h2 className="mt-2 text-xl font-semibold text-slate-950">{post.title}</h2>

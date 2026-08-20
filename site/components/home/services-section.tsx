@@ -34,7 +34,7 @@ export function ServicesSection({ services: cmsServices }: { services?: unknown 
         </div>
 
         <p className="mt-10 text-center">
-          <Link href="/services" className="text-sm font-semibold text-teal-700 hover:underline">
+          <Link href="/services" className="text-sm font-semibold text-[var(--primary)] hover:underline">
             View full services catalogue →
           </Link>
         </p>

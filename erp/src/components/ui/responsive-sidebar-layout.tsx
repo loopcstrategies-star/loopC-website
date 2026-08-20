@@ -8,14 +8,17 @@ export function ResponsiveSidebarLayout({
   title,
   headerActions,
   children,
+  variant = "default",
 }: {
   sidebar: ReactNode;
   title?: ReactNode;
   headerActions?: ReactNode;
   children: ReactNode;
+  variant?: "default" | "admin";
 }) {
   usePathname();
   const [open, setOpen] = useState(false);
+  const isAdmin = variant === "admin";
 
   useEffect(() => {
     if (!open) return;
@@ -41,12 +44,16 @@ export function ResponsiveSidebarLayout({
         <>
           <button
             type="button"
-            className="fixed inset-0 z-40 bg-black/40 lg:hidden"
+            className="fixed inset-0 z-40 bg-black/40 transition-opacity lg:hidden"
             aria-label="Close menu"
             onClick={() => setOpen(false)}
           />
-          <div className="fixed inset-y-0 left-0 z-50 flex h-dvh w-[min(100%,18rem)] max-w-[85vw] shadow-xl lg:hidden">
-            <div className="flex h-full w-full min-h-0 flex-col overflow-y-auto overscroll-contain bg-[var(--surface)]">
+          <div className="fixed inset-y-0 left-0 z-50 flex h-dvh w-[min(100%,18rem)] max-w-[85vw] shadow-2xl transition-transform lg:hidden">
+            <div
+              className={`flex h-full w-full min-h-0 flex-col overflow-y-auto overscroll-contain ${
+                isAdmin ? "bg-[var(--navy,#0b1020)]" : "bg-[var(--surface)]"
+              }`}
+            >
               {sidebar}
             </div>
           </div>
@@ -54,11 +61,11 @@ export function ResponsiveSidebarLayout({
       ) : null}
 
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="flex h-14 shrink-0 items-center justify-between gap-3 border-b border-[var(--border)] bg-[var(--surface)] px-4 md:px-6">
+        <header className="flex h-14 shrink-0 items-center justify-between gap-3 border-b border-[var(--border)] bg-[var(--surface)]/90 px-4 backdrop-blur md:px-6">
           <div className="flex min-w-0 flex-1 items-center gap-3">
             <button
               type="button"
-              className="inline-flex shrink-0 rounded-md border border-[var(--border)] bg-[var(--surface)] p-2 text-[var(--ink)] hover:bg-[var(--surface-2)] lg:hidden"
+              className="inline-flex shrink-0 rounded-lg border border-[var(--border)] bg-[var(--surface)] p-2 text-[var(--ink)] hover:bg-[var(--surface-2)] lg:hidden"
               aria-expanded={open}
               aria-label={open ? "Close menu" : "Open menu"}
               onClick={() => setOpen((value) => !value)}
@@ -74,7 +81,9 @@ export function ResponsiveSidebarLayout({
               )}
             </button>
             {title ? (
-              <div className="min-w-0 truncate text-sm text-[var(--muted)]">{title}</div>
+              <div className="min-w-0 truncate font-[family-name:var(--font-display)] text-sm font-semibold text-[var(--ink)]">
+                {title}
+              </div>
             ) : null}
           </div>
           {headerActions ? (

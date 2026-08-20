@@ -19,15 +19,17 @@ function BarChart({
   title,
   rows,
   formatValue,
+  color = "var(--accent)",
 }: {
   title: string;
   rows: { label: string; value: number }[];
   formatValue?: (n: number) => string;
+  color?: string;
 }) {
   const max = Math.max(...rows.map((r) => r.value), 1);
   return (
-    <Card className="p-4">
-      <h2 className="text-lg font-semibold">{title}</h2>
+    <Card className="rounded-2xl p-5">
+      <h2 className="text-lg font-semibold tracking-tight">{title}</h2>
       {rows.every((r) => r.value === 0) ? (
         <p className="mt-3 text-sm text-[var(--muted)]">No data yet.</p>
       ) : (
@@ -40,10 +42,13 @@ function BarChart({
                   {formatValue ? formatValue(row.value) : row.value.toLocaleString("en-IN")}
                 </span>
               </div>
-              <div className="mt-1 h-2 rounded-full bg-[var(--surface-2)]">
+              <div className="mt-1 h-2.5 rounded-full bg-[var(--surface-2)]">
                 <div
-                  className="h-full rounded-full bg-[var(--accent)]"
-                  style={{ width: `${Math.round((row.value / max) * 100)}%` }}
+                  className="h-full rounded-full transition-[width] duration-500"
+                  style={{
+                    width: `${Math.round((row.value / max) * 100)}%`,
+                    background: color,
+                  }}
                 />
               </div>
             </div>
@@ -169,41 +174,104 @@ export default async function AdminDashboardPage() {
     }
   }
 
+  const highlightCards = [
+    {
+      label: "Monthly Revenue",
+      value: formatInr(monthlyRevenue),
+      tone: "admin-kpi-blue",
+      bar: "#2563eb",
+    },
+    {
+      label: "Active Subscriptions",
+      value: String(activeSubscriptions),
+      tone: "admin-kpi-violet",
+      bar: "#7c3aed",
+    },
+    {
+      label: "Customers",
+      value: String(companies),
+      tone: "admin-kpi-teal",
+      bar: "#14b8a6",
+    },
+    {
+      label: "New Enquiries",
+      value: String(contactNew),
+      tone: "admin-kpi-orange",
+      bar: "#f59e0b",
+    },
+    {
+      label: "Yearly Revenue (ARR est.)",
+      value: formatInr(arrPaise),
+      tone: "admin-kpi-blue",
+      bar: "#2563eb",
+    },
+    {
+      label: "Failed Payments (30d)",
+      value: String(failedPayments),
+      tone: "admin-kpi-orange",
+      bar: "#ef4444",
+    },
+  ];
+
   const cards = [
     { label: "Customers (users)", value: String(users) },
-    { label: "Companies", value: String(companies) },
-    { label: "Active subscriptions", value: String(activeSubscriptions) },
     { label: "Trial accounts", value: String(trialAccounts) },
     { label: "Past due", value: String(pastDue) },
     { label: "Cancelled", value: String(cancelled) },
     { label: "MRR (estimate)", value: formatInr(mrrPaise) },
-    { label: "ARR (estimate)", value: formatInr(arrPaise) },
-    { label: "Revenue this month", value: formatInr(monthlyRevenue) },
     { label: "New companies (30d)", value: String(newCustomers) },
-    { label: "Failed payments (30d)", value: String(failedPayments) },
     { label: "Website enquiries", value: String(contactSubmissions) },
-    { label: "New contact leads", value: String(contactNew) },
     { label: "Published blog posts", value: String(publishedBlogs) },
   ];
 
   const planDistribution = [...planCounts.entries()].sort((a, b) => b[1] - a[1]);
   const planTotal = planDistribution.reduce((s, [, n]) => s + n, 0) || 1;
+  const planColors = ["#2563eb", "#7c3aed", "#14b8a6", "#06b6d4", "#8b5cf6"];
 
   return (
     <div className="space-y-8">
-      <h1 className="text-2xl font-semibold tracking-tight">Admin dashboard</h1>
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
-        {cards.map((c) => (
-          <Card key={c.label}>
-            <p className="text-sm text-[var(--muted)]">{c.label}</p>
-            <p className="mt-2 text-3xl font-semibold">{c.value}</p>
+      <div>
+        <h1 className="text-2xl font-semibold tracking-tight">Admin dashboard</h1>
+        <p className="mt-1 text-sm text-[var(--muted)]">
+          Sales, subscriptions and website operations at a glance.
+        </p>
+      </div>
+
+      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+        {highlightCards.map((c) => (
+          <Card key={c.label} className={`rounded-2xl ${c.tone}`}>
+            <div className="flex items-start justify-between gap-3">
+              <div>
+                <p className="text-sm text-[var(--muted)]">{c.label}</p>
+                <p className="mt-2 text-3xl font-semibold tracking-tight" style={{ color: "var(--kpi, var(--ink))" }}>
+                  {c.value}
+                </p>
+              </div>
+              <span
+                className="mt-1 h-2.5 w-2.5 rounded-full"
+                style={{ background: c.bar }}
+                aria-hidden
+              />
+            </div>
           </Card>
         ))}
+      </div>
+
+      <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)]">
+        <div className="grid gap-px bg-[var(--border)] sm:grid-cols-2 xl:grid-cols-4">
+          {cards.map((c) => (
+            <div key={c.label} className="bg-[var(--surface)] p-4 transition hover:bg-[var(--surface-2)]">
+              <p className="text-xs text-[var(--muted)]">{c.label}</p>
+              <p className="mt-1 text-xl font-semibold">{c.value}</p>
+            </div>
+          ))}
+        </div>
       </div>
 
       <div className="grid gap-4 lg:grid-cols-2">
         <BarChart
           title="Monthly revenue (last 6 months)"
+          color="#2563eb"
           rows={monthKeys.map((k) => ({
             label: monthLabel(k),
             value: revenueByMonth.get(k) ?? 0,
@@ -212,6 +280,7 @@ export default async function AdminDashboardPage() {
         />
         <BarChart
           title="Subscription growth (new ACTIVE/TRIAL)"
+          color="#7c3aed"
           rows={monthKeys.map((k) => ({
             label: monthLabel(k),
             value: subsByMonth.get(k) ?? 0,
@@ -219,18 +288,19 @@ export default async function AdminDashboardPage() {
         />
         <BarChart
           title="Customer growth (new companies)"
+          color="#14b8a6"
           rows={monthKeys.map((k) => ({
             label: monthLabel(k),
             value: customersByMonth.get(k) ?? 0,
           }))}
         />
-        <Card className="p-4">
+        <Card className="rounded-2xl p-5">
           <h2 className="text-lg font-semibold">Plan distribution (active)</h2>
           {planDistribution.length === 0 ? (
             <p className="mt-3 text-sm text-[var(--muted)]">No active subscriptions yet.</p>
           ) : (
             <div className="mt-4 space-y-3">
-              {planDistribution.map(([name, count]) => {
+              {planDistribution.map(([name, count], i) => {
                 const pct = Math.round((count / planTotal) * 100);
                 return (
                   <div key={name}>
@@ -240,10 +310,13 @@ export default async function AdminDashboardPage() {
                         {count} ({pct}%)
                       </span>
                     </div>
-                    <div className="mt-1 h-2 rounded-full bg-[var(--surface-2)]">
+                    <div className="mt-1 h-2.5 rounded-full bg-[var(--surface-2)]">
                       <div
-                        className="h-full rounded-full bg-[var(--accent)]"
-                        style={{ width: `${pct}%` }}
+                        className="h-full rounded-full"
+                        style={{
+                          width: `${pct}%`,
+                          background: planColors[i % planColors.length],
+                        }}
                       />
                     </div>
                   </div>

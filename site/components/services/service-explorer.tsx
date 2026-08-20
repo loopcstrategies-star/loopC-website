@@ -153,8 +153,8 @@ export function ServiceExplorer() {
             onClick={() => setActive(i)}
             className={`rounded-xl px-4 py-2.5 text-sm font-medium text-left transition-all duration-150 ${
               active === i
-                ? "bg-teal-600 text-white shadow-md"
-                : "bg-slate-100 text-slate-700 hover:bg-teal-50 hover:text-teal-800"
+                ? "bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)] text-white shadow-md"
+                : "bg-slate-100 text-slate-700 hover:bg-blue-50 hover:text-blue-800"
             }`}
           >
             {service.label}
@@ -178,18 +178,18 @@ export function ServiceExplorer() {
 
             <div className="mt-6 grid gap-6 sm:grid-cols-2">
               <div>
-                <p className="text-xs font-bold tracking-widest text-teal-600">What's included</p>
+                <p className="text-xs font-bold tracking-widest text-[var(--primary)]">What&apos;s included</p>
                 <ul className="mt-3 space-y-2">
                   {current.features.map((f) => (
                     <li key={f} className="flex items-start gap-2 text-sm text-slate-600">
-                      <span className="mt-0.5 shrink-0 text-teal-500" aria-hidden>—</span>
+                      <span className="mt-0.5 shrink-0 text-[var(--primary)]" aria-hidden>—</span>
                       {f}
                     </li>
                   ))}
                 </ul>
               </div>
               <div>
-                <p className="text-xs font-bold tracking-widest text-teal-600">Technologies</p>
+                <p className="text-xs font-bold tracking-widest text-[var(--primary)]">Technologies</p>
                 <div className="mt-3 flex flex-wrap gap-2">
                   {current.technologies.map((t) => (
                     <span
@@ -206,7 +206,7 @@ export function ServiceExplorer() {
             <div className="mt-6">
               <Link
                 href={current.cta.href}
-                className="inline-flex items-center gap-2 rounded-full bg-teal-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-teal-700"
+                className="btn-primary inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)] px-5 py-2.5 text-sm font-semibold text-white transition hover:brightness-105"
               >
                 {current.cta.label}
                 <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden>

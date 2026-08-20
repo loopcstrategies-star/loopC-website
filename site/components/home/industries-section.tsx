@@ -27,15 +27,15 @@ export function IndustriesSection() {
               <h3 className="font-semibold text-white">{industry.title}</h3>
               <dl className="mt-4 space-y-2 text-sm">
                 <div>
-                  <dt className="text-teal-300">Problem</dt>
+                  <dt className="text-blue-300">Problem</dt>
                   <dd className="text-slate-300">{industry.problem}</dd>
                 </div>
                 <div>
-                  <dt className="text-teal-300">Solution</dt>
+                  <dt className="text-blue-300">Solution</dt>
                   <dd className="text-slate-300">{industry.solution}</dd>
                 </div>
                 <div>
-                  <dt className="text-teal-300">Outcome</dt>
+                  <dt className="text-blue-300">Outcome</dt>
                   <dd className="text-slate-300">{industry.outcome}</dd>
                 </div>
               </dl>

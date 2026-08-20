@@ -34,7 +34,7 @@ export default function ServicesPage() {
       <section className="bg-white py-20 sm:py-24">
         <Container>
           <FadeIn>
-            <p className="type-label text-teal-600">Service explorer</p>
+            <p className="type-label text-[var(--primary)]">Service explorer</p>
             <h2 className="type-h2 mt-3 max-w-2xl font-bold text-slate-950">
               What would you like to build?
             </h2>
@@ -50,8 +50,8 @@ export default function ServicesPage() {
       <section className="section-light py-16 sm:py-20">
         <Container>
           <FadeIn>
-            <div className="rounded-3xl border border-teal-200/60 bg-teal-50/50 p-8 sm:p-10">
-              <p className="type-label text-teal-700">ERP product</p>
+            <div className="rounded-3xl border border-blue-200/60 bg-blue-50/50 p-8 sm:p-10">
+              <p className="type-label text-[var(--primary)]">ERP product</p>
               <h2 className="mt-3 text-2xl font-bold text-slate-950">
                 Looking for a complete business ERP?
               </h2>
@@ -68,7 +68,7 @@ export default function ServicesPage() {
                 </Link>
                 <Link
                   href="/pricing"
-                  className="inline-flex rounded-full border border-teal-300 bg-white px-5 py-2.5 text-sm font-semibold text-teal-800 transition hover:bg-teal-50"
+                  className="inline-flex rounded-full border border-blue-300 bg-white px-5 py-2.5 text-sm font-semibold text-blue-800 transition hover:bg-blue-50"
                 >
                   View Pricing
                 </Link>

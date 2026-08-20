@@ -33,9 +33,7 @@ export default async function ContactPage({
   const whatsapp = getWhatsAppUrl(whatsappPrefill);
 
   const heroTitle =
-    intent === "expert"
-      ? "Talk to an Expert."
-      : "Start a Project.";
+    intent === "expert" ? "Talk to an Expert." : "Let's Build Something Great.";
 
   const heroDescription =
     intent === "expert"
@@ -51,50 +49,58 @@ export default async function ContactPage({
         ])}
       />
       <PageHero eyebrow="Contact" title={heroTitle} description={heroDescription} dark />
-      <Container className="grid gap-12 py-16 lg:grid-cols-[1.1fr_0.9fr] sm:py-20">
-        <ContactForm
-          defaultService={mapServiceQuery(params.service)}
-          defaultIntent={intent}
-          turnstileSiteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? ""}
-        />
-        <aside className="h-fit rounded-2xl border border-slate-200 bg-white p-6">
-          <h2 className="font-semibold text-slate-950">{siteConfig.name}</h2>
-          <p className="mt-2 text-sm text-slate-600">{siteConfig.location.display}</p>
-          <div className="mt-5 space-y-2 text-sm">
-            {email ? (
-              <p>
-                <a href={`mailto:${email}`} className="text-teal-700 hover:underline">
-                  {email}
-                </a>
-              </p>
-            ) : null}
-            {phone && phoneTel ? (
-              <p>
-                <a href={`tel:${phoneTel}`} className="font-medium text-slate-900">
-                  {phone}
-                </a>
-              </p>
-            ) : null}
-            {whatsapp ? (
-              <p>
-                <a
-                  href={whatsapp}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-teal-700 hover:underline"
-                >
-                  WhatsApp
-                </a>
-              </p>
-            ) : null}
-            {!email && !phone && !whatsapp ? (
-              <p className="text-slate-600">
-                Use the form on this page. It is the fastest way to reach the team.
-              </p>
-            ) : null}
+      <section className="relative overflow-hidden">
+        <div className="pointer-events-none absolute -right-20 top-10 h-80 w-80 rounded-full bg-violet-400/20 blur-3xl" />
+        <div className="pointer-events-none absolute -left-16 bottom-0 h-72 w-72 rounded-full bg-blue-400/20 blur-3xl" />
+        <Container className="relative grid gap-12 py-16 lg:grid-cols-[1fr_1.1fr] sm:py-20">
+          <aside className="h-fit">
+            <h2 className="type-h3 font-bold text-[var(--text)]">Let&apos;s Build Something Great.</h2>
+            <p className="mt-3 text-sm leading-relaxed text-[var(--muted)]">
+              Tell us about your project. We respond with a clear next step — not a generic sales
+              pitch.
+            </p>
+            <div className="mt-8 rounded-2xl border border-[var(--border)] bg-white p-6 shadow-sm">
+              <h3 className="font-semibold text-[var(--text)]">{siteConfig.name}</h3>
+              <p className="mt-2 text-sm text-[var(--muted)]">{siteConfig.location.display}</p>
+              <div className="mt-5 space-y-2 text-sm">
+                {email ? (
+                  <p>
+                    <a href={`mailto:${email}`} className="text-[var(--primary)] hover:underline">
+                      {email}
+                    </a>
+                  </p>
+                ) : null}
+                {phone && phoneTel ? (
+                  <p>
+                    <a href={`tel:${phoneTel}`} className="font-medium text-[var(--text)]">
+                      {phone}
+                    </a>
+                  </p>
+                ) : null}
+                {whatsapp ? (
+                  <p>
+                    <a
+                      href={whatsapp}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-[var(--primary)] hover:underline"
+                    >
+                      WhatsApp
+                    </a>
+                  </p>
+                ) : null}
+              </div>
+            </div>
+          </aside>
+          <div className="relative rounded-3xl border border-[var(--border)] bg-white/90 p-6 shadow-xl shadow-blue-500/5 backdrop-blur sm:p-8">
+            <ContactForm
+              defaultService={mapServiceQuery(params.service)}
+              defaultIntent={intent}
+              turnstileSiteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? ""}
+            />
           </div>
-        </aside>
-      </Container>
+        </Container>
+      </section>
     </div>
   );
 }

@@ -7,16 +7,19 @@ type MagneticButtonProps = {
   href: string;
   children: React.ReactNode;
   className?: string;
-  variant?: "primary" | "secondary" | "light";
+  variant?: "primary" | "secondary" | "light" | "dark";
+  showArrow?: boolean;
 };
 
 const variants = {
   primary:
-    "btn-primary interactive-shine inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-teal-600 to-teal-500 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-teal-700/20",
+    "btn-primary interactive-shine inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)] px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-600/25",
   secondary:
-    "btn-secondary inline-flex items-center justify-center gap-2 rounded-full border border-white/20 bg-white/5 px-6 py-3 text-sm font-semibold text-white",
+    "btn-secondary inline-flex items-center justify-center gap-2 rounded-xl border border-[var(--border)] bg-white px-6 py-3 text-sm font-semibold text-[var(--text)] hover:border-blue-200 hover:bg-blue-50",
   light:
-    "btn-primary interactive-shine inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-teal-700 to-teal-600 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-teal-700/15",
+    "btn-primary interactive-shine inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)] px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-600/20",
+  dark:
+    "btn-secondary inline-flex items-center justify-center gap-2 rounded-xl border border-white/20 bg-white px-6 py-3 text-sm font-semibold text-[var(--navy)] hover:border-white/40 hover:bg-blue-50",
 };
 
 export function MagneticButton({
@@ -24,6 +27,7 @@ export function MagneticButton({
   children,
   className = "",
   variant = "primary",
+  showArrow = true,
 }: MagneticButtonProps) {
   const ref = useRef<HTMLAnchorElement>(null);
   const external = /^https?:\/\//i.test(href);
@@ -47,6 +51,17 @@ export function MagneticButton({
   const classNames = `${variants[variant]} ${className}`;
   const style = { transition: "transform 160ms ease-out" };
 
+  const content = (
+    <>
+      {children}
+      {showArrow ? (
+        <span className="btn-arrow" aria-hidden>
+          →
+        </span>
+      ) : null}
+    </>
+  );
+
   if (external) {
     return (
       <a
@@ -57,7 +72,7 @@ export function MagneticButton({
         onMouseLeave={onLeave}
         style={style}
       >
-        {children}
+        {content}
       </a>
     );
   }
@@ -71,7 +86,7 @@ export function MagneticButton({
       onMouseLeave={onLeave}
       style={style}
     >
-      {children}
+      {content}
     </Link>
   );
 }

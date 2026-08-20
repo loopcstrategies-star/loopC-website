@@ -105,7 +105,10 @@ export function ContactForm({
 
   if (status === "success") {
     return (
-      <p role="status" className="rounded-2xl border border-teal-200 bg-teal-50 p-6 text-slate-800">
+      <p
+        role="status"
+        className="animate-[fadeUp_0.5s_ease] rounded-2xl border border-blue-200 bg-gradient-to-br from-blue-50 to-violet-50 p-6 text-slate-800"
+      >
         Thank you. We have received your project details and will reply from LoopC.
       </p>
     );
@@ -230,7 +233,7 @@ export function ContactForm({
       <button
         type="submit"
         disabled={!canSubmit}
-        className="btn-primary inline-flex rounded-full bg-gradient-to-r from-teal-700 to-teal-600 px-6 py-3 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-60"
+        className="btn-primary inline-flex rounded-xl bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)] px-6 py-3 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-60"
       >
         {status === "submitting"
           ? "Sending…"
@@ -260,4 +263,4 @@ function Field({
 }
 
 const inputClass =
-  "w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-900 outline-none ring-teal-500/30 focus:border-teal-500 focus:ring-2";
+  "w-full rounded-xl border border-[var(--border)] bg-white px-3 py-2.5 text-sm text-slate-900 outline-none ring-blue-500/30 transition focus:border-[var(--primary)] focus:ring-2";

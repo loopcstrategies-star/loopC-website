@@ -98,14 +98,14 @@ async function main() {
       key: "hero",
       title: "Build Better. Operate Smarter. Grow Faster.",
       subtitle:
-        "We design and build powerful digital products for modern businesses — from custom web and mobile applications to scalable business software and complete ERP solutions.",
-      ctaLabel: "Explore Our ERP",
-      ctaHref: "/erp",
+        "We design and build powerful digital products for modern businesses — from web and mobile applications to scalable SaaS platforms and business software.",
+      ctaLabel: "Start a Project",
+      ctaHref: "/contact?service=custom-software",
       sortOrder: 1,
       contentJson: {
-        secondaryCtaLabel: "Start a Project",
-        secondaryCtaHref: "/contact",
-        pills: ["ERP", "Web apps", "Mobile apps", "Custom software", "Dashboards"],
+        secondaryCtaLabel: "Explore ERP",
+        secondaryCtaHref: "/erp",
+        pills: ["Web apps", "Mobile apps", "SaaS", "ERP", "Dashboards", "APIs"],
       },
     },
     {

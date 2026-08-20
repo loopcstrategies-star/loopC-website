@@ -27,9 +27,9 @@ export function PricingTable({ plans }: { plans: PricingPlan[] }) {
         <button
           type="button"
           onClick={() => setCycle("MONTHLY")}
-          className={`rounded-md px-4 py-2 text-sm font-medium ${
+          className={`rounded-lg px-4 py-2 text-sm font-medium transition ${
             cycle === "MONTHLY"
-              ? "bg-[var(--accent)] text-white"
+              ? "bg-gradient-to-r from-[var(--accent)] to-[var(--secondary)] text-white"
               : "bg-[var(--surface)] text-[var(--muted)] border border-[var(--border)]"
           }`}
         >
@@ -38,9 +38,9 @@ export function PricingTable({ plans }: { plans: PricingPlan[] }) {
         <button
           type="button"
           onClick={() => setCycle("YEARLY")}
-          className={`rounded-md px-4 py-2 text-sm font-medium ${
+          className={`rounded-lg px-4 py-2 text-sm font-medium transition ${
             cycle === "YEARLY"
-              ? "bg-[var(--accent)] text-white"
+              ? "bg-gradient-to-r from-[var(--accent)] to-[var(--secondary)] text-white"
               : "bg-[var(--surface)] text-[var(--muted)] border border-[var(--border)]"
           }`}
         >
@@ -59,7 +59,7 @@ export function PricingTable({ plans }: { plans: PricingPlan[] }) {
           return (
             <div
               key={plan.id}
-              className="flex flex-col rounded-lg border border-[var(--border)] bg-[var(--surface)] p-5 shadow-[var(--shadow-sm)]"
+              className="lift-card flex flex-col rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-[var(--shadow-sm)]"
             >
               <h3 className="text-xl font-semibold">{plan.name}</h3>
               <p className="mt-2 min-h-12 text-sm text-[var(--muted)]">

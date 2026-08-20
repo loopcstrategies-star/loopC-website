@@ -83,7 +83,7 @@ export default function TermsPage() {
           <h2 className="type-h3 font-semibold text-slate-950">Contact</h2>
           <p className="mt-3">
             Questions: the{" "}
-            <Link href="/contact" className="font-medium text-teal-700 hover:underline">
+            <Link href="/contact" className="font-medium text-[var(--primary)] hover:underline">
               contact form
             </Link>
             {email ? (

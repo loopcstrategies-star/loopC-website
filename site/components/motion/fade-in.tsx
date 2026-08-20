@@ -1,6 +1,29 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion, type Variants } from "framer-motion";
+
+export const fadeUp: Variants = {
+  hidden: { opacity: 0, y: 18 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
+  },
+};
+
+export const scaleIn: Variants = {
+  hidden: { opacity: 0, scale: 0.96 },
+  show: {
+    opacity: 1,
+    scale: 1,
+    transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] },
+  },
+};
+
+export const staggerChildren: Variants = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.08 } },
+};
 
 type FadeInProps = {
   children: React.ReactNode;
@@ -8,6 +31,7 @@ type FadeInProps = {
   delay?: number;
   y?: number;
   onMount?: boolean;
+  scale?: boolean;
 };
 
 export function FadeIn({
@@ -16,6 +40,7 @@ export function FadeIn({
   delay = 0,
   y = 18,
   onMount = false,
+  scale = false,
 }: FadeInProps) {
   const reduce = useReducedMotion();
 
@@ -24,13 +49,15 @@ export function FadeIn({
   }
 
   const transition = { duration: 0.5, delay, ease: [0.22, 1, 0.36, 1] as const };
+  const initial = scale ? { opacity: 0, scale: 0.96, y: y * 0.4 } : { opacity: 0, y };
+  const animate = scale ? { opacity: 1, scale: 1, y: 0 } : { opacity: 1, y: 0 };
 
   if (onMount) {
     return (
       <motion.div
         className={className}
-        initial={{ opacity: 0, y }}
-        animate={{ opacity: 1, y: 0 }}
+        initial={initial}
+        animate={animate}
         transition={transition}
       >
         {children}
@@ -41,8 +68,8 @@ export function FadeIn({
   return (
     <motion.div
       className={className}
-      initial={{ opacity: 0, y }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={initial}
+      whileInView={animate}
       viewport={{ once: true, margin: "0px 0px -32px 0px", amount: 0.05 }}
       transition={transition}
     >
@@ -68,10 +95,7 @@ export function Stagger({
       initial="hidden"
       whileInView="show"
       viewport={{ once: true, margin: "0px 0px -24px 0px", amount: 0.05 }}
-      variants={{
-        hidden: {},
-        show: { transition: { staggerChildren: 0.08 } },
-      }}
+      variants={staggerChildren}
     >
       {children}
     </motion.div>
@@ -81,26 +105,18 @@ export function Stagger({
 export function StaggerItem({
   children,
   className = "",
+  scale = false,
 }: {
   children: React.ReactNode;
   className?: string;
+  scale?: boolean;
 }) {
   const reduce = useReducedMotion();
   if (reduce) {
     return <div className={className}>{children}</div>;
   }
   return (
-    <motion.div
-      className={className}
-      variants={{
-        hidden: { opacity: 0, y: 14 },
-        show: {
-          opacity: 1,
-          y: 0,
-          transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] },
-        },
-      }}
-    >
+    <motion.div className={className} variants={scale ? scaleIn : fadeUp}>
       {children}
     </motion.div>
   );
