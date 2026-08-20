@@ -5,9 +5,17 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardTitle } from "@/components/ui/card";
 
+function externalErpUrl() {
+  return (
+    process.env.NEXT_PUBLIC_EXTERNAL_ERP_URL?.replace(/\/$/, "") ||
+    "https://app.loopcstrategies.com"
+  );
+}
+
 export default function CheckoutSuccessPage() {
   const [status, setStatus] = useState<string>("pending");
   const [message, setMessage] = useState("Confirming your subscription…");
+  const erpUrl = externalErpUrl();
 
   useEffect(() => {
     let cancelled = false;
@@ -27,14 +35,14 @@ export default function CheckoutSuccessPage() {
         const s = data.status as string | null;
         setStatus(s ?? "none");
         if (s === "ACTIVE" || s === "TRIAL") {
-          setMessage(`Subscription is ${s}. You’re ready to go.`);
+          setMessage(`Subscription is ${s}. You can open the ERP product.`);
           return;
         }
         if (attempts < 20) {
           setMessage(`Waiting for activation… (${s ?? "none"})`);
           setTimeout(poll, 1500);
         } else {
-          setMessage("Still processing. You can open the app and check Billing.");
+          setMessage("Still processing. Check Billing in your account portal.");
         }
       } catch {
         if (!cancelled && attempts < 20) setTimeout(poll, 1500);
@@ -54,9 +62,16 @@ export default function CheckoutSuccessPage() {
       <Card className="max-w-md text-center">
         <CardTitle>Payment received</CardTitle>
         <p className="mt-3 text-sm text-[var(--muted)]">{message}</p>
-        <div className="mt-6">
+        <div className="mt-6 flex flex-col gap-2 sm:flex-row sm:justify-center">
+          {ready ? (
+            <a href={erpUrl} target="_blank" rel="noopener noreferrer">
+              <Button className="w-full sm:w-auto">Open ERP</Button>
+            </a>
+          ) : null}
           <Link href={ready ? "/app" : "/app/billing"}>
-            <Button>{ready ? "Go to app" : "Open billing"}</Button>
+            <Button variant={ready ? "secondary" : "primary"} className="w-full sm:w-auto">
+              {ready ? "Account portal" : "Open billing"}
+            </Button>
           </Link>
         </div>
       </Card>

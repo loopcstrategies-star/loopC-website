@@ -181,6 +181,7 @@ model Plan {
   monthlyPriceInr Int?
   yearlyPriceInr  Int?
   isCustomPricing Boolean  @default(false)
+  isPopular       Boolean  @default(false)
   isActive        Boolean  @default(true)
   sortOrder       Int      @default(0)
   supportLevel    String   @default("email")

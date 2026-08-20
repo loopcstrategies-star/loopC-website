@@ -1,18 +1,19 @@
+/** Plan feature keys for the external ERP product — not in-app routes. */
 export const MODULE_CATALOG = [
-  { key: "accounting", label: "Accounting", path: "/app/accounting" },
-  { key: "invoicing", label: "Invoicing", path: "/app/invoicing" },
-  { key: "sales", label: "Sales", path: "/app/sales" },
-  { key: "purchasing", label: "Purchasing", path: "/app/purchasing" },
-  { key: "inventory", label: "Inventory", path: "/app/inventory" },
-  { key: "crm", label: "CRM", path: "/app/crm" },
-  { key: "expenses", label: "Expenses", path: "/app/expenses" },
-  { key: "reports_basic", label: "Basic reports", path: "/app/reports" },
-  { key: "reports", label: "Reports", path: "/app/reports" },
-  { key: "reports_advanced", label: "Advanced reports", path: "/app/reports" },
-  { key: "hr", label: "HR", path: "/app/hr" },
-  { key: "payroll", label: "Payroll", path: "/app/payroll" },
-  { key: "projects", label: "Projects", path: "/app/projects" },
-  { key: "api", label: "API access", path: "/app/api-keys" },
+  { key: "accounting", label: "Accounting" },
+  { key: "invoicing", label: "Invoicing" },
+  { key: "sales", label: "Sales" },
+  { key: "purchasing", label: "Purchasing" },
+  { key: "inventory", label: "Inventory" },
+  { key: "crm", label: "CRM" },
+  { key: "expenses", label: "Expenses" },
+  { key: "reports_basic", label: "Basic reports" },
+  { key: "reports", label: "Reports" },
+  { key: "reports_advanced", label: "Advanced reports" },
+  { key: "hr", label: "HR" },
+  { key: "payroll", label: "Payroll" },
+  { key: "projects", label: "Projects" },
+  { key: "api", label: "API access" },
 ] as const;
 
 export type ModuleKey = (typeof MODULE_CATALOG)[number]["key"];

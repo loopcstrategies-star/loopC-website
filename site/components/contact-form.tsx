@@ -164,7 +164,7 @@ export function ContactForm({
         </Field>
       </div>
       <div className="grid gap-4 sm:grid-cols-2">
-        <Field label="Service" htmlFor="service">
+        <Field label="Project Type" htmlFor="service">
           <select
             id="service"
             name="service"
@@ -173,7 +173,7 @@ export function ContactForm({
             onChange={(e) => update("service", e.target.value)}
             className={inputClass}
           >
-            <option value="">Select a service</option>
+            <option value="">Select a project type</option>
             {contactServices.map((item) => (
               <option key={item.value} value={item.value}>
                 {item.label}

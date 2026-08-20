@@ -3,15 +3,15 @@ import { Badge, subscriptionTone } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardTitle } from "@/components/ui/card";
 import { formatDate } from "@/lib/format";
-import { MODULE_CATALOG } from "@/lib/constants";
+import { getExternalErpUrl } from "@/lib/external-erp";
 import { requireAppSession } from "@/lib/session-guards";
 import { getCompanySubscription } from "@/server/access/subscription";
-import { getEnabledModules } from "@/server/access/features";
 import { prisma } from "@/server/db";
 
-export default async function AppDashboardPage() {
+export default async function AccountPortalPage() {
   const session = await requireAppSession();
   const companyId = session.user.companyId;
+  const erpUrl = getExternalErpUrl();
 
   const [company, subscription, memberCount, recentInvoices] = await Promise.all([
     prisma.company.findUnique({ where: { id: companyId } }),
@@ -24,64 +24,57 @@ export default async function AppDashboardPage() {
     }),
   ]);
 
-  let enabledModules: string[] = [];
-  try {
-    enabledModules = await getEnabledModules(companyId);
-  } catch {
-    enabledModules = [];
-  }
-
   const userLimit =
     subscription?.plan.limits.find((l) => l.limitKey === "users")?.value ?? null;
-  const enabledSet = new Set(enabledModules);
-  const catalogKeys = [
-    "accounting",
-    "invoicing",
-    "inventory",
-    "crm",
-    "reports",
-    "hr",
-    "payroll",
-    "api",
-  ];
-  const lockedModules = catalogKeys.filter((key) => {
-    if (enabledSet.has(key)) return false;
-    if (key === "reports") {
-      return !(
-        enabledSet.has("reports") ||
-        enabledSet.has("reports_basic") ||
-        enabledSet.has("reports_advanced")
-      );
-    }
-    return true;
-  });
-
-  const needsUpgrade =
-    !subscription ||
-    subscription.status === "TRIAL" ||
-    subscription.plan.slug === "starter" ||
-    lockedModules.length > 0;
+  const accessReady =
+    subscription?.status === "ACTIVE" || subscription?.status === "TRIAL";
 
   return (
     <div className="space-y-6">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight">Dashboard</h1>
+          <h1 className="text-2xl font-semibold tracking-tight">Account</h1>
           <p className="mt-1 text-[var(--muted)]">
-            {company?.name ?? "Your company"} · LoopC workspace overview
+            Manage your subscription here. Use Open ERP to access the product.
           </p>
         </div>
         <div className="flex flex-wrap gap-2">
+          {accessReady ? (
+            <a href={erpUrl} target="_blank" rel="noopener noreferrer">
+              <Button>Open ERP</Button>
+            </a>
+          ) : (
+            <Link href="/pricing">
+              <Button>Choose a plan</Button>
+            </Link>
+          )}
           <Link href="/app/billing">
             <Button variant="secondary">Billing</Button>
           </Link>
-          {needsUpgrade && (
-            <Link href="/pricing">
-              <Button>Upgrade plan</Button>
-            </Link>
-          )}
         </div>
       </div>
+
+      <Card className="border-[var(--accent)]/25 bg-[var(--accent-soft)]/40">
+        <CardTitle>LoopC ERP access</CardTitle>
+        <p className="mt-2 text-sm text-[var(--muted)]">
+          This portal sells and manages subscriptions. The ERP application itself is a separate
+          product.
+        </p>
+        {accessReady ? (
+          <a
+            href={erpUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-4 inline-flex text-sm font-semibold text-[var(--accent)] hover:underline"
+          >
+            Open existing ERP →
+          </a>
+        ) : (
+          <p className="mt-4 text-sm text-[var(--muted)]">
+            Activate a subscription to unlock product access.
+          </p>
+        )}
+      </Card>
 
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <Card>
@@ -90,160 +83,63 @@ export default async function AppDashboardPage() {
         </Card>
         <Card>
           <p className="text-sm text-[var(--muted)]">Plan</p>
-          <p className="mt-2 text-xl font-semibold">
-            {subscription?.plan.name ?? "No plan"}
-          </p>
+          <p className="mt-2 text-xl font-semibold">{subscription?.plan.name ?? "No plan"}</p>
         </Card>
         <Card>
           <p className="text-sm text-[var(--muted)]">Subscription</p>
           <div className="mt-2">
             {subscription ? (
-              <Badge tone={subscriptionTone(subscription.status)}>
-                {subscription.status}
-              </Badge>
+              <Badge tone={subscriptionTone(subscription.status)}>{subscription.status}</Badge>
             ) : (
-              <Badge>None</Badge>
+              <span className="text-xl font-semibold">—</span>
             )}
           </div>
         </Card>
         <Card>
-          <p className="text-sm text-[var(--muted)]">Renewal</p>
+          <p className="text-sm text-[var(--muted)]">Team seats</p>
           <p className="mt-2 text-xl font-semibold">
-            {formatDate(subscription?.renewalDate) || "—"}
-          </p>
-        </Card>
-      </div>
-
-      <div className="grid gap-4 lg:grid-cols-2">
-        <Card>
-          <CardTitle>Team usage</CardTitle>
-          <p className="mt-3 text-3xl font-semibold tracking-tight">
             {memberCount}
-            {userLimit != null ? (
-              <span className="text-lg font-medium text-[var(--muted)]">
-                {" "}
-                / {userLimit}
-              </span>
-            ) : null}
+            {userLimit != null ? ` / ${userLimit}` : ""}
           </p>
-          <p className="mt-1 text-sm text-[var(--muted)]">
-            Active members on this company
-            {userLimit != null && memberCount >= userLimit
-              ? " · Limit reached"
-              : ""}
-          </p>
-          <div className="mt-4 flex flex-wrap gap-2">
-            <Link href="/app/team">
-              <Button variant="secondary" size="sm">
-                Manage team
-              </Button>
-            </Link>
-            {userLimit != null && memberCount >= userLimit && (
-              <Link href="/pricing">
-                <Button size="sm">Upgrade for more seats</Button>
-              </Link>
-            )}
-          </div>
-        </Card>
-
-        <Card>
-          <CardTitle>Modules</CardTitle>
-          <p className="mt-3 text-3xl font-semibold tracking-tight">
-            {enabledModules.length}
-            <span className="text-lg font-medium text-[var(--muted)]">
-              {" "}
-              available
-            </span>
-          </p>
-          <p className="mt-1 text-sm text-[var(--muted)]">
-            {lockedModules.length} locked on your current plan
-          </p>
-          <div className="mt-4 flex flex-wrap gap-2">
-            {enabledModules.slice(0, 6).map((key) => (
-              <Badge key={key} tone="success">
-                {MODULE_CATALOG.find((m) => m.key === key)?.label ?? key}
-              </Badge>
-            ))}
-            {lockedModules.slice(0, 4).map((key) => (
-              <Badge key={key} tone="warning">
-                {MODULE_CATALOG.find((m) => m.key === key)?.label ?? key} · locked
-              </Badge>
-            ))}
-          </div>
         </Card>
       </div>
+
+      {subscription && (
+        <Card>
+          <CardTitle>Current period</CardTitle>
+          <dl className="mt-3 grid gap-2 text-sm sm:grid-cols-2">
+            <div>
+              <dt className="text-[var(--muted)]">Cycle</dt>
+              <dd className="font-medium">{subscription.billingCycle}</dd>
+            </div>
+            <div>
+              <dt className="text-[var(--muted)]">Renews / ends</dt>
+              <dd className="font-medium">{formatDate(subscription.renewalDate)}</dd>
+            </div>
+          </dl>
+        </Card>
+      )}
 
       <Card>
-        <div className="flex flex-wrap items-center justify-between gap-3">
+        <div className="flex items-center justify-between gap-2">
           <CardTitle>Recent invoices</CardTitle>
           <Link href="/app/billing" className="text-sm text-[var(--accent)] hover:underline">
-            Billing & invoices
+            View billing
           </Link>
         </div>
         {recentInvoices.length === 0 ? (
-          <p className="mt-3 text-sm text-[var(--muted)]">
-            No billing invoices yet. Complete checkout to activate your
-            subscription.
-          </p>
+          <p className="mt-3 text-sm text-[var(--muted)]">No invoices yet.</p>
         ) : (
-          <div className="mt-4 overflow-x-auto">
-            <table className="w-full text-left text-sm">
-              <thead className="text-[var(--muted)]">
-                <tr>
-                  <th className="py-2 font-medium">Number</th>
-                  <th className="py-2 font-medium">Status</th>
-                  <th className="py-2 font-medium">Total</th>
-                  <th className="py-2 font-medium">Date</th>
-                </tr>
-              </thead>
-              <tbody>
-                {recentInvoices.map((inv) => (
-                  <tr key={inv.id} className="border-t border-[var(--border)]">
-                    <td className="py-2">{inv.number}</td>
-                    <td className="py-2">
-                      <Badge>{inv.status}</Badge>
-                    </td>
-                    <td className="py-2">
-                      ₹{(inv.totalInr / 100).toLocaleString("en-IN")}
-                    </td>
-                    <td className="py-2">{formatDate(inv.createdAt)}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+          <ul className="mt-3 divide-y divide-[var(--border)] text-sm">
+            {recentInvoices.map((inv) => (
+              <li key={inv.id} className="flex justify-between gap-3 py-2">
+                <span>{inv.number}</span>
+                <span className="text-[var(--muted)]">{inv.status}</span>
+              </li>
+            ))}
+          </ul>
         )}
       </Card>
-
-      {(subscription?.status === "TRIAL" ||
-        subscription?.status === "PAST_DUE" ||
-        !subscription) && (
-        <Card className="border-amber-200 bg-amber-50/40">
-          <CardTitle>
-            {!subscription
-              ? "Choose a plan to unlock ERP modules"
-              : subscription.status === "TRIAL"
-                ? "You're on a trial"
-                : "Payment past due"}
-          </CardTitle>
-          <p className="mt-2 text-sm text-[var(--muted)]">
-            {!subscription
-              ? "Pick a plan and complete checkout. Modules unlock only after a verified subscription."
-              : subscription.status === "TRIAL"
-                ? `Trial ends ${formatDate(subscription.trialEndDate)}. Upgrade anytime to keep access.`
-                : `Grace period ends ${formatDate(subscription.graceEndsAt)}. Update billing to avoid suspension.`}
-          </p>
-          <div className="mt-4">
-            <Link href={subscription ? "/app/billing" : "/pricing"}>
-              <Button>
-                {subscription?.status === "PAST_DUE"
-                  ? "Fix billing"
-                  : "View plans"}
-              </Button>
-            </Link>
-          </div>
-        </Card>
-      )}
     </div>
   );
 }

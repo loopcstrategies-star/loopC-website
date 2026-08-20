@@ -7,7 +7,7 @@ import { writeAuditLog } from "@/server/audit";
 export const runtime = "nodejs";
 
 const updateSchema = z.object({
-  status: z.enum(["new", "in_progress", "closed", "spam"]).optional(),
+  status: z.enum(["new", "in_progress", "contacted", "converted", "closed", "spam"]).optional(),
   internalNotes: z.string().max(5000).nullable().optional(),
 });
 

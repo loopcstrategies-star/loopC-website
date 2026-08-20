@@ -18,6 +18,7 @@ export const primaryNav: NavItem[] = [
   { href: "/services", label: "Services" },
   { href: "/erp", label: "ERP" },
   { href: "/pricing", label: "Pricing" },
+  { href: "/faq", label: "FAQ" },
   { href: "/contact", label: "Contact" },
 ];
 
@@ -36,7 +37,7 @@ export function getExpertCta(): NavItem {
 }
 
 export function getExploreErpCta(): NavItem {
-  return { href: "/erp", label: "Explore Our ERP" };
+  return { href: "/erp", label: "Explore ERP" };
 }
 
 export function getCustomSoftwareCta(): NavItem {

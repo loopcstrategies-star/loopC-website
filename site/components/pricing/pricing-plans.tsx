@@ -93,8 +93,15 @@ export function PricingPlans({
           return (
             <div
               key={plan.slug}
-              className="lift-card flex flex-col rounded-2xl border border-slate-200 bg-white p-6 shadow-sm"
+              className={`lift-card relative flex flex-col rounded-2xl border bg-white p-6 shadow-sm ${
+                plan.isPopular ? "border-teal-400 ring-2 ring-teal-100" : "border-slate-200"
+              }`}
             >
+              {plan.isPopular ? (
+                <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-teal-600 px-3 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white">
+                  Popular
+                </span>
+              ) : null}
               <h3 className="font-bold text-slate-950">{plan.name}</h3>
               {plan.description ? (
                 <p className="mt-1 text-sm text-slate-500">{plan.description}</p>

@@ -1,20 +1,16 @@
 import Link from "next/link";
 
-const MAIN = [
-  { href: "/admin", label: "Dashboard" },
-];
+const MAIN = [{ href: "/admin", label: "Dashboard" }];
 
 const WEBSITE = [
-  { href: "/admin/website", label: "Home / Settings" },
+  { href: "/admin/website", label: "Home" },
   { href: "/admin/website/about", label: "About" },
-  { href: "/admin/website/erp-product", label: "ERP Product" },
   { href: "/admin/website/services", label: "Services" },
-  { href: "/admin/website/faqs", label: "FAQs" },
-  { href: "/admin/website/testimonials", label: "Testimonials" },
-  { href: "/admin/website/contacts", label: "Contact Enquiries" },
+  { href: "/admin/website/erp-product", label: "ERP Product" },
+  { href: "/admin/website/faqs", label: "FAQ" },
+  { href: "/admin/website/contacts", label: "Contact" },
   { href: "/admin/website/seo", label: "SEO" },
-  { href: "/admin/website/media", label: "Media Library" },
-  { href: "/admin/website/blog", label: "Blog" },
+  { href: "/admin/website/media", label: "Media" },
 ];
 
 const SALES = [
@@ -27,8 +23,10 @@ const SALES = [
 ];
 
 const OPERATIONS = [
+  { href: "/admin/website/contacts", label: "Enquiries" },
   { href: "/admin/analytics", label: "Analytics" },
   { href: "/admin/settings", label: "Settings" },
+  { href: "/admin/users", label: "Admin Users" },
   { href: "/admin/audit", label: "Audit Logs" },
 ];
 
@@ -64,7 +62,7 @@ export function AdminSidebar() {
 
         <SectionLabel>Website</SectionLabel>
         {WEBSITE.map((l) => (
-          <NavLink key={l.href} {...l} />
+          <NavLink key={`${l.href}-${l.label}`} {...l} />
         ))}
 
         <SectionLabel>ERP Sales</SectionLabel>
@@ -74,14 +72,14 @@ export function AdminSidebar() {
 
         <SectionLabel>Operations</SectionLabel>
         {OPERATIONS.map((l) => (
-          <NavLink key={l.href} {...l} />
+          <NavLink key={`${l.href}-${l.label}`} {...l} />
         ))}
 
         <Link
           href="/app"
           className="mt-4 block rounded-md px-3 py-2 text-[var(--muted)] hover:bg-[var(--surface-2)]"
         >
-          ← Back to app
+          ← Account portal
         </Link>
       </nav>
     </aside>

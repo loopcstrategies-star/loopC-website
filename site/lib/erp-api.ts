@@ -67,6 +67,7 @@ export type ErpPlan = {
   monthlyPriceInr: number | null;
   yearlyPriceInr: number | null;
   isCustomPricing: boolean;
+  isPopular?: boolean;
   isActive: boolean;
   sortOrder: number;
   supportLevel: string;

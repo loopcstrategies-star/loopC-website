@@ -348,15 +348,16 @@ async function main() {
     ],
   });
 
+  // Catalog of entitlements for the external ERP product (not in-app routes)
   const modules = [
-    { key: "accounting", name: "Accounting", path: "/app/accounting" },
-    { key: "invoicing", name: "Invoicing", path: "/app/invoicing" },
-    { key: "inventory", name: "Inventory", path: "/app/inventory" },
-    { key: "crm", name: "CRM", path: "/app/crm" },
-    { key: "reports", name: "Reports", path: "/app/reports" },
-    { key: "hr", name: "HR", path: "/app/hr" },
-    { key: "payroll", name: "Payroll", path: "/app/payroll" },
-    { key: "api", name: "API", path: "/app/api-keys" },
+    { key: "accounting", name: "Accounting", path: "external:accounting" },
+    { key: "invoicing", name: "Invoicing", path: "external:invoicing" },
+    { key: "inventory", name: "Inventory", path: "external:inventory" },
+    { key: "crm", name: "CRM", path: "external:crm" },
+    { key: "reports", name: "Reports", path: "external:reports" },
+    { key: "hr", name: "HR", path: "external:hr" },
+    { key: "payroll", name: "Payroll", path: "external:payroll" },
+    { key: "api", name: "API", path: "external:api" },
   ];
 
   for (const [i, m] of modules.entries()) {

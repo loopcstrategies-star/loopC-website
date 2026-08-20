@@ -155,7 +155,7 @@ export default function AboutPage() {
                 href="/erp"
                 className="inline-flex rounded-full border border-white/25 px-6 py-3 text-sm font-semibold text-white transition hover:border-white/50 hover:bg-white/10"
               >
-                Explore Our ERP
+                Explore ERP
               </Link>
             </div>
           </FadeIn>

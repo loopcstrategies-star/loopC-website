@@ -158,18 +158,27 @@ async function main() {
     const sub = await prisma.subscription.findUnique({ where: { companyId: company.id } });
     log("TEST8 subscription ACTIVE", sub?.status === SubscriptionStatus.ACTIVE, String(sub?.status));
 
+    // Entitlements still gate the *external* ERP product features (not in-app screens)
     const { assertFeature } = await import("../src/server/access/features");
     await assertFeature(company.id, "accounting");
-    log("TEST9 allowed module accounting", true);
+    log("TEST9 plan entitlement accounting", true);
 
-    // TEST 10 — deny unavailable module
+    // TEST 10 — deny unavailable module entitlement
     let denied = false;
     try {
       await assertFeature(company.id, "hr");
     } catch {
       denied = true;
     }
-    log("TEST10 unavailable module rejected", denied, "hr on starter");
+    log("TEST10 unavailable entitlement rejected", denied, "hr on starter");
+
+    // Account portal exists; ERP business modules must not
+    const portalStatus = await httpStatus(`${ERP}/app`);
+    log("TEST10b account portal requires auth or loads", portalStatus === 200 || portalStatus === 307 || portalStatus === 302, String(portalStatus));
+    const crmGone = await httpStatus(`${ERP}/app/crm`);
+    log("TEST10c ERP module /app/crm removed", crmGone === 404, String(crmGone));
+    const accountingGone = await httpStatus(`${ERP}/app/accounting`);
+    log("TEST10d ERP module /app/accounting removed", accountingGone === 404, String(accountingGone));
 
     // TEST 11 — suspend company → access blocked
     try {
