@@ -12,14 +12,13 @@ export type SolutionNavItem = {
   description?: string;
 };
 
-/** Main header links (Solutions rendered separately as dropdown). */
+/** Main header links. */
 export const primaryNav: NavItem[] = [
-  { href: "/erp", label: "ERP" },
-  { href: "/services", label: "Services" },
-  { href: "/industries", label: "Industries" },
-  { href: "/work", label: "Work" },
   { href: "/about", label: "About" },
+  { href: "/services", label: "Services" },
+  { href: "/erp", label: "ERP" },
   { href: "/pricing", label: "Pricing" },
+  { href: "/contact", label: "Contact" },
 ];
 
 export const solutionsNav: SolutionNavItem[] = [
@@ -33,23 +32,23 @@ export const solutionsNav: SolutionNavItem[] = [
 ];
 
 export function getExpertCta(): NavItem {
-  return { href: "/contact?intent=expert", label: "Talk to an Expert" };
+  return { href: "/contact", label: "Get Started" };
 }
 
 export function getExploreErpCta(): NavItem {
-  return { href: "/erp", label: "Explore LoopC ERP" };
+  return { href: "/erp", label: "Explore Our ERP" };
 }
 
 export function getCustomSoftwareCta(): NavItem {
   return {
-    href: "/contact?intent=project&service=custom-software",
-    label: "Build Custom Software",
+    href: "/contact?service=custom-software",
+    label: "Start a Project",
   };
 }
 
 export function getSalesCta(): NavItem {
   return {
-    href: "/contact?intent=expert&service=erp",
+    href: "/contact?service=erp",
     label: "Talk to Sales",
   };
 }

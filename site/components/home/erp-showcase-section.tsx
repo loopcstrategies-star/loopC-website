@@ -73,7 +73,7 @@ export function ErpShowcaseSection() {
             light
           />
           <ul className="mt-8 space-y-3 text-sm text-slate-300">
-            <li>— Accounting, invoicing and financial reporting</li>
+            <li>— Finance, accounting and invoicing</li>
             <li>— Inventory, sales, purchasing and CRM</li>
             <li>— HR, payroll and operational dashboards</li>
             <li>— Role-based access with web and mobile</li>
@@ -81,7 +81,7 @@ export function ErpShowcaseSection() {
           <div className="mt-8 flex flex-wrap gap-3">
             <MagneticButton href={erpCta.href}>{erpCta.label}</MagneticButton>
             <MagneticButton href="/pricing" variant="secondary">
-              View pricing
+              View Pricing
             </MagneticButton>
           </div>
         </FadeIn>
@@ -133,8 +133,8 @@ export function ErpValueProps() {
         <FadeIn>
           <SectionHeader
             eyebrow="Why LoopC ERP"
-            title="Built for growing businesses that need more than spreadsheets."
-            description="A connected platform you can configure, extend and scale — without rebuilding from scratch."
+            title="One connected system for your entire business."
+            description="Replace disconnected tools and manual processes with a platform built to grow with you."
             light
             align="center"
             className="mx-auto text-center"

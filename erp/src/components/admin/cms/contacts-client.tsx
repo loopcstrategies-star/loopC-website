@@ -61,6 +61,8 @@ export function ContactsClient({ contacts }: { contacts: Contact[] }) {
                 onChange={(e) => setEditing({ ...editing, status: e.target.value })}
               >
                 <option value="new">New</option>
+                <option value="contacted">Contacted</option>
+                <option value="converted">Converted</option>
                 <option value="in_progress">In progress</option>
                 <option value="closed">Closed</option>
                 <option value="spam">Spam</option>

@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 
 export function ResponsiveSidebarLayout({
   sidebar,
@@ -14,14 +14,8 @@ export function ResponsiveSidebarLayout({
   headerActions?: ReactNode;
   children: ReactNode;
 }) {
-  const pathname = usePathname();
+  usePathname();
   const [open, setOpen] = useState(false);
-  const pathnameRef = useRef(pathname);
-
-  if (pathnameRef.current !== pathname) {
-    pathnameRef.current = pathname;
-    if (open) setOpen(false);
-  }
 
   useEffect(() => {
     if (!open) return;

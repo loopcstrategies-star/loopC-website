@@ -118,10 +118,28 @@ a {
 }
 
 @keyframes drift {
-  from {
-    transform: translateX(0);
+  from { transform: translateX(0); }
+  to { transform: translateX(-8%); }
+}
+
+.lift-card {
+  transition:
+    transform 200ms ease-out,
+    box-shadow 200ms ease-out,
+    border-color 200ms ease-out;
+}
+
+.lift-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 24px 48px -24px rgba(15, 23, 42, 0.35);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lift-card {
+    transition: none !important;
   }
-  to {
-    transform: translateX(-8%);
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
   }
 }

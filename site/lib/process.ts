@@ -8,52 +8,52 @@ export type ProcessStep = {
 
 export const deliveryProcess: ProcessStep[] = [
   {
-    id: "strategy",
+    id: "discover",
     num: "01",
-    title: "Strategy",
-    summary: "Understand the business, the users and the constraint.",
+    title: "Discover",
+    summary: "Understand the business, users and the real problem.",
     detail:
-      "We start with how the work happens today — who does what, where it breaks, and what “better” would change. The output is a shared picture of the product, not a slide deck of buzzwords.",
+      "We start by mapping how work happens today — who does what, where it breaks, and what better would change. The output is a shared picture of the product, not a slide deck of buzzwords.",
   },
   {
-    id: "ux",
+    id: "plan",
     num: "02",
-    title: "UX",
-    summary: "Map flows before screens.",
+    title: "Plan",
+    summary: "Define scope, architecture and delivery approach.",
     detail:
-      "We design the path a person takes: the first action, the exception, the approval, the report. If the flow is wrong, visual design will not save it.",
+      "A clear roadmap covering technology choices, integrations, milestones and risks — agreed before a single line of code is written.",
   },
   {
-    id: "ui",
+    id: "design",
     num: "03",
-    title: "UI",
-    summary: "Make the product clear and consistent.",
+    title: "Design",
+    summary: "Map flows and craft intuitive interfaces.",
     detail:
-      "Interfaces, components and states — empty, loading, error, success — so engineering builds one system instead of a pile of screens.",
+      "We design the path a person takes: the first action, the exception, the approval, the report. Wireframes and UI aligned to how people actually work.",
   },
   {
-    id: "development",
+    id: "develop",
     num: "04",
-    title: "Development",
+    title: "Develop",
     summary: "Build the real product, not a demo that cannot grow.",
     detail:
-      "Web, mobile and backend work against the same model. We keep the architecture boring where it should be boring, and custom where the business is custom.",
+      "Web, mobile and backend work against the same model. Architecture that is purposely boring where it should be, and custom where the business demands it.",
   },
   {
-    id: "testing",
+    id: "test",
     num: "05",
-    title: "Testing",
+    title: "Test",
     summary: "Prove it works the way the business works.",
     detail:
-      "Functional checks, the awkward cases, devices and roles. We would rather find the broken path in staging than in your first live week.",
+      "Functional checks, edge cases, devices and roles. We would rather find the broken path in staging than in your first live week.",
   },
   {
-    id: "deployment",
+    id: "launch",
     num: "06",
-    title: "Deployment",
-    summary: "Launch with a plan, not a hope.",
+    title: "Launch",
+    summary: "Go live with a plan, not a hope.",
     detail:
-      "Hosting, access, data, and a go-live sequence your team can actually follow. Launch is a delivery step, not a surprise.",
+      "Hosting, access, data migration and a go-live sequence your team can follow. Launch is a delivery step, not a surprise.",
   },
   {
     id: "support",
@@ -61,7 +61,7 @@ export const deliveryProcess: ProcessStep[] = [
     title: "Support",
     summary: "Stay on as the product meets real use.",
     detail:
-      "Monitoring, fixes, and the next set of features. Software that is used will change. We plan for that instead of disappearing after the invoice.",
+      "Monitoring, fixes and the next set of features. Software that is used will change — we plan for that instead of disappearing after the invoice.",
   },
 ];
 

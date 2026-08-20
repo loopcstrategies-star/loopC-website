@@ -1,16 +1,9 @@
 import type { Metadata } from "next";
-import { Source_Sans_3 } from "next/font/google";
 import "./globals.css";
 
-const sourceSans = Source_Sans_3({
-  subsets: ["latin"],
-  variable: "--font-source-sans",
-  display: "swap",
-});
-
 export const metadata: Metadata = {
-  title: "LoopC ERP",
-  description: "Modern SaaS ERP for growing businesses — billing, finance, and operations.",
+  title: "LoopC | ERP SaaS",
+  description: "LoopC ERP — business software for growing companies.",
 };
 
 export const viewport = {
@@ -24,11 +17,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${sourceSans.variable} h-full antialiased`}>
-      <body
-        className="min-h-full flex flex-col"
-        style={{ fontFamily: "var(--font-source-sans), var(--font-sans)" }}
-      >
+    <html lang="en" className="h-full antialiased">
+      <body className="min-h-full flex flex-col">
         {children}
       </body>
     </html>

@@ -1,22 +1,16 @@
 import type { Metadata } from "next";
-import { CustomSoftwareSection } from "@/components/home/custom-software-section";
-import { DualOfferingSection } from "@/components/home/dual-offering-section";
 import {
-  ErpModulesGrid,
   ErpShowcaseSection,
   ErpValueProps,
 } from "@/components/home/erp-showcase-section";
-import { HomeFinalCta, TrustProofSection } from "@/components/home/home-final-cta";
+import { HomeFinalCta } from "@/components/home/home-final-cta";
 import { HomeHero } from "@/components/home/home-hero";
 import { HomePricingPreview } from "@/components/home/home-pricing-preview";
-import { IndustriesSection } from "@/components/home/industries-section";
+import { IntroCardsSection } from "@/components/home/intro-cards-section";
+import { DigitalProductsSection } from "@/components/home/digital-products-section";
 import { ProcessSection } from "@/components/home/process-section";
-import { ServicesSection } from "@/components/home/services-section";
-import { TechnologySection } from "@/components/home/technology-section";
-import { WorkProofCta } from "@/components/home/work-proof-cta";
 import { JsonLd } from "@/components/json-ld";
 import {
-  type ErpCmsService,
   type ErpPlan,
   type ErpWebsitePage,
   asStringArray,
@@ -41,15 +35,13 @@ type SitePayload = {
   home?: ErpWebsitePage | null;
 };
 
-type ServicesPayload = { services: ErpCmsService[] };
 type PlansPayload = { plans: ErpPlan[] };
 
 export default async function HomePage() {
   const erpCta = getExploreErpCta();
   const customCta = getCustomSoftwareCta();
-  const [siteData, servicesData, plansData] = await Promise.all([
+  const [siteData, plansData] = await Promise.all([
     erpFetch<SitePayload>("/api/public/site"),
-    erpFetch<ServicesPayload>("/api/public/services"),
     erpFetch<PlansPayload>("/api/public/plans"),
   ]);
 
@@ -82,17 +74,11 @@ export default async function HomePage() {
             : undefined
         }
       />
-      <DualOfferingSection />
+      <IntroCardsSection />
+      <DigitalProductsSection />
       <ErpShowcaseSection />
-      <ErpModulesGrid />
       <ErpValueProps />
-      <CustomSoftwareSection />
-      <ServicesSection services={servicesData?.services} />
-      <IndustriesSection />
-      <WorkProofCta />
-      <TechnologySection />
       <ProcessSection />
-      <TrustProofSection />
       <HomePricingPreview plans={plansData?.plans} />
       <HomeFinalCta />
     </div>

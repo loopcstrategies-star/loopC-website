@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { JsonLd } from "@/components/json-ld";
-import { ErpModulesGrid, ErpValueProps } from "@/components/home/erp-showcase-section";
 import { PageHero } from "@/components/page-hero";
+import { FadeIn } from "@/components/motion/fade-in";
 import { Container } from "@/components/ui/container";
-import { SectionHeader } from "@/components/ui/section-header";
+import { ErpValueProps } from "@/components/home/erp-showcase-section";
 import {
   type ErpWebsitePage,
+  type ErpFaqItem,
   asStringArray,
   erpFetch,
   getErpPublicUrl,
@@ -14,27 +15,83 @@ import {
 } from "@/lib/erp-api";
 import { getSalesCta } from "@/lib/navigation";
 import { getBreadcrumbSchema, pageMetadata } from "@/lib/seo";
-import { siteConfig } from "@/lib/site-config";
+import { erpModules, siteConfig } from "@/lib/site-config";
 
 export const metadata: Metadata = pageMetadata({
   title: "LoopC ERP | Business management software",
   description:
-    "LoopC ERP brings finance, sales, inventory, CRM, HR and reporting into one connected workspace — web and mobile.",
+    "LoopC ERP brings finance, sales, inventory, CRM, HR and reporting into one connected system — web and mobile.",
   path: "/erp",
 });
 
 type PagePayload = { page: ErpWebsitePage };
+type FaqPayload = { faqs: ErpFaqItem[] };
+
+function ErpDashboardMock() {
+  return (
+    <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-[#0e172a]/90 p-4 shadow-2xl">
+      <div className="mb-3 flex items-center gap-1.5">
+        <span className="h-2 w-2 rounded-full bg-red-400/80" />
+        <span className="h-2 w-2 rounded-full bg-amber-400/80" />
+        <span className="h-2 w-2 rounded-full bg-emerald-400/80" />
+        <span className="ml-2 text-[10px] text-slate-500">LoopC ERP · Dashboard</span>
+      </div>
+      <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+        {[
+          { label: "Revenue", value: "₹12.4L" },
+          { label: "Invoices", value: "48" },
+          { label: "Stock alerts", value: "6" },
+          { label: "Open tasks", value: "14" },
+        ].map((kpi) => (
+          <div key={kpi.label} className="rounded-lg bg-white/5 p-3">
+            <p className="text-[10px] text-slate-400">{kpi.label}</p>
+            <p className="text-sm font-semibold text-white">{kpi.value}</p>
+          </div>
+        ))}
+      </div>
+      <div className="mt-3 grid gap-2 sm:grid-cols-2">
+        <div className="rounded-lg bg-white/5 p-3">
+          <p className="text-[10px] font-semibold uppercase tracking-wider text-teal-300">Recent sales</p>
+          <div className="mt-2 space-y-1.5">
+            {["INV-1042 · Acme Traders", "INV-1041 · Metro Supplies", "INV-1040 · Green Foods"].map((row) => (
+              <div key={row} className="rounded border border-white/5 px-2 py-1.5 text-[11px] text-slate-300">
+                {row}
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="rounded-lg bg-white/5 p-3">
+          <p className="text-[10px] font-semibold uppercase tracking-wider text-teal-300">Inventory</p>
+          <div className="mt-3 flex h-16 items-end gap-1">
+            {[55, 72, 48, 85, 60, 90].map((h, i) => (
+              <span
+                key={i}
+                className="w-full origin-bottom rounded-sm bg-teal-400/60"
+                style={{ height: `${h}%` }}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+      <p className="mt-3 text-[10px] text-slate-500">Illustrative demo · LoopC ERP interface</p>
+    </div>
+  );
+}
 
 export default async function ErpPage() {
   const erp = getErpPublicUrl();
   const salesCta = getSalesCta();
-  const data = await erpFetch<PagePayload>("/api/public/pages/erp");
+  const [data, faqData] = await Promise.all([
+    erpFetch<PagePayload>("/api/public/pages/erp"),
+    erpFetch<FaqPayload>("/api/public/faqs?page=erp"),
+  ]);
   const intro = sectionByKey(data?.page?.sections, "intro");
   const modules = asStringArray(
     intro?.contentJson && typeof intro.contentJson === "object"
       ? (intro.contentJson as { modules?: unknown }).modules
       : null,
   );
+  const faqs = faqData?.faqs ?? [];
 
   return (
     <div>
@@ -44,135 +101,145 @@ export default async function ErpPage() {
           { name: "ERP", path: "/erp" },
         ])}
       />
+
+      {/* Hero */}
       <PageHero
         eyebrow="LoopC ERP"
-        title={intro?.title || data?.page?.title || "Run your business from one workspace."}
+        title={intro?.title || "One Powerful ERP for Your Entire Business"}
         description={
           intro?.subtitle ||
-          intro?.body ||
           siteConfig.positioning.erpCopy
         }
         dark
       />
 
-      <section className="section-light py-16 sm:py-20">
-        <Container>
-          <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
-            <div>
-              <SectionHeader
-                eyebrow="Web + mobile"
-                title="Your team works from anywhere."
-                description="LoopC ERP is built for daily use on desktop and mobile — finance at the desk, operations in the field, leadership on the move."
-              />
-              <ul className="mt-6 space-y-2 text-sm text-slate-600">
-                <li>— Responsive web app for office teams</li>
-                <li>— Mobile-ready workflows for field and warehouse</li>
-                <li>— Role-based views so people see what they need</li>
-              </ul>
+      {/* ERP showcase */}
+      <section className="section-dark relative overflow-hidden py-20 sm:py-28">
+        <div className="pointer-events-none absolute inset-0 opacity-20" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px)", backgroundSize: "48px 48px" }} />
+        <Container className="relative grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+          <FadeIn>
+            <p className="type-label text-teal-300">What&apos;s included</p>
+            <h2 className="type-h2 mt-3 font-bold text-white">
+              Everything your business needs, connected.
+            </h2>
+            <p className="mt-4 leading-relaxed text-slate-300">
+              LoopC ERP is designed to replace disconnected tools with a single connected system —
+              giving your team one place to manage the entire business.
+            </p>
+            <ul className="mt-8 grid grid-cols-2 gap-3">
+              {(modules.length ? modules : [...erpModules]).map((mod) => (
+                <li
+                  key={mod}
+                  className="flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2.5 text-sm text-slate-200"
+                >
+                  <span className="h-1.5 w-1.5 rounded-full bg-teal-400 shrink-0" aria-hidden />
+                  {mod}
+                </li>
+              ))}
+            </ul>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Link
+                href="/pricing"
+                className="inline-flex rounded-full bg-teal-500 px-5 py-2.5 text-sm font-semibold text-slate-950 transition hover:bg-teal-400"
+              >
+                View Pricing
+              </Link>
+              <Link
+                href={salesCta.href}
+                className="inline-flex rounded-full border border-white/25 px-5 py-2.5 text-sm font-semibold text-white transition hover:border-white/50 hover:bg-white/10"
+              >
+                {salesCta.label}
+              </Link>
             </div>
-            <div className="rounded-3xl border border-slate-200/80 bg-[#050b16] p-6">
-              <p className="text-xs font-semibold uppercase tracking-wider text-teal-300">Product UI concept</p>
-              <div className="mt-4 grid gap-3 sm:grid-cols-2">
-                <div className="rounded-xl border border-white/10 bg-white/5 p-4">
-                  <p className="text-sm font-semibold text-white">Web dashboard</p>
-                  <p className="mt-1 text-xs text-slate-400">Finance, sales and inventory at a glance</p>
-                </div>
-                <div className="rounded-xl border border-white/10 bg-white/5 p-4">
-                  <p className="text-sm font-semibold text-white">Mobile access</p>
-                  <p className="mt-1 text-xs text-slate-400">Approvals, stock checks and tasks on the go</p>
-                </div>
-              </div>
-            </div>
-          </div>
+          </FadeIn>
+          <FadeIn delay={0.08}>
+            <ErpDashboardMock />
+          </FadeIn>
         </Container>
       </section>
 
-      <ErpModulesGrid modules={modules.length ? modules : undefined} />
+      {/* Benefits */}
       <ErpValueProps />
 
-      <section className="section-light py-16 sm:py-20">
+      {/* Modules grid */}
+      <section className="bg-white py-20 sm:py-24">
         <Container>
-          <SectionHeader
-            eyebrow="Multi-tenant & access"
-            title="Built for teams, roles and growing organizations."
-            description="Configure who sees what. LoopC ERP supports role-based access so finance, sales, warehouse and leadership each work from the same connected data."
-          />
-          <div className="mt-8 grid gap-4 sm:grid-cols-3">
-            {[
-              { title: "Role-based access", copy: "Permissions aligned to job functions." },
-              { title: "Multi-tenant ready", copy: "Separate data for each organization you manage." },
-              { title: "Audit-friendly", copy: "Track who changed what and when." },
-            ].map((item) => (
-              <div key={item.title} className="lift-card rounded-2xl border border-slate-200/80 bg-white p-5 shadow-sm">
-                <h3 className="font-semibold text-slate-950">{item.title}</h3>
-                <p className="mt-2 text-sm text-slate-600">{item.copy}</p>
-              </div>
+          <FadeIn>
+            <p className="type-label text-teal-600">ERP modules</p>
+            <h2 className="type-h2 mt-3 max-w-xl font-bold text-slate-950">
+              Start with what you need. Expand when you are ready.
+            </h2>
+            <p className="mt-4 max-w-2xl text-slate-600">
+              LoopC ERP is modular — finance, operations, people and reporting connected from day one.
+            </p>
+          </FadeIn>
+          <ul className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+            {[...erpModules].map((mod, i) => (
+              <FadeIn key={mod} delay={i * 0.04}>
+                <li className="lift-card rounded-2xl border border-slate-200/80 bg-[#f8faf9] px-4 py-4 text-center text-sm font-medium text-slate-800 shadow-sm">
+                  {mod}
+                </li>
+              </FadeIn>
             ))}
-          </div>
-        </Container>
-      </section>
-
-      <section className="section-dark py-16 sm:py-20">
-        <Container className="grid gap-8 lg:grid-cols-2 lg:items-center">
-          <SectionHeader
-            eyebrow="Pricing"
-            title="Plans that grow with your business."
-            description="Start with the modules you need. Upgrade as your team and operations expand."
-            light
-          />
-          <div className="flex flex-wrap gap-3 lg:justify-end">
-            <Link
-              href={intro?.ctaHref || "/pricing"}
-              className="btn-primary inline-flex rounded-full bg-gradient-to-r from-teal-600 to-teal-500 px-5 py-2.5 text-sm font-semibold text-white"
-            >
-              {intro?.ctaLabel || "View pricing"}
+          </ul>
+          <p className="mt-6 text-center text-sm text-slate-500">
+            Module availability depends on your plan.{" "}
+            <Link href="/pricing" className="font-semibold text-teal-700 hover:underline">
+              Compare pricing
             </Link>
-            <Link
-              href={`${erp}/signup`}
-              className="btn-secondary inline-flex rounded-full border border-white/25 px-5 py-2.5 text-sm font-semibold text-white"
-            >
-              Get started
-            </Link>
-          </div>
-        </Container>
-      </section>
-
-      <section className="section-light py-16 sm:py-20">
-        <Container>
-          <SectionHeader
-            eyebrow="Customization"
-            title="Need more than the standard modules?"
-            description="We extend LoopC ERP with custom modules, workflows, reports and integrations tailored to your organization."
-          />
-          <Link
-            href="/contact?intent=expert&service=erp-customization"
-            className="mt-6 inline-flex text-sm font-semibold text-teal-700 hover:underline"
-          >
-            Talk about ERP customization →
-          </Link>
-        </Container>
-      </section>
-
-      <section className="section-dark py-16 sm:py-20">
-        <Container className="rounded-3xl border border-white/10 bg-white/5 px-6 py-10 text-center sm:px-12">
-          <h2 className="type-h2 font-bold text-white">Ready to explore LoopC ERP?</h2>
-          <p className="mx-auto mt-3 max-w-xl text-slate-300">
-            Compare plans, start a subscription, or talk to us about enterprise requirements.
           </p>
-          <div className="mt-8 flex flex-wrap justify-center gap-3">
-            <Link
-              href="/pricing"
-              className="btn-primary inline-flex rounded-full bg-gradient-to-r from-teal-600 to-teal-500 px-5 py-2.5 text-sm font-semibold text-white"
-            >
-              View pricing
-            </Link>
-            <Link
-              href={salesCta.href}
-              className="btn-secondary inline-flex rounded-full border border-white/25 px-5 py-2.5 text-sm font-semibold text-white"
-            >
-              {salesCta.label}
-            </Link>
-          </div>
+        </Container>
+      </section>
+
+      {/* FAQ */}
+      {faqs.length > 0 && (
+        <section className="section-light py-20 sm:py-24">
+          <Container>
+            <FadeIn>
+              <p className="type-label text-teal-600">Frequently asked</p>
+              <h2 className="type-h2 mt-3 max-w-xl font-bold text-slate-950">
+                Questions about LoopC ERP
+              </h2>
+            </FadeIn>
+            <dl className="mt-10 space-y-4">
+              {faqs.map((faq, i) => (
+                <FadeIn key={faq.id} delay={i * 0.05}>
+                  <div className="rounded-2xl border border-slate-200/80 bg-white p-5">
+                    <dt className="font-semibold text-slate-950">{faq.question}</dt>
+                    <dd className="mt-2 text-sm leading-relaxed text-slate-600">{faq.answer}</dd>
+                  </div>
+                </FadeIn>
+              ))}
+            </dl>
+          </Container>
+        </section>
+      )}
+
+      {/* CTA */}
+      <section className="section-dark py-20 sm:py-24">
+        <Container className="text-center">
+          <FadeIn>
+            <h2 className="type-h2 font-bold text-white">
+              Ready to run your business on one platform?
+            </h2>
+            <p className="mx-auto mt-4 max-w-xl text-slate-300">
+              Choose a plan and get access to LoopC ERP. No setup fees.
+            </p>
+            <div className="mt-8 flex flex-wrap justify-center gap-4">
+              <Link
+                href="/pricing"
+                className="inline-flex rounded-full bg-teal-500 px-6 py-3 text-sm font-semibold text-slate-950 transition hover:bg-teal-400"
+              >
+                View Pricing
+              </Link>
+              <Link
+                href={`${erp}/signup`}
+                className="inline-flex rounded-full border border-white/25 px-6 py-3 text-sm font-semibold text-white transition hover:border-white/50 hover:bg-white/10"
+              >
+                Get Started Free
+              </Link>
+            </div>
+          </FadeIn>
         </Container>
       </section>
     </div>

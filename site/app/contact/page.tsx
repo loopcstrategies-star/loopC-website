@@ -14,9 +14,9 @@ import {
 } from "@/lib/site-config";
 
 export const metadata: Metadata = pageMetadata({
-  title: "Contact LoopC | Talk to an expert",
+  title: "Contact LoopC | Start a project or explore the ERP",
   description:
-    "Tell us what you're trying to build — LoopC ERP, custom software, web apps, mobile apps or dashboards.",
+    "Tell us what you're building — web app, mobile app, SaaS, ERP, custom software or dashboard. We will come back with a clear next step.",
   path: "/contact",
 });
 
@@ -34,10 +34,8 @@ export default async function ContactPage({
 
   const heroTitle =
     intent === "expert"
-      ? "Talk to an expert."
-      : intent === "project"
-        ? "Tell us what you're trying to build."
-        : "Tell us what you're trying to build.";
+      ? "Talk to an Expert."
+      : "Start a Project.";
 
   const heroDescription =
     intent === "expert"

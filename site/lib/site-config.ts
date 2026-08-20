@@ -4,29 +4,29 @@ export const siteConfig = {
   brand: "LoopC",
   name: "LoopC Business Strategies",
   legalName: "LoopC Business Strategies",
-  tagline: "Software built around the way your business works.",
+  tagline: "Build Better. Operate Smarter. Grow Faster.",
   description:
-    "LoopC builds and delivers ERP, web applications, mobile apps, dashboards and custom business software for growing companies.",
+    "We design and build powerful digital products for modern businesses — from custom web and mobile applications to scalable business software and complete ERP solutions.",
   supportingLine:
-    "LoopC builds and delivers ERP, web applications, mobile apps, dashboards and custom business software for growing companies.",
+    "We design and build powerful digital products for modern businesses — from custom web and mobile applications to scalable business software and complete ERP solutions.",
   footerTagline:
-    "Business software built around the way your business works.",
+    "Technology built around the way your business works.",
   productionUrl: "https://www.loopcstrategies.com",
 
   positioning: {
-    eyebrow: "BUSINESS SOFTWARE • ERP • WEB • MOBILE",
+    eyebrow: "ERP • WEB • MOBILE • CUSTOM SOFTWARE",
     heroSupport:
-      "From strategy and design to development, launch and long-term support.",
-    erpHeadline: "One workspace for your entire business.",
+      "We design and build powerful digital products for modern businesses — from custom web and mobile applications to scalable business software and complete ERP solutions.",
+    erpHeadline: "One Powerful ERP for Your Entire Business.",
     erpCopy:
-      "Bring finance, sales, inventory, customers and people into one connected system. Start with the modules you need and expand as your business grows.",
-    customSoftwareHeadline: "Your business is different. Your software can be too.",
+      "Bring your business operations together with a powerful ERP platform designed to help teams manage their everyday operations from one connected system.",
+    customSoftwareHeadline: "Technology Built Around Your Business.",
     customSoftwareCopy:
-      "Not every business can operate inside a standard workflow. We design and build custom software around your processes, data and customers.",
-    dualOfferingHeadline: "One company. Two ways to work with us.",
+      "Every business works differently. We create digital solutions around your workflows, your teams and your goals — helping you replace disconnected tools and manual processes with technology that works for your business.",
+    dualOfferingHeadline: "Digital Products We Build.",
     finalCtaHeadline: "Ready to build software that works the way your business does?",
     finalCtaCopy:
-      "Start with LoopC ERP or tell us what you need to build. We'll help you find the right path.",
+      "Start with LoopC ERP or tell us about your project. We'll help you find the right path.",
   },
 
   location: {
@@ -115,33 +115,81 @@ export const whatsappPrefill =
   "Hello LoopC — I would like to discuss a software project.";
 
 export const erpModules = [
+  "Finance",
   "Accounting",
-  "Invoicing",
   "Inventory",
-  "Sales",
-  "Purchasing",
   "CRM",
   "HR",
-  "Payroll",
+  "Sales",
+  "Purchasing",
   "Reports",
-  "Analytics",
+  "Business Management",
+  "Role-based Access",
 ] as const;
 
 export const erpValueProps = [
   {
-    title: "Modular",
-    description: "Pay for the capabilities your business needs and expand as you grow.",
+    title: "One Connected Platform",
+    description: "Finance, sales, inventory, customers and people — all connected from one system.",
   },
   {
-    title: "Connected",
-    description: "Finance, sales, inventory, customers and operations work from shared data.",
+    title: "Reduce Manual Work",
+    description: "Replace spreadsheets and disconnected tools with automated, integrated workflows.",
   },
   {
-    title: "Flexible",
-    description: "Configure roles, workflows and business rules around your organization.",
+    title: "Real-Time Business Visibility",
+    description: "Live dashboards and reports give you a clear picture of your business at any time.",
   },
   {
-    title: "Scalable",
-    description: "Start with a small team and grow into a complete business platform.",
+    title: "Scale With Your Business",
+    description: "Start with what you need and expand your ERP capabilities as your business grows.",
+  },
+] as const;
+
+export const homeServices = [
+  {
+    title: "Web Applications",
+    description: "Custom web platforms designed for complex business workflows and scalable operations.",
+    icon: "browser",
+  },
+  {
+    title: "Mobile Applications",
+    description: "Modern mobile experiences for customers, employees and business operations.",
+    icon: "phone",
+  },
+  {
+    title: "SaaS Applications",
+    description: "Cloud-based software products designed for scalability and recurring business models.",
+    icon: "cloud",
+  },
+  {
+    title: "Business Dashboards",
+    description: "Interactive dashboards that turn business data into clear and useful decisions.",
+    icon: "chart",
+  },
+  {
+    title: "Custom Software",
+    description: "Software designed specifically around your company's processes and requirements.",
+    icon: "gears",
+  },
+  {
+    title: "ERP & Business Systems",
+    description: "Connected business systems that help organizations manage their operations more efficiently.",
+    icon: "plug",
+  },
+  {
+    title: "UI/UX Design",
+    description: "Simple, intuitive and modern interfaces designed around real users.",
+    icon: "pencil",
+  },
+  {
+    title: "API & Integrations",
+    description: "Connect applications, services and business workflows through reliable APIs and integrations.",
+    icon: "workflow",
+  },
+  {
+    title: "Automation",
+    description: "Reduce repetitive work and improve efficiency with intelligent business automation.",
+    icon: "shield",
   },
 ] as const;

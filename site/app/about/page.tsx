@@ -2,34 +2,43 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { JsonLd } from "@/components/json-ld";
 import { PageHero } from "@/components/page-hero";
+import { FadeIn } from "@/components/motion/fade-in";
 import { Container } from "@/components/ui/container";
 import { getBreadcrumbSchema, pageMetadata } from "@/lib/seo";
 import { deliveryProcess } from "@/lib/process";
-import { siteConfig } from "@/lib/site-config";
 
 export const metadata: Metadata = pageMetadata({
-  title: "About LoopC | ERP & custom business software",
+  title: "About LoopC | Technology built around your business",
   description:
-    "LoopC Business Strategies builds ERP and custom business software — designed around how companies actually work.",
+    "LoopC is a technology team focused on creating practical, scalable and user-friendly digital products that help businesses operate better.",
   path: "/about",
 });
 
 const values = [
   {
-    title: "Business first",
+    title: "Business First",
     copy: "We start with the workflow, the constraint and the user — not the technology trend.",
+    icon: "◈",
   },
   {
-    title: "Simple by design",
+    title: "Simplicity",
     copy: "Software should feel obvious to the people who use it every day.",
+    icon: "◇",
   },
   {
-    title: "Built to evolve",
-    copy: "Products change as the business changes. We plan for that from day one.",
+    title: "Quality",
+    copy: "We build to last — not to demo. Every product is crafted with attention to detail and reliability.",
+    icon: "◆",
   },
   {
-    title: "Long-term partnership",
+    title: "Innovation",
+    copy: "We stay current so your business can benefit from the best tools and approaches available.",
+    icon: "◉",
+  },
+  {
+    title: "Partnership",
     copy: "Launch is a delivery step. We stay on for support, improvements and the next release.",
+    icon: "◎",
   },
 ] as const;
 
@@ -44,74 +53,114 @@ export default function AboutPage() {
       />
       <PageHero
         eyebrow="About LoopC"
-        title="Business software built around the way your business works."
-        description={`${siteConfig.name} delivers LoopC ERP and custom software — from ${siteConfig.location.short}.`}
+        title="We Build Technology Around the Way Businesses Work."
+        description="We are a technology team focused on creating practical, scalable and user-friendly digital products that help businesses operate better."
         dark
       />
-      <Container className="max-w-3xl space-y-14 py-16 sm:py-20">
-        <section>
-          <h2 className="type-h3 font-semibold text-slate-950">The problem we solve</h2>
-          <p className="mt-3 leading-relaxed text-slate-600">
-            Growing businesses often run on spreadsheets, disconnected tools and manual hand-offs.
-            Finance lives in one place, inventory in another, customers in a third. By the time
-            leadership gets a clear picture, the week has already moved on.
-          </p>
-          <p className="mt-3 leading-relaxed text-slate-600">
-            LoopC exists to bring that work into software — either through LoopC ERP or custom
-            systems designed around your operations.
-          </p>
-        </section>
-        <section>
-          <h2 className="type-h3 font-semibold text-slate-950">The LoopC approach</h2>
-          <p className="mt-3 leading-relaxed text-slate-600">
-            We sit with the work first: approvals, exceptions, the Tuesday-morning rush. Then we
-            choose the right product — ERP subscription, web application, mobile app or custom
-            platform — and build it with a team that stays after go-live.
-          </p>
-        </section>
-        <section>
-          <h2 className="type-h3 font-semibold text-slate-950">How we deliver</h2>
-          <ol className="mt-4 space-y-3">
-            {deliveryProcess.map((step) => (
-              <li key={step.id} className="rounded-2xl border border-slate-200 bg-white p-4">
-                <p className="text-xs font-bold text-teal-700">{step.num} · {step.title}</p>
-                <p className="mt-1 text-sm text-slate-600">{step.summary}</p>
-              </li>
+
+      {/* Our Story */}
+      <section className="bg-white py-20 sm:py-24">
+        <Container className="grid gap-12 lg:grid-cols-2 lg:gap-20">
+          <FadeIn>
+            <p className="type-label text-teal-600">Our story</p>
+            <h2 className="type-h2 mt-3 font-bold text-slate-950">
+              From Business Problems to Digital Solutions
+            </h2>
+          </FadeIn>
+          <FadeIn delay={0.08}>
+            <div className="space-y-5 text-slate-600 leading-relaxed">
+              <p>
+                Businesses often operate across spreadsheets, disconnected tools, manual processes
+                and multiple systems. We believe technology should simplify that complexity.
+              </p>
+              <p>
+                Our approach is simple: understand the problem, design the right experience, build
+                reliable technology and continue improving it as the business grows.
+              </p>
+              <p>
+                From a single ERP implementation to a complex custom platform, every engagement
+                starts the same way — with a genuine understanding of how the work gets done today
+                and what better would look like tomorrow.
+              </p>
+            </div>
+          </FadeIn>
+        </Container>
+      </section>
+
+      {/* Approach timeline */}
+      <section className="section-light py-20 sm:py-24">
+        <Container>
+          <FadeIn>
+            <p className="type-label text-teal-600">Our approach</p>
+            <h2 className="type-h2 mt-3 max-w-xl font-bold text-slate-950">
+              How we work with you
+            </h2>
+            <p className="mt-4 max-w-2xl text-slate-600">
+              A clear process from the first conversation to long-term support.
+            </p>
+          </FadeIn>
+          <ol className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {deliveryProcess.map((step, i) => (
+              <FadeIn key={step.id} delay={i * 0.06}>
+                <li className="group flex flex-col rounded-2xl border border-slate-200/80 bg-white p-5 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:border-teal-300/60 hover:shadow-md">
+                  <p className="text-3xl font-bold text-teal-100">{step.num}</p>
+                  <p className="mt-2 font-semibold text-slate-950">{step.title}</p>
+                  <p className="mt-2 text-sm leading-relaxed text-slate-600">{step.summary}</p>
+                </li>
+              </FadeIn>
             ))}
           </ol>
-        </section>
-        <section>
-          <h2 className="type-h3 font-semibold text-slate-950">What we stand for</h2>
-          <ul className="mt-4 grid gap-4 sm:grid-cols-2">
-            {values.map((value) => (
-              <li key={value.title} className="rounded-2xl bg-slate-50 p-4">
-                <p className="font-semibold text-slate-900">{value.title}</p>
-                <p className="mt-2 text-sm text-slate-600">{value.copy}</p>
-              </li>
+        </Container>
+      </section>
+
+      {/* Values */}
+      <section className="bg-white py-20 sm:py-24">
+        <Container>
+          <FadeIn>
+            <p className="type-label text-teal-600">What we stand for</p>
+            <h2 className="type-h2 mt-3 max-w-xl font-bold text-slate-950">
+              Principles that guide everything we build
+            </h2>
+          </FadeIn>
+          <ul className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {values.map((value, i) => (
+              <FadeIn key={value.title} delay={i * 0.07}>
+                <li className="group flex flex-col rounded-2xl border border-slate-200/80 bg-[#f8faf9] p-6 transition-all duration-200 hover:-translate-y-1 hover:border-teal-300/60 hover:shadow-md">
+                  <span className="text-2xl text-teal-600" aria-hidden>{value.icon}</span>
+                  <p className="mt-3 font-bold text-slate-950">{value.title}</p>
+                  <p className="mt-2 text-sm leading-relaxed text-slate-600">{value.copy}</p>
+                </li>
+              </FadeIn>
             ))}
           </ul>
-        </section>
-        <section className="rounded-3xl bg-[#050b16] px-6 py-10 text-white">
-          <h2 className="text-2xl font-semibold">Two ways to work with us</h2>
-          <p className="mt-2 text-slate-300">
-            Start with LoopC ERP or tell us what you need to build custom.
-          </p>
-          <div className="mt-6 flex flex-wrap gap-3">
-            <Link
-              href="/erp"
-              className="inline-flex rounded-full bg-teal-500 px-5 py-2.5 text-sm font-semibold text-slate-950"
-            >
-              Explore LoopC ERP
-            </Link>
-            <Link
-              href="/contact?intent=expert"
-              className="inline-flex rounded-full border border-white/25 px-5 py-2.5 text-sm font-semibold text-white"
-            >
-              Talk to an expert
-            </Link>
-          </div>
-        </section>
-      </Container>
+        </Container>
+      </section>
+
+      {/* CTA */}
+      <section className="section-dark py-20 sm:py-24">
+        <Container className="text-center">
+          <FadeIn>
+            <h2 className="type-h2 font-bold text-white">Ready to build something better?</h2>
+            <p className="mx-auto mt-4 max-w-xl text-slate-300">
+              Tell us about your business challenge. We will help you find the right next step.
+            </p>
+            <div className="mt-8 flex flex-wrap justify-center gap-4">
+              <Link
+                href="/contact"
+                className="inline-flex rounded-full bg-teal-500 px-6 py-3 text-sm font-semibold text-slate-950 transition hover:bg-teal-400"
+              >
+                Start a Project
+              </Link>
+              <Link
+                href="/erp"
+                className="inline-flex rounded-full border border-white/25 px-6 py-3 text-sm font-semibold text-white transition hover:border-white/50 hover:bg-white/10"
+              >
+                Explore Our ERP
+              </Link>
+            </div>
+          </FadeIn>
+        </Container>
+      </section>
     </div>
   );
 }

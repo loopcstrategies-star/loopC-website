@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { formatDate } from "@/lib/format";
 
 type CompanyRow = {
@@ -21,6 +22,19 @@ export function CompaniesClient({ companies }: { companies: CompanyRow[] }) {
   const router = useRouter();
   const [pending, startTransition] = useTransition();
   const [error, setError] = useState("");
+  const [search, setSearch] = useState("");
+  const [subFilter, setSubFilter] = useState("all");
+
+  const filtered = companies.filter((c) => {
+    if (subFilter !== "all" && c.subscriptionStatus !== subFilter) return false;
+    if (
+      search &&
+      !c.name.toLowerCase().includes(search.toLowerCase()) &&
+      !c.slug.toLowerCase().includes(search.toLowerCase())
+    )
+      return false;
+    return true;
+  });
 
   async function act(payload: Record<string, unknown>) {
     setError("");
@@ -38,8 +52,29 @@ export function CompaniesClient({ companies }: { companies: CompanyRow[] }) {
   }
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-4">
       {error ? <p className="text-sm text-red-600">{error}</p> : null}
+      <div className="flex flex-wrap gap-3">
+        <Input
+          className="max-w-xs"
+          placeholder="Search customers…"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+        <select
+          className="rounded border border-[var(--border)] bg-[var(--surface)] px-3 py-1.5 text-sm"
+          value={subFilter}
+          onChange={(e) => setSubFilter(e.target.value)}
+        >
+          <option value="all">All statuses</option>
+          <option value="ACTIVE">Active</option>
+          <option value="TRIAL">Trial</option>
+          <option value="PAST_DUE">Past due</option>
+          <option value="CANCELLED">Cancelled</option>
+          <option value="SUSPENDED">Suspended</option>
+        </select>
+        <span className="self-center text-sm text-[var(--muted)]">{filtered.length} customers</span>
+      </div>
       <div className="overflow-x-auto">
         <table className="w-full min-w-[720px] text-left text-sm">
           <thead className="text-[var(--muted)]">
@@ -55,7 +90,7 @@ export function CompaniesClient({ companies }: { companies: CompanyRow[] }) {
             </tr>
           </thead>
           <tbody>
-            {companies.map((c) => (
+            {filtered.map((c) => (
               <tr key={c.id} className="border-t border-[var(--border)]">
                 <td className="py-2">{c.name}</td>
                 <td className="py-2">{c.slug}</td>

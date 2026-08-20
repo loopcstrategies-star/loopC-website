@@ -37,13 +37,12 @@ async function main() {
     // TEST 1 — marketing home
     log("TEST1 marketing home", (await httpStatus(MARKETING)) === 200);
 
-    // TEST 2 — ERP pricing from DB
-    const pricingStatus = await httpStatus(`${ERP}/pricing`);
+    // TEST 2 — ERP public plans API (pricing UI lives on marketing site)
     const plansRes = await fetch(`${ERP}/api/public/plans`);
     const plansJson = (await plansRes.json()) as { plans: { slug: string; monthlyPriceInr: number | null }[] };
     log(
-      "TEST2 ERP pricing + DB plans",
-      pricingStatus === 200 && plansJson.plans?.length >= 4,
+      "TEST2 ERP DB plans API",
+      plansRes.status === 200 && plansJson.plans?.length >= 4,
       `${plansJson.plans?.length ?? 0} plans`,
     );
 
@@ -58,6 +57,10 @@ async function main() {
       mktPricing.status === 200 && mktHtml.includes(String(Math.floor(starter.monthlyPriceInr / 100))),
       `expects ~${priceLabel}`,
     );
+
+    // Signup deep-link target exists on ERP
+    const signupStatus = await httpStatus(`${ERP}/signup?plan=starter&cycle=MONTHLY`);
+    log("TEST2c ERP signup reachable", signupStatus === 200, String(signupStatus));
 
     // TEST 3 — admin requires auth
     const adminStatus = await httpStatus(`${ERP}/admin`);

@@ -5,7 +5,6 @@ import { usePathname } from "next/navigation";
 import { useEffect, useId, useRef, useState, useSyncExternalStore } from "react";
 import { createPortal } from "react-dom";
 import { Logo } from "@/components/logo";
-import { MobileSolutionsGroup, SolutionsMenu } from "@/components/navigation/solutions-menu";
 import { getExpertCta, getLoginNav, primaryNav } from "@/lib/navigation";
 import { getWhatsAppUrl, siteConfig, whatsappPrefill } from "@/lib/site-config";
 
@@ -106,22 +105,7 @@ export function SiteHeader() {
         className="flex min-h-0 flex-1 flex-col gap-1 overflow-y-auto px-4 py-6"
         aria-label="Mobile"
       >
-        {primaryNav.slice(0, 1).map(({ href, label }) => (
-          <Link
-            key={href}
-            href={href}
-            className={`rounded-xl px-4 py-3 text-lg ${
-              isActivePath(pathname, href)
-                ? "bg-white/10 font-semibold text-teal-300"
-                : "font-medium text-slate-200"
-            }`}
-            onClick={() => setOpen(false)}
-          >
-            {label}
-          </Link>
-        ))}
-        <MobileSolutionsGroup onNavigate={() => setOpen(false)} />
-        {primaryNav.slice(1).map(({ href, label }) => (
+        {primaryNav.map(({ href, label }) => (
           <Link
             key={href}
             href={href}
@@ -185,25 +169,7 @@ export function SiteHeader() {
             className="hidden items-center gap-3 text-[0.75rem] xl:flex xl:gap-4 2xl:gap-5"
             aria-label="Main"
           >
-            {primaryNav.slice(0, 1).map(({ href, label }) => {
-              const active = isActivePath(pathname, href);
-              return (
-                <Link
-                  key={href}
-                  href={href}
-                  data-active={active ? "true" : undefined}
-                  className={`nav-link whitespace-nowrap ${
-                    active
-                      ? "font-semibold text-teal-300"
-                      : "font-medium text-slate-300 transition-colors hover:text-white"
-                  }`}
-                >
-                  {label}
-                </Link>
-              );
-            })}
-            <SolutionsMenu />
-            {primaryNav.slice(1).map(({ href, label }) => {
+            {primaryNav.map(({ href, label }) => {
               const active = isActivePath(pathname, href);
               return (
                 <Link
@@ -226,6 +192,13 @@ export function SiteHeader() {
             className="btn-primary interactive-shine hidden items-center whitespace-nowrap rounded-full bg-gradient-to-r from-teal-600 to-teal-500 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-teal-700/20 xl:inline-flex"
           >
             {expertCta.label}
+          </NavAnchor>
+          <NavAnchor
+            href={login.href}
+            external={login.external}
+            className="hidden items-center whitespace-nowrap rounded-full border border-white/20 px-4 py-2 text-sm font-semibold text-white transition hover:border-white/40 hover:bg-white/5 xl:inline-flex"
+          >
+            {login.label}
           </NavAnchor>
           <button
             type="button"

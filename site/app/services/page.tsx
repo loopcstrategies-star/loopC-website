@@ -2,25 +2,17 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { JsonLd } from "@/components/json-ld";
 import { PageHero } from "@/components/page-hero";
+import { FadeIn } from "@/components/motion/fade-in";
 import { Container } from "@/components/ui/container";
-import { SectionHeader } from "@/components/ui/section-header";
+import { ServiceExplorer } from "@/components/services/service-explorer";
 import { getBreadcrumbSchema, pageMetadata } from "@/lib/seo";
-import { services } from "@/lib/services";
 
 export const metadata: Metadata = pageMetadata({
-  title: "Software services | Web, mobile, ERP & custom systems",
+  title: "Services | Web, mobile, ERP & custom software",
   description:
-    "LoopC delivers web applications, mobile apps, dashboards, automation, UI/UX and custom business software — plus ERP customization.",
+    "From websites and mobile applications to complex business platforms — we design and develop digital solutions built around your goals.",
   path: "/services",
 });
-
-const serviceGroups = [
-  { label: "Web & product", slugs: ["web-development", "web-applications", "ui-ux"] },
-  { label: "Mobile", slugs: ["mobile-app-development"] },
-  { label: "Custom & dashboards", slugs: ["custom-software", "dashboard-development"] },
-  { label: "Automation & integrations", slugs: ["business-automation", "api-integrations"] },
-  { label: "Support", slugs: ["support-growth"] },
-] as const;
 
 export default function ServicesPage() {
   return (
@@ -33,51 +25,58 @@ export default function ServicesPage() {
       />
       <PageHero
         eyebrow="Services"
-        title="Software services for growing businesses."
-        description="Web, mobile, dashboards, automation and custom systems — plus ERP customization when you need to extend LoopC ERP."
+        title="Digital Solutions Built for Modern Businesses"
+        description="From websites and mobile applications to complex business platforms, we design and develop digital solutions that are built around your goals."
         dark
       />
-      <Container className="space-y-16 py-16 sm:py-20">
-        {serviceGroups.map((group) => {
-          const items = group.slugs
-            .map((slug) => services.find((s) => s.slug === slug))
-            .filter((s): s is (typeof services)[number] => Boolean(s));
 
-          return (
-            <section key={group.label}>
-              <h2 className="type-h3 font-semibold text-slate-950">{group.label}</h2>
-              <div className="mt-8 grid gap-4 md:grid-cols-2">
-                {items.map((service) => (
-                  <Link
-                    key={service.slug}
-                    href={service.href}
-                    className="lift-card rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm"
-                  >
-                    <h2 className="text-xl font-semibold text-slate-950">{service.title}</h2>
-                    <p className="mt-2 text-slate-600">{service.summary}</p>
-                    <p className="mt-3 text-sm text-slate-500">{service.whoFor}</p>
-                    <p className="mt-4 text-sm font-semibold text-teal-700">View {service.shortTitle}</p>
-                  </Link>
-                ))}
+      {/* Interactive service explorer */}
+      <section className="bg-white py-20 sm:py-24">
+        <Container>
+          <FadeIn>
+            <p className="type-label text-teal-600">Service explorer</p>
+            <h2 className="type-h2 mt-3 max-w-2xl font-bold text-slate-950">
+              What would you like to build?
+            </h2>
+            <p className="mt-4 max-w-xl text-slate-600">
+              Select a service to explore what we deliver, the technologies we use, and how to get started.
+            </p>
+          </FadeIn>
+          <ServiceExplorer />
+        </Container>
+      </section>
+
+      {/* ERP CTA */}
+      <section className="section-light py-16 sm:py-20">
+        <Container>
+          <FadeIn>
+            <div className="rounded-3xl border border-teal-200/60 bg-teal-50/50 p-8 sm:p-10">
+              <p className="type-label text-teal-700">ERP product</p>
+              <h2 className="mt-3 text-2xl font-bold text-slate-950">
+                Looking for a complete business ERP?
+              </h2>
+              <p className="mt-3 max-w-xl text-slate-600">
+                LoopC ERP brings finance, inventory, CRM, HR, sales and reporting into one connected
+                platform. Explore plans and start a subscription.
+              </p>
+              <div className="mt-6 flex flex-wrap gap-3">
+                <Link
+                  href="/erp"
+                  className="inline-flex rounded-full bg-teal-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-teal-700"
+                >
+                  Explore LoopC ERP
+                </Link>
+                <Link
+                  href="/pricing"
+                  className="inline-flex rounded-full border border-teal-300 bg-white px-5 py-2.5 text-sm font-semibold text-teal-800 transition hover:bg-teal-50"
+                >
+                  View Pricing
+                </Link>
               </div>
-            </section>
-          );
-        })}
-
-        <section className="rounded-3xl border border-teal-200/60 bg-teal-50/50 p-6 sm:p-8">
-          <SectionHeader
-            eyebrow="ERP"
-            title="ERP customization"
-            description="Extend LoopC ERP with custom modules, workflows, reports and integrations tailored to your organization."
-          />
-          <Link
-            href="/contact?intent=expert&service=erp-customization"
-            className="mt-4 inline-flex text-sm font-semibold text-teal-800 hover:underline"
-          >
-            Talk about ERP customization →
-          </Link>
-        </section>
-      </Container>
+            </div>
+          </FadeIn>
+        </Container>
+      </section>
     </div>
   );
 }
