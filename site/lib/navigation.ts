@@ -18,7 +18,6 @@ export const primaryNav: NavItem[] = [
   { href: "/services", label: "Services" },
   { href: "/erp", label: "ERP" },
   { href: "/pricing", label: "Pricing" },
-  { href: "/faq", label: "FAQ" },
   { href: "/contact", label: "Contact" },
 ];
 
@@ -97,8 +96,6 @@ export const footerCompany: NavItem[] = [
   { href: "/about", label: "About" },
   { href: "/work", label: "Work" },
   { href: "/industries", label: "Industries" },
-  { href: "/blog", label: "Insights" },
-  { href: "/faq", label: "FAQ" },
   { href: "/contact", label: "Contact" },
 ];
 

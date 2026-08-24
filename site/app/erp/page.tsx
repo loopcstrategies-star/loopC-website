@@ -52,7 +52,6 @@ export default async function ErpPage() {
         ])}
       />
 
-      {/* Hero */}
       <PageHero
         eyebrow="LoopC ERP"
         title={intro?.title || "One Powerful ERP for Your Entire Business"}
@@ -61,9 +60,12 @@ export default async function ErpPage() {
           siteConfig.positioning.erpCopy
         }
         dark
+        backgroundImage="/images/page-heroes/erp.jpg"
       />
 
-      {/* ERP showcase */}
+      <ErpValueProps />
+
+      {/* What's included */}
       <section className="section-dark on-dark relative overflow-hidden py-20 sm:py-28">
         <div className="pointer-events-none absolute inset-0 opacity-20" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px)", backgroundSize: "48px 48px" }} />
         <Container className="relative grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
@@ -111,9 +113,6 @@ export default async function ErpPage() {
           </FadeIn>
         </Container>
       </section>
-
-      {/* Benefits */}
-      <ErpValueProps />
 
       {/* Modules grid */}
       <section className="bg-white py-20 sm:py-24">

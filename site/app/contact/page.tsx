@@ -48,7 +48,13 @@ export default async function ContactPage({
           { name: "Contact", path: "/contact" },
         ])}
       />
-      <PageHero eyebrow="Contact" title={heroTitle} description={heroDescription} dark />
+      <PageHero
+        eyebrow="Contact"
+        title={heroTitle}
+        description={heroDescription}
+        dark
+        backgroundImage="/images/page-heroes/contact.jpg"
+      />
       <section className="relative overflow-hidden">
         <div className="pointer-events-none absolute -right-20 top-10 h-80 w-80 rounded-full bg-violet-400/20 blur-3xl" />
         <div className="pointer-events-none absolute -left-16 bottom-0 h-72 w-72 rounded-full bg-blue-400/20 blur-3xl" />
@@ -98,6 +104,9 @@ export default async function ContactPage({
               defaultIntent={intent}
               turnstileSiteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? ""}
             />
+            <p className="mt-4 text-xs leading-relaxed text-[var(--muted)]">
+              We review every enquiry in our team inbox (ERP Admin → Website → Contact).
+            </p>
           </div>
         </Container>
       </section>

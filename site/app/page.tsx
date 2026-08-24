@@ -4,7 +4,6 @@ import {
   WhyChooseUsSection,
 } from "@/components/home/erp-showcase-section";
 import { HomeFinalCta } from "@/components/home/home-final-cta";
-import { HomeFaqSection } from "@/components/home/home-faq-section";
 import { HomeHero } from "@/components/home/home-hero";
 import { HomePricingPreview } from "@/components/home/home-pricing-preview";
 import { IntroCardsSection } from "@/components/home/intro-cards-section";
@@ -13,7 +12,6 @@ import { ProcessSection } from "@/components/home/process-section";
 import { TechStripSection } from "@/components/home/tech-strip-section";
 import { JsonLd } from "@/components/json-ld";
 import {
-  type ErpFaqItem,
   type ErpPlan,
   type ErpWebsitePage,
   asStringArray,
@@ -39,15 +37,13 @@ type SitePayload = {
 };
 
 type PlansPayload = { plans: ErpPlan[] };
-type FaqPayload = { faqs: ErpFaqItem[] };
 
 export default async function HomePage() {
   const erpCta = getExploreErpCta();
   const customCta = getCustomSoftwareCta();
-  const [siteData, plansData, faqData] = await Promise.all([
+  const [siteData, plansData] = await Promise.all([
     erpFetch<SitePayload>("/api/public/site"),
     erpFetch<PlansPayload>("/api/public/plans"),
-    erpFetch<FaqPayload>("/api/public/faqs?pageSlug=faq"),
   ]);
 
   const hero = sectionByKey(siteData?.home?.sections, "hero");
@@ -82,7 +78,6 @@ export default async function HomePage() {
       <WhyChooseUsSection />
       <ProcessSection />
       <HomePricingPreview plans={plansData?.plans} />
-      <HomeFaqSection faqs={faqData?.faqs ?? []} />
       <HomeFinalCta />
     </div>
   );

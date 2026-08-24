@@ -36,14 +36,14 @@ export function HeroVisualImage({
               Live
             </span>
           </div>
-          <div className="relative aspect-[16/10] w-full bg-[#0b1224]">
+          <div className="relative aspect-[16/10] w-full overflow-hidden bg-[#0b1224]">
             <Image
               src={src}
               alt={alt}
               fill
               priority
               sizes="(max-width: 1024px) 100vw, 55vw"
-              className="object-cover object-top"
+              className="scale-[1.06] object-cover object-left-top"
             />
           </div>
         </div>

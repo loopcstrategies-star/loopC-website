@@ -56,6 +56,7 @@ export default function AboutPage() {
         title="We Build Technology Around the Way Businesses Work."
         description="We are a technology team focused on creating practical, scalable and user-friendly digital products that help businesses operate better."
         dark
+        backgroundImage="/images/page-heroes/about.jpg"
       />
 
       {/* Our Story */}
@@ -102,8 +103,8 @@ export default function AboutPage() {
           <ol className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {deliveryProcess.map((step, i) => (
               <FadeIn key={step.id} delay={i * 0.06}>
-                <li className="group flex flex-col rounded-2xl border border-slate-200/80 bg-white p-5 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:border-blue-300/60 hover:shadow-md">
-                  <p className="text-3xl font-bold text-blue-100">{step.num}</p>
+                <li className="group flex flex-col rounded-2xl border border-slate-300 bg-white p-5 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:border-blue-400/70 hover:shadow-md">
+                  <p className="text-3xl font-bold text-[var(--primary)]">{step.num}</p>
                   <p className="mt-2 font-semibold text-slate-950">{step.title}</p>
                   <p className="mt-2 text-sm leading-relaxed text-slate-600">{step.summary}</p>
                 </li>

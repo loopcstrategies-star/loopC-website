@@ -23,8 +23,14 @@ export function ProductFrame({
           Live
         </span>
       </div>
-      <div className="relative aspect-[16/10] w-full bg-[#0b1224]">
-        <Image src={src} alt={alt} fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover object-top" />
+      <div className="relative aspect-[16/10] w-full overflow-hidden bg-[#0b1224]">
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          sizes="(max-width: 1024px) 100vw, 50vw"
+          className="scale-[1.06] object-cover object-left-top"
+        />
       </div>
     </figure>
   );

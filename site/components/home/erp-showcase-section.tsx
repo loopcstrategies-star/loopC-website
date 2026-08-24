@@ -79,23 +79,23 @@ export function ErpShowcaseSection() {
 
 export function ErpValueProps() {
   return (
-    <section className="section-dark on-dark py-20 sm:py-24">
+    <section className="bg-white py-20 sm:py-24">
       <Container>
         <FadeIn>
-          <p className="type-label mx-auto text-center text-blue-300">Why LoopC ERP</p>
-          <h2 className="type-h2 mx-auto mt-3 max-w-2xl text-center font-bold text-white">
+          <p className="type-label mx-auto text-center text-[var(--primary)]">Why LoopC ERP</p>
+          <h2 className="type-h2 mx-auto mt-3 max-w-2xl text-center font-bold text-slate-950">
             One connected system for your entire business.
           </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-center text-slate-300">
+          <p className="mx-auto mt-4 max-w-2xl text-center text-slate-600">
             Replace disconnected tools and manual processes with a platform built to grow with you.
           </p>
         </FadeIn>
         <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {erpValueProps.map((item, index) => (
             <FadeIn key={item.title} delay={index * 0.05}>
-              <div className="lift-card premium-card h-full rounded-2xl border border-white/10 bg-white/5 p-5">
-                <h3 className="text-lg font-semibold text-white">{item.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-slate-300">{item.description}</p>
+              <div className="lift-card premium-card h-full rounded-2xl border border-slate-300 bg-[var(--background)] p-5 shadow-sm">
+                <h3 className="text-lg font-semibold text-slate-950">{item.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-slate-600">{item.description}</p>
               </div>
             </FadeIn>
           ))}

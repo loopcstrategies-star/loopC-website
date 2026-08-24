@@ -101,6 +101,7 @@ export default async function PricingPage() {
         title="Plans that grow with your business."
         description="Subscribe monthly or yearly. Enterprise teams can talk to us for custom modules, limits and support."
         dark
+        backgroundImage="/images/page-heroes/pricing.jpg"
       />
       <Container className="py-16 sm:py-20">
         <p className="mx-auto mb-10 max-w-2xl text-center text-slate-600">

@@ -28,6 +28,7 @@ export default function ServicesPage() {
         title="Digital Solutions Built for Modern Businesses"
         description="From websites and mobile applications to complex business platforms, we design and develop digital solutions that are built around your goals."
         dark
+        backgroundImage="/images/page-heroes/services.jpg"
       />
 
       {/* Interactive service explorer */}
