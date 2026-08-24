@@ -68,7 +68,7 @@ export default async function BlogPage() {
           <Link
             key={post.slug}
             href={`/blog/${post.slug}`}
-            className="lift-card rounded-2xl border border-slate-200 bg-white p-6"
+            className="lift-card premium-card rounded-2xl border border-slate-200 bg-white p-6"
           >
             <p className="text-xs font-semibold uppercase tracking-wider text-[var(--primary)]">
               {post.category}

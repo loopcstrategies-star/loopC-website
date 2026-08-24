@@ -22,11 +22,11 @@ export function HomeFaqSection({ faqs }: { faqs: ErpFaqItem[] }) {
             const isOpen = open === item.id;
             return (
               <FadeIn key={item.id} delay={index * 0.04}>
-                <li className="overflow-hidden rounded-2xl border border-[var(--border)] bg-white">
+                <li className="overflow-hidden rounded-2xl border border-[var(--border)] bg-white shadow-sm transition hover:border-blue-200/70 hover:shadow-md hover:shadow-blue-500/5">
                   <button
                     type="button"
                     aria-expanded={isOpen}
-                    className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left"
+                    className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left transition hover:bg-slate-50/80"
                     onClick={() => setOpen(isOpen ? null : item.id)}
                   >
                     <span className="font-semibold text-[var(--text)]">{item.question}</span>

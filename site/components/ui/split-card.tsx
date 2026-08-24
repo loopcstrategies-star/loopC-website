@@ -22,9 +22,9 @@ export function SplitCard({
 
   return (
     <article
-      className={`lift-card flex h-full flex-col rounded-3xl border p-6 sm:p-8 ${
+      className={`lift-card premium-card flex h-full flex-col rounded-3xl border p-6 sm:p-8 ${
         isDark
-          ? "border-white/10 bg-white/5 text-white"
+          ? "surface-card-dark border-white/10 text-white"
           : "border-slate-200/80 bg-white text-slate-950 shadow-sm"
       }`}
     >
@@ -84,14 +84,17 @@ export function PremiumCard({
 
   if (href) {
     return (
-      <Link href={href} className="lift-card block rounded-2xl border border-slate-200/80 bg-white p-5 shadow-sm">
+      <Link
+        href={href}
+        className="lift-card premium-card interactive-shine block rounded-2xl border border-slate-200/80 bg-white p-5 shadow-sm"
+      >
         {body}
       </Link>
     );
   }
 
   return (
-    <div className="lift-card rounded-2xl border border-slate-200/80 bg-white p-5 shadow-sm">
+    <div className="lift-card premium-card rounded-2xl border border-slate-200/80 bg-white p-5 shadow-sm">
       {body}
     </div>
   );

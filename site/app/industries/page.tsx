@@ -33,7 +33,7 @@ export default function IndustriesPage() {
           <Link
             key={industry.slug}
             href={`/industries/${industry.slug}`}
-            className="lift-card rounded-2xl border border-slate-200 bg-white p-6"
+            className="lift-card premium-card rounded-2xl border border-slate-200 bg-white p-6"
           >
             <h2 className="text-xl font-semibold text-slate-950">{industry.title}</h2>
             <p className="mt-2 text-slate-600">{industry.summary}</p>

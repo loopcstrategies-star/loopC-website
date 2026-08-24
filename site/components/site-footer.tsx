@@ -29,7 +29,7 @@ function SocialButton({
       target="_blank"
       rel="noopener noreferrer"
       aria-label={label}
-      className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-slate-200 transition hover:border-blue-400/40 hover:bg-blue-500/15 hover:text-white"
+      className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-slate-200 transition duration-200 hover:-translate-y-0.5 hover:border-blue-400/40 hover:bg-blue-500/15 hover:text-white hover:shadow-lg hover:shadow-blue-500/20"
     >
       {children}
     </a>
@@ -43,7 +43,10 @@ function FooterColumn({ title, links }: { title: string; links: { href: string; 
       <ul className="mt-4 space-y-2.5 text-sm">
         {links.map(({ href, label }) => (
           <li key={href}>
-            <Link href={href} className="text-slate-400 transition hover:text-blue-300">
+            <Link
+              href={href}
+              className="text-slate-400 transition duration-200 hover:translate-x-0.5 hover:text-blue-300"
+            >
               {label}
             </Link>
           </li>
@@ -65,8 +68,9 @@ export function SiteFooter() {
 
   return (
     <footer className="on-dark relative mt-auto overflow-hidden border-t border-white/10 bg-[var(--dark)] text-slate-300">
-      <div className="pointer-events-none absolute -left-24 bottom-0 h-64 w-64 rounded-full bg-blue-600/15 blur-3xl" />
-      <div className="pointer-events-none absolute -right-16 top-0 h-56 w-56 rounded-full bg-violet-600/10 blur-3xl" />
+      <div className="pointer-events-none absolute -left-24 bottom-0 h-72 w-72 rounded-full bg-blue-600/20 blur-3xl" />
+      <div className="pointer-events-none absolute -right-16 top-0 h-64 w-64 rounded-full bg-violet-600/15 blur-3xl" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-blue-500/40 to-transparent" />
       <div className="relative mx-auto max-w-6xl px-4 py-14 sm:px-6 lg:py-16">
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-12 lg:gap-8">
           <div className="lg:col-span-4">

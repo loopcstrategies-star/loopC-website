@@ -171,7 +171,7 @@ export function ServiceExplorer() {
             animate={reduce ? {} : { opacity: 1, x: 0 }}
             exit={reduce ? {} : { opacity: 0, x: -8 }}
             transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className="rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm sm:p-8"
+            className="rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm ring-1 ring-blue-500/5 sm:p-8"
           >
             <h2 className="text-2xl font-bold text-slate-950">{current.title}</h2>
             <p className="mt-3 leading-relaxed text-slate-600">{current.description}</p>

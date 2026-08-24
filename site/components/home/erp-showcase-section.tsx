@@ -1,3 +1,4 @@
+import { ProductFrame } from "@/components/layout/product-frame";
 import Link from "next/link";
 import { FadeIn } from "@/components/motion/fade-in";
 import { MagneticButton } from "@/components/motion/magnetic-button";
@@ -9,78 +10,27 @@ const floatingFeatures = ["Finance", "CRM", "Inventory", "HR", "Sales", "Reports
 
 function ErpDashboardMock() {
   return (
-    <div className="relative">
-      <div className="relative z-10 overflow-hidden rounded-2xl border border-white/10 bg-[#111827]/95 p-4 shadow-2xl">
-        <div className="mb-3 flex items-center gap-1.5">
-          <span className="h-2 w-2 rounded-full bg-red-400/80" />
-          <span className="h-2 w-2 rounded-full bg-amber-400/80" />
-          <span className="h-2 w-2 rounded-full bg-emerald-400/80" />
-          <span className="ml-2 text-[10px] text-slate-500">LoopC ERP · Dashboard</span>
-        </div>
-        <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-          {[
-            { label: "Revenue", value: "₹12.4L", tone: "text-blue-300" },
-            { label: "Invoices", value: "48", tone: "text-violet-300" },
-            { label: "Stock alerts", value: "6", tone: "text-cyan-300" },
-            { label: "Open tasks", value: "14", tone: "text-blue-300" },
-          ].map((kpi) => (
-            <div key={kpi.label} className="rounded-lg bg-white/5 p-3">
-              <p className="text-[10px] text-slate-400">{kpi.label}</p>
-              <p className={`text-sm font-semibold ${kpi.tone}`}>{kpi.value}</p>
-            </div>
-          ))}
-        </div>
-        <div className="mt-3 grid gap-2 sm:grid-cols-2">
-          <div className="rounded-lg bg-white/5 p-3">
-            <p className="text-[10px] font-semibold uppercase tracking-wider text-blue-300">
-              Recent sales
-            </p>
-            <div className="mt-2 space-y-1.5">
-              {["INV-1042 · Acme Traders", "INV-1041 · Metro Supplies", "INV-1040 · Green Foods"].map(
-                (row) => (
-                  <div
-                    key={row}
-                    className="rounded border border-white/5 px-2 py-1.5 text-[11px] text-slate-300"
-                  >
-                    {row}
-                  </div>
-                ),
-              )}
-            </div>
-          </div>
-          <div className="rounded-lg bg-white/5 p-3">
-            <p className="text-[10px] font-semibold uppercase tracking-wider text-violet-300">
-              Inventory
-            </p>
-            <div className="mt-3 flex h-16 items-end gap-1">
-              {[55, 72, 48, 85, 60, 90].map((h, i) => (
-                <span
-                  key={i}
-                  className="w-full origin-bottom rounded-sm bg-gradient-to-t from-blue-600 to-violet-400"
-                  style={{ height: `${h}%` }}
-                />
-              ))}
-            </div>
-          </div>
-        </div>
-        <p className="mt-3 text-[10px] text-slate-500">Illustrative demo data · Product UI concept</p>
-      </div>
-
-      <ul className="mt-4 flex flex-wrap justify-center gap-2 lg:absolute lg:left-0 lg:top-8 lg:mt-0 lg:flex-col">
+    <div className="relative lg:pl-4">
+      <ProductFrame
+        src="/images/hero/operations.png"
+        alt="LoopC ERP operations dashboard with inventory, finance and activity"
+        caption="loopc.app / erp"
+      />
+      <ul className="mt-4 flex flex-wrap justify-center gap-2 lg:absolute lg:-left-2 lg:top-10 lg:mt-0 lg:flex-col">
         {floatingFeatures.slice(0, 3).map((f) => (
           <li
             key={f}
-            className="rounded-xl border border-white/10 bg-[var(--dark)]/90 px-3 py-2 text-xs font-semibold text-slate-200 shadow-lg backdrop-blur"
+            className="hero-float rounded-xl border border-white/10 bg-[var(--dark)]/90 px-3.5 py-2 text-xs font-semibold text-slate-200 shadow-lg shadow-blue-950/30 backdrop-blur transition hover:border-blue-400/40 hover:bg-blue-500/15"
           >
             {f}
           </li>
         ))}
       </ul>
-      <ul className="mt-2 flex flex-wrap justify-center gap-2 lg:absolute lg:right-0 lg:bottom-12 lg:mt-0 lg:flex-col">
+      <ul className="mt-2 flex flex-wrap justify-center gap-2 lg:absolute lg:-right-2 lg:bottom-14 lg:mt-0 lg:flex-col">
         {floatingFeatures.slice(3).map((f) => (
           <li
             key={f}
-            className="rounded-xl border border-white/10 bg-[var(--dark)]/90 px-3 py-2 text-xs font-semibold text-slate-200 shadow-lg backdrop-blur"
+            className="hero-float-alt rounded-xl border border-white/10 bg-[var(--dark)]/90 px-3.5 py-2 text-xs font-semibold text-slate-200 shadow-lg shadow-violet-950/30 backdrop-blur transition hover:border-violet-400/40 hover:bg-violet-500/15"
           >
             {f}
           </li>
@@ -143,7 +93,7 @@ export function ErpValueProps() {
         <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {erpValueProps.map((item, index) => (
             <FadeIn key={item.title} delay={index * 0.05}>
-              <div className="lift-card h-full rounded-2xl border border-white/10 bg-white/5 p-5">
+              <div className="lift-card premium-card h-full rounded-2xl border border-white/10 bg-white/5 p-5">
                 <h3 className="text-lg font-semibold text-white">{item.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-slate-300">{item.description}</p>
               </div>
@@ -191,7 +141,7 @@ export function WhyChooseUsSection() {
         <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {items.map((item, index) => (
             <FadeIn key={item.title} delay={index * 0.05}>
-              <div className="lift-card h-full rounded-2xl border border-[var(--border)] bg-[var(--background)] p-5">
+              <div className="lift-card premium-card h-full rounded-2xl border border-[var(--border)] bg-[var(--background)] p-5 shadow-sm">
                 <div className="mb-3 h-1 w-10 rounded-full bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)]" />
                 <h3 className="text-lg font-semibold text-[var(--text)]">{item.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">{item.description}</p>
@@ -219,7 +169,7 @@ export function ErpModulesGrid({ modules }: { modules?: string[] }) {
         <ul className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
           {moduleList.map((name, index) => (
             <FadeIn key={name} delay={index * 0.03}>
-              <li className="lift-card rounded-2xl border border-[var(--border)] bg-white px-4 py-4 text-center text-sm font-medium text-slate-800 shadow-sm">
+              <li className="lift-card premium-card rounded-2xl border border-[var(--border)] bg-white px-4 py-4 text-center text-sm font-medium text-slate-800 shadow-sm">
                 {name}
               </li>
             </FadeIn>

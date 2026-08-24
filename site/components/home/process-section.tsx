@@ -51,10 +51,10 @@ export function ProcessSection() {
                 <button
                   type="button"
                   onClick={() => setActive(index)}
-                  className={`w-full rounded-2xl border px-4 py-4 text-left transition ${
+                  className={`w-full rounded-2xl border px-4 py-4 text-left transition duration-200 ${
                     active === index
-                      ? "border-blue-400/40 bg-white/10"
-                      : "border-white/10 bg-white/5 hover:bg-white/8"
+                      ? "border-blue-400/50 bg-white/10 shadow-lg shadow-blue-500/10"
+                      : "border-white/10 bg-white/5 hover:border-white/20 hover:bg-white/[0.08]"
                   }`}
                 >
                   <p className="text-xs font-semibold tracking-[0.16em] text-blue-300">{step.num}</p>

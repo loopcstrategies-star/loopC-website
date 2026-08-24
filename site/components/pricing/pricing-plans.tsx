@@ -115,7 +115,7 @@ export function PricingPlans({
           return (
             <div
               key={plan.slug}
-              className={`lift-card relative flex flex-col rounded-2xl border bg-white p-6 shadow-sm ${
+              className={`lift-card premium-card relative flex flex-col rounded-2xl border bg-white p-6 shadow-sm ${
                 plan.isPopular
                   ? "border-transparent bg-gradient-to-b from-blue-50/80 to-violet-50/80 shadow-xl shadow-blue-500/15 ring-2 ring-blue-500/35"
                   : "border-[var(--border)]"

@@ -15,19 +15,25 @@ export function HomeFinalCta() {
       <div className="grain-overlay" />
       <Container className="relative">
         <FadeIn>
-          <div className="mx-auto max-w-3xl rounded-3xl border border-white/10 bg-white/5 px-6 py-12 text-center sm:px-12">
-            <p className="type-label text-blue-300">Next step</p>
-            <h2 className="type-h2 mt-3 font-bold text-white">
-              {siteConfig.positioning.finalCtaHeadline}
-            </h2>
-            <p className="mx-auto mt-4 max-w-xl text-slate-300">
-              {siteConfig.positioning.finalCtaCopy}
-            </p>
-            <div className="mt-8 flex flex-wrap justify-center gap-3">
-              <MagneticButton href={projectCta.href}>{projectCta.label}</MagneticButton>
-              <MagneticButton href={erpCta.href} variant="dark">
-                {erpCta.label}
-              </MagneticButton>
+          <div className="relative mx-auto max-w-3xl overflow-hidden rounded-3xl border border-white/10 bg-white/5 px-6 py-12 text-center shadow-2xl shadow-blue-950/40 backdrop-blur-sm sm:px-12">
+            <div
+              className="pointer-events-none absolute inset-0 rounded-3xl bg-gradient-to-br from-blue-500/5 via-transparent to-violet-500/5"
+              aria-hidden
+            />
+            <div className="relative">
+              <p className="type-label text-blue-300">Next step</p>
+              <h2 className="type-h2 mt-3 font-bold text-white">
+                {siteConfig.positioning.finalCtaHeadline}
+              </h2>
+              <p className="mx-auto mt-4 max-w-xl text-slate-300">
+                {siteConfig.positioning.finalCtaCopy}
+              </p>
+              <div className="mt-8 flex flex-wrap justify-center gap-3">
+                <MagneticButton href={projectCta.href}>{projectCta.label}</MagneticButton>
+                <MagneticButton href={erpCta.href} variant="dark">
+                  {erpCta.label}
+                </MagneticButton>
+              </div>
             </div>
           </div>
         </FadeIn>

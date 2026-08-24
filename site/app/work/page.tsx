@@ -34,7 +34,7 @@ export default function WorkPage() {
             <Link
               key={project.slug}
               href={project.href}
-              className="lift-card rounded-3xl border border-slate-200 bg-white p-6 sm:p-8"
+              className="lift-card premium-card rounded-3xl border border-slate-200 bg-white p-6 sm:p-8"
             >
               <p className="type-label text-[var(--primary)]">{project.sector}</p>
               <h2 className="type-h3 mt-3 font-semibold text-slate-950">{project.title}</h2>

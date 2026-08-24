@@ -160,8 +160,8 @@ export function SiteHeader() {
     <header
       className={`sticky top-0 z-50 border-b transition-[background-color,height,box-shadow,backdrop-filter] duration-300 ${
         scrolled
-          ? "border-white/10 bg-[var(--dark)]/85 shadow-lg shadow-blue-950/30 backdrop-blur-xl"
-          : "border-white/10 bg-[var(--dark)]/95 backdrop-blur-xl"
+          ? "border-white/10 bg-[var(--dark)]/80 shadow-xl shadow-blue-950/40 backdrop-blur-2xl"
+          : "border-white/10 bg-[var(--dark)]/92 backdrop-blur-xl"
       }`}
     >
       <div
@@ -206,20 +206,20 @@ export function SiteHeader() {
           </nav>
           <NavAnchor
             href={cta.href}
-            className="btn-primary interactive-shine hidden items-center whitespace-nowrap rounded-xl bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)] px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-blue-600/25 xl:inline-flex"
+            className="btn-primary interactive-shine hidden items-center whitespace-nowrap rounded-xl bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)] px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-blue-600/30 ring-1 ring-white/10 xl:inline-flex"
           >
             {cta.label}
           </NavAnchor>
           <NavAnchor
             href={login.href}
             external={login.external}
-            className="hidden items-center whitespace-nowrap rounded-xl border border-white/20 px-4 py-2 text-sm font-semibold text-white transition hover:border-white/40 hover:bg-white/5 xl:inline-flex"
+            className="hidden items-center whitespace-nowrap rounded-xl border border-white/20 px-4 py-2 text-sm font-semibold text-white transition hover:border-white/40 hover:bg-white/10 xl:inline-flex"
           >
             {login.label}
           </NavAnchor>
           <button
             type="button"
-            className="inline-flex rounded-xl border border-white/15 bg-white/5 p-2.5 text-white xl:hidden"
+            className="inline-flex rounded-xl border border-white/15 bg-white/5 p-2.5 text-white transition hover:bg-white/10 xl:hidden"
             aria-expanded={open}
             aria-controls={panelId}
             aria-haspopup="dialog"

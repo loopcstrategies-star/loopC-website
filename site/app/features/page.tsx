@@ -85,7 +85,7 @@ export default async function FeaturesPage() {
           {modules.map((name) => (
             <li
               key={name}
-              className="rounded-2xl border border-slate-200 bg-white px-4 py-4 text-sm font-semibold text-slate-900"
+              className="lift-card premium-card rounded-2xl border border-slate-200 bg-white px-4 py-4 text-sm font-semibold text-slate-900"
             >
               {name}
             </li>

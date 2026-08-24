@@ -20,14 +20,18 @@ export async function erpFetch<T>(path: string, init?: RequestInit): Promise<T |
   const isGet = method === "GET" || method === "HEAD";
 
   try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 5000);
     const res = await fetch(url, {
       ...init,
       headers: {
         Accept: "application/json",
         ...init?.headers,
       },
+      signal: init?.signal ?? controller.signal,
       ...(isGet ? { next: { revalidate: 30 } } : { cache: "no-store" as const }),
     });
+    clearTimeout(timeoutId);
     if (!res.ok) return null;
     return (await res.json()) as T;
   } catch {

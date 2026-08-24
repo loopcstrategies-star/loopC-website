@@ -71,7 +71,7 @@ export function IntroCardsSection() {
               whileInView={reduce ? {} : { opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.1 }}
               transition={{ duration: 0.5, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
-              className="premium-card group relative flex flex-col overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--background)] p-6 transition-all duration-300 hover:-translate-y-1.5 hover:border-blue-300/60 hover:shadow-xl hover:shadow-blue-500/10"
+              className="premium-card group relative flex flex-col overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--background)] p-6 shadow-sm transition-all duration-300 hover:-translate-y-2 hover:border-blue-300/60 hover:shadow-xl hover:shadow-blue-500/12"
             >
               <div
                 className={`pointer-events-none absolute -right-8 -top-8 h-28 w-28 rounded-full bg-gradient-to-br ${card.accent} opacity-0 blur-2xl transition-opacity duration-300 group-hover:opacity-30`}

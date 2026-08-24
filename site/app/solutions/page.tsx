@@ -39,7 +39,7 @@ export default function SolutionsPage() {
           {solutions.map((solution) => (
             <article
               key={solution.slug}
-              className="lift-card rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm"
+              className="lift-card premium-card rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm"
             >
               <h2 className="text-xl font-semibold text-slate-950">{solution.title}</h2>
               <p className="mt-3 text-slate-600">{solution.summary}</p>

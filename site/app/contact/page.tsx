@@ -59,7 +59,7 @@ export default async function ContactPage({
               Tell us about your project. We respond with a clear next step — not a generic sales
               pitch.
             </p>
-            <div className="mt-8 rounded-2xl border border-[var(--border)] bg-white p-6 shadow-sm">
+            <div className="mt-8 rounded-2xl border border-[var(--border)] bg-white p-6 shadow-sm transition duration-200 hover:border-blue-200/70 hover:shadow-md hover:shadow-blue-500/5">
               <h3 className="font-semibold text-[var(--text)]">{siteConfig.name}</h3>
               <p className="mt-2 text-sm text-[var(--muted)]">{siteConfig.location.display}</p>
               <div className="mt-5 space-y-2 text-sm">
@@ -92,7 +92,7 @@ export default async function ContactPage({
               </div>
             </div>
           </aside>
-          <div className="relative rounded-3xl border border-[var(--border)] bg-white/90 p-4 shadow-xl shadow-blue-500/5 backdrop-blur sm:p-8">
+          <div className="relative rounded-3xl border border-[var(--border)] bg-white/90 p-4 shadow-xl shadow-blue-500/10 ring-1 ring-blue-500/5 backdrop-blur sm:p-8">
             <ContactForm
               defaultService={mapServiceQuery(params.service)}
               defaultIntent={intent}

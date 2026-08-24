@@ -3,6 +3,7 @@ import Link from "next/link";
 import { JsonLd } from "@/components/json-ld";
 import { PageHero } from "@/components/page-hero";
 import { FadeIn } from "@/components/motion/fade-in";
+import { ProductFrame } from "@/components/layout/product-frame";
 import { Container } from "@/components/ui/container";
 import { ErpValueProps } from "@/components/home/erp-showcase-section";
 import {
@@ -26,57 +27,6 @@ export const metadata: Metadata = pageMetadata({
 
 type PagePayload = { page: ErpWebsitePage };
 type FaqPayload = { faqs: ErpFaqItem[] };
-
-function ErpDashboardMock() {
-  return (
-    <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-[#0e172a]/90 p-4 shadow-2xl">
-      <div className="mb-3 flex items-center gap-1.5">
-        <span className="h-2 w-2 rounded-full bg-red-400/80" />
-        <span className="h-2 w-2 rounded-full bg-amber-400/80" />
-        <span className="h-2 w-2 rounded-full bg-emerald-400/80" />
-        <span className="ml-2 text-[10px] text-slate-500">LoopC ERP · Dashboard</span>
-      </div>
-      <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-        {[
-          { label: "Revenue", value: "₹12.4L" },
-          { label: "Invoices", value: "48" },
-          { label: "Stock alerts", value: "6" },
-          { label: "Open tasks", value: "14" },
-        ].map((kpi) => (
-          <div key={kpi.label} className="rounded-lg bg-white/5 p-3">
-            <p className="text-[10px] text-slate-400">{kpi.label}</p>
-            <p className="text-sm font-semibold text-white">{kpi.value}</p>
-          </div>
-        ))}
-      </div>
-      <div className="mt-3 grid gap-2 sm:grid-cols-2">
-        <div className="rounded-lg bg-white/5 p-3">
-          <p className="text-[10px] font-semibold uppercase tracking-wider text-blue-300">Recent sales</p>
-          <div className="mt-2 space-y-1.5">
-            {["INV-1042 · Acme Traders", "INV-1041 · Metro Supplies", "INV-1040 · Green Foods"].map((row) => (
-              <div key={row} className="rounded border border-white/5 px-2 py-1.5 text-[11px] text-slate-300">
-                {row}
-              </div>
-            ))}
-          </div>
-        </div>
-        <div className="rounded-lg bg-white/5 p-3">
-          <p className="text-[10px] font-semibold uppercase tracking-wider text-blue-300">Inventory</p>
-          <div className="mt-3 flex h-16 items-end gap-1">
-            {[55, 72, 48, 85, 60, 90].map((h, i) => (
-              <span
-                key={i}
-                className="w-full origin-bottom rounded-sm bg-blue-400/60"
-                style={{ height: `${h}%` }}
-              />
-            ))}
-          </div>
-        </div>
-      </div>
-      <p className="mt-3 text-[10px] text-slate-500">Illustrative demo · LoopC ERP interface</p>
-    </div>
-  );
-}
 
 export default async function ErpPage() {
   const erp = getErpPublicUrl();
@@ -153,7 +103,11 @@ export default async function ErpPage() {
             </div>
           </FadeIn>
           <FadeIn delay={0.08}>
-            <ErpDashboardMock />
+            <ProductFrame
+              src="/images/hero/operations.png"
+              alt="LoopC ERP operations dashboard with inventory, finance and activity"
+              caption="loopc.app / erp"
+            />
           </FadeIn>
         </Container>
       </section>
@@ -176,7 +130,7 @@ export default async function ErpPage() {
           <ul className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
             {[...erpModules].map((mod, i) => (
               <FadeIn key={mod} delay={i * 0.04}>
-                <li className="lift-card rounded-2xl border border-slate-200/80 bg-[#f8faf9] px-4 py-4 text-center text-sm font-medium text-slate-800 shadow-sm">
+                <li className="lift-card premium-card rounded-2xl border border-slate-200/80 bg-[#f8faf9] px-4 py-4 text-center text-sm font-medium text-slate-800 shadow-sm">
                   {mod}
                 </li>
               </FadeIn>
@@ -204,7 +158,7 @@ export default async function ErpPage() {
             <dl className="mt-10 space-y-4">
               {faqs.map((faq, i) => (
                 <FadeIn key={faq.id} delay={i * 0.05}>
-                  <div className="rounded-2xl border border-slate-200/80 bg-white p-5">
+                  <div className="lift-card premium-card rounded-2xl border border-slate-200/80 bg-white p-5 shadow-sm">
                     <dt className="font-semibold text-slate-950">{faq.question}</dt>
                     <dd className="mt-2 text-sm leading-relaxed text-slate-600">{faq.answer}</dd>
                   </div>

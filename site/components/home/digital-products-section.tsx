@@ -97,7 +97,7 @@ export function DigitalProductsSection() {
               whileInView={reduce ? {} : { opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.08 }}
               transition={{ duration: 0.45, delay: i * 0.05, ease: [0.22, 1, 0.36, 1] }}
-              className="group relative flex flex-col overflow-hidden rounded-2xl border border-[var(--border)] bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:border-blue-300/50 hover:shadow-lg hover:shadow-blue-500/10"
+              className="premium-card group relative flex flex-col overflow-hidden rounded-2xl border border-[var(--border)] bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-2 hover:border-blue-300/50 hover:shadow-lg hover:shadow-blue-500/12"
             >
               <div
                 className={`absolute inset-x-0 top-0 h-24 bg-gradient-to-br ${accents[i % accents.length]} opacity-70 transition-transform duration-300 group-hover:scale-105`}
@@ -122,7 +122,7 @@ export function DigitalProductsSection() {
         <div className="mt-10 text-center">
           <Link
             href="/services"
-            className="inline-flex items-center gap-1.5 text-sm font-semibold text-[var(--primary)] hover:underline"
+            className="interactive-shine inline-flex items-center gap-1.5 rounded-xl border border-blue-200/60 bg-blue-50/50 px-5 py-2.5 text-sm font-semibold text-[var(--primary)] transition hover:border-blue-300 hover:bg-blue-50"
           >
             View all services
             <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden>

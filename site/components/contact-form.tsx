@@ -263,4 +263,4 @@ function Field({
 }
 
 const inputClass =
-  "w-full rounded-xl border border-[var(--border)] bg-white px-3 py-2.5 text-sm text-slate-900 outline-none ring-blue-500/30 transition focus:border-[var(--primary)] focus:ring-2";
+  "w-full rounded-xl border border-[var(--border)] bg-white px-3 py-2.5 text-sm text-slate-900 outline-none ring-blue-500/30 transition duration-200 hover:border-slate-300 focus:border-[var(--primary)] focus:ring-2";

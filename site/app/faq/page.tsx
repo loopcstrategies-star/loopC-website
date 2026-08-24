@@ -62,7 +62,7 @@ export default async function FaqPage() {
         {faqs.map((item) => (
           <details
             key={item.id}
-            className="group rounded-2xl border border-slate-200 bg-white px-5 py-4"
+            className="group rounded-2xl border border-slate-200 bg-white px-5 py-4 shadow-sm transition hover:border-blue-200/70 hover:shadow-md hover:shadow-blue-500/5"
           >
             <summary className="cursor-pointer list-none font-semibold text-slate-950 marker:content-none">
               <span className="flex items-center justify-between gap-4">

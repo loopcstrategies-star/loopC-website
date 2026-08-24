@@ -71,7 +71,7 @@ export function HomePricingPreview({ plans }: { plans?: ErpPlan[] | null }) {
             return (
               <FadeIn key={plan.slug} delay={index * 0.04}>
                 <div
-                  className={`lift-card relative flex h-full flex-col rounded-2xl border bg-[var(--background)] p-5 ${
+                  className={`lift-card premium-card relative flex h-full flex-col rounded-2xl border bg-[var(--background)] p-5 ${
                     popular
                       ? "border-transparent bg-gradient-to-b from-blue-50 to-violet-50 shadow-lg shadow-blue-500/10 ring-2 ring-blue-500/30"
                       : "border-[var(--border)]"
