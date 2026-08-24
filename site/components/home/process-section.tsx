@@ -21,14 +21,15 @@ export function ProcessSection() {
         const index = Number(visible.target.getAttribute("data-process-step"));
         if (!Number.isNaN(index)) setActive(index);
       },
-      { rootMargin: "-35% 0px -45% 0px", threshold: [0.2, 0.5, 0.8] },
+      { rootMargin: "-30% 0px -45% 0px", threshold: [0.2, 0.5, 0.8] },
     );
 
     nodes.forEach((node) => observer.observe(node));
     return () => observer.disconnect();
   }, []);
 
-  const current = deliveryProcess[active] ?? deliveryProcess[0];
+  const progress =
+    deliveryProcess.length <= 1 ? 100 : (active / (deliveryProcess.length - 1)) * 100;
 
   return (
     <section className="section-dark on-dark relative overflow-hidden bg-[var(--dark)] py-20 text-white sm:py-24">
@@ -44,46 +45,71 @@ export function ProcessSection() {
           </p>
         </FadeIn>
 
-        <div className="mt-12 grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
-          <ol className="space-y-3">
-            {deliveryProcess.map((step, index) => (
-              <li key={step.id} data-process-step={index}>
-                <button
-                  type="button"
-                  onClick={() => setActive(index)}
-                  className={`w-full rounded-2xl border px-4 py-4 text-left transition duration-200 ${
-                    active === index
-                      ? "border-blue-400/50 bg-white/10 shadow-lg shadow-blue-500/10"
-                      : "border-white/10 bg-white/5 hover:border-white/20 hover:bg-white/[0.08]"
-                  }`}
-                >
-                  <p className="text-xs font-semibold tracking-[0.16em] text-blue-300">{step.num}</p>
-                  <p className="mt-1 font-semibold">{step.title}</p>
-                  <p className="mt-1 text-sm text-slate-400">{step.summary}</p>
-                </button>
-              </li>
-            ))}
-          </ol>
+        <div className="relative mt-14 max-w-3xl">
+          {/* Spine track */}
+          <div
+            className="absolute bottom-3 left-[19px] top-3 w-px bg-white/10 sm:left-[23px]"
+            aria-hidden
+          />
+          {/* Spine progress fill */}
+          <div
+            className="absolute left-[19px] top-3 w-px origin-top bg-gradient-to-b from-blue-500 via-violet-500 to-cyan-400 transition-[height] duration-500 ease-out sm:left-[23px]"
+            style={{ height: `calc(${progress}% - 0.75rem)` }}
+            aria-hidden
+          />
 
-          <div className="lg:sticky lg:top-24">
-            <div className="glass-dark rounded-3xl p-6 sm:p-8">
-              <p className="type-label text-blue-300">{current.num}</p>
-              <h3 className="type-h3 mt-3 font-semibold text-white">{current.title}</h3>
-              <p className="mt-4 leading-relaxed text-slate-300">{current.detail}</p>
-              <div className="mt-8 grid grid-cols-7 gap-1">
-                {deliveryProcess.map((step, index) => (
-                  <div
-                    key={step.id}
-                    className={`h-1.5 rounded-full ${
-                      index <= active
-                        ? "bg-gradient-to-r from-blue-500 to-violet-500"
-                        : "bg-white/10"
-                    }`}
-                  />
-                ))}
-              </div>
-            </div>
-          </div>
+          <ol className="relative space-y-0">
+            {deliveryProcess.map((step, index) => {
+              const isActive = active === index;
+              const isPast = index < active;
+
+              return (
+                <li key={step.id} data-process-step={index}>
+                  <FadeIn delay={index * 0.05}>
+                    <button
+                      type="button"
+                      onClick={() => setActive(index)}
+                      className="group relative flex w-full gap-5 py-5 text-left sm:gap-7 sm:py-6"
+                    >
+                      <span
+                        className={`relative z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border text-xs font-bold tracking-wide transition duration-300 sm:h-12 sm:w-12 sm:text-sm ${
+                          isActive
+                            ? "border-blue-400 bg-gradient-to-br from-blue-500 to-violet-600 text-white shadow-lg shadow-blue-500/40 ring-4 ring-blue-500/20"
+                            : isPast
+                              ? "border-blue-400/60 bg-blue-500/20 text-blue-200"
+                              : "border-white/20 bg-[#0b1224] text-slate-400 group-hover:border-white/35 group-hover:text-slate-200"
+                        }`}
+                      >
+                        {step.num}
+                      </span>
+
+                      <span className="min-w-0 flex-1 pt-0.5 sm:pt-1">
+                        <span
+                          className={`block font-semibold transition-colors duration-200 sm:text-lg ${
+                            isActive ? "text-white" : "text-slate-200 group-hover:text-white"
+                          }`}
+                        >
+                          {step.title}
+                        </span>
+                        <span className="mt-1 block text-sm text-slate-400">{step.summary}</span>
+                        <span
+                          className={`grid transition-[grid-template-rows,opacity] duration-300 ease-out ${
+                            isActive ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+                          }`}
+                        >
+                          <span className="overflow-hidden">
+                            <span className="mt-3 block text-sm leading-relaxed text-slate-300 sm:text-[15px]">
+                              {step.detail}
+                            </span>
+                          </span>
+                        </span>
+                      </span>
+                    </button>
+                  </FadeIn>
+                </li>
+              );
+            })}
+          </ol>
         </div>
       </Container>
     </section>
