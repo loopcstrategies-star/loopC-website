@@ -29,7 +29,7 @@ export function ProductFrame({
           alt={alt}
           fill
           sizes="(max-width: 1024px) 100vw, 50vw"
-          className="scale-[1.06] object-cover object-left-top"
+          className="object-cover object-left-top"
         />
       </div>
     </figure>

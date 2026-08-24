@@ -3,12 +3,12 @@ import Link from "next/link";
 import { JsonLd } from "@/components/json-ld";
 import { PageHero } from "@/components/page-hero";
 import { Container } from "@/components/ui/container";
-import { getBreadcrumbSchema, pageMetadata } from "@/lib/seo";
+import { getBreadcrumbSchema, pageMetadata, pageSeo } from "@/lib/seo";
 import { getPublishedEmail, siteConfig } from "@/lib/site-config";
 
 export const metadata: Metadata = pageMetadata({
-  title: "Privacy policy",
-  description: `How ${siteConfig.name} handles information submitted through this website.`,
+  title: pageSeo.privacy.title,
+  description: pageSeo.privacy.description,
   path: "/privacy",
 });
 

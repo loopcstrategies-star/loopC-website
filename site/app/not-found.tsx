@@ -1,5 +1,12 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { siteConfig } from "@/lib/site-config";
+
+export const metadata: Metadata = {
+  title: "Page not found",
+  description: `The page you requested is not available on the ${siteConfig.name} website.`,
+  robots: { index: false, follow: false },
+};
 
 export default function NotFound() {
   return (
@@ -22,13 +29,13 @@ export default function NotFound() {
             href="/"
             className="inline-flex rounded-full bg-gradient-to-r from-teal-600 to-teal-500 px-6 py-3 text-sm font-semibold text-white"
           >
-            Back Home
+            Back to LoopC home
           </Link>
           <Link
             href="/contact"
             className="inline-flex rounded-full border border-white/20 px-6 py-3 text-sm font-semibold text-white"
           >
-            Start a Project
+            Contact LoopC Business Strategies
           </Link>
         </div>
       </div>

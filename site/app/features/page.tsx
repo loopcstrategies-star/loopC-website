@@ -9,12 +9,11 @@ import {
   erpFetch,
   sectionByKey,
 } from "@/lib/erp-api";
-import { getBreadcrumbSchema, pageMetadata } from "@/lib/seo";
+import { getBreadcrumbSchema, pageMetadata, pageSeo } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
-  title: "ERP features",
-  description:
-    "LoopC ERP modules unlock from your subscription — accounting, inventory, CRM, HR and more.",
+  title: pageSeo.features.title,
+  description: pageSeo.features.description,
   path: "/features",
 });
 

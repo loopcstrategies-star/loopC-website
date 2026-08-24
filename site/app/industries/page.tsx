@@ -4,12 +4,11 @@ import { JsonLd } from "@/components/json-ld";
 import { PageHero } from "@/components/page-hero";
 import { Container } from "@/components/ui/container";
 import { industries } from "@/lib/industries";
-import { getBreadcrumbSchema, pageMetadata } from "@/lib/seo";
+import { getBreadcrumbSchema, pageMetadata, pageSeo } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
-  title: "Software for trading, retail, manufacturing and more",
-  description:
-    "LoopC builds software for trading, wholesale, distribution, manufacturing, retail, education and professional services from OMR, Chennai.",
+  title: pageSeo.industries.title,
+  description: pageSeo.industries.description,
   path: "/industries",
 });
 

@@ -15,13 +15,12 @@ import {
   sectionByKey,
 } from "@/lib/erp-api";
 import { getSalesCta } from "@/lib/navigation";
-import { getBreadcrumbSchema, pageMetadata } from "@/lib/seo";
+import { getBreadcrumbSchema, getFaqPageSchema, pageMetadata, pageSeo } from "@/lib/seo";
 import { erpModules, siteConfig } from "@/lib/site-config";
 
 export const metadata: Metadata = pageMetadata({
-  title: "LoopC ERP | Business management software",
-  description:
-    "LoopC ERP brings finance, sales, inventory, CRM, HR and reporting into one connected system — web and mobile.",
+  title: pageSeo.erp.title,
+  description: pageSeo.erp.description,
   path: "/erp",
 });
 
@@ -51,6 +50,7 @@ export default async function ErpPage() {
           { name: "ERP", path: "/erp" },
         ])}
       />
+      {faqs.length > 0 ? <JsonLd data={getFaqPageSchema(faqs)} /> : null}
 
       <PageHero
         eyebrow="LoopC ERP"

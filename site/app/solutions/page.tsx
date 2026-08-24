@@ -4,13 +4,12 @@ import { JsonLd } from "@/components/json-ld";
 import { PageHero } from "@/components/page-hero";
 import { Container } from "@/components/ui/container";
 import { SectionHeader } from "@/components/ui/section-header";
-import { getBreadcrumbSchema, pageMetadata } from "@/lib/seo";
+import { getBreadcrumbSchema, pageMetadata, pageSeo } from "@/lib/seo";
 import { solutions } from "@/lib/solutions";
 
 export const metadata: Metadata = pageMetadata({
-  title: "Business software solutions | ERP & custom systems",
-  description:
-    "LoopC ERP, custom business software, web and mobile applications, dashboards, automation and ERP customization.",
+  title: pageSeo.solutions.title,
+  description: pageSeo.solutions.description,
   path: "/solutions",
 });
 

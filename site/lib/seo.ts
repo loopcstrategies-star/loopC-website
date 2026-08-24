@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { insightAuthor, type InsightPost } from "@/lib/insights";
 import type { Industry } from "@/lib/industries";
 import type { Project } from "@/lib/projects";
 import type { Service } from "@/lib/services";
@@ -19,20 +18,89 @@ export const seoKeywords = [
 ] as const;
 
 export const defaultSiteTitle =
-  "LoopC Business Strategies | ERP & Custom Business Software";
+  "LoopC Business Strategies | Enterprise ERP & Business Technology";
 
 export const defaultSiteDescription =
-  "LoopC builds LoopC ERP and custom business software — web applications, mobile apps, dashboards and integrations for growing companies.";
+  "LoopC builds LoopC ERP and custom business software — web apps, mobile apps, dashboards and integrations for growing companies in India.";
 
 export const homePageTitle =
-  "LoopC | ERP & Custom Business Software";
+  "LoopC Business Strategies | Enterprise ERP & Business Technology";
 
-export const homePageDescription = siteConfig.supportingLine;
+export const homePageDescription =
+  "Design and build powerful digital products for modern businesses — LoopC ERP, web and mobile apps, SaaS platforms and custom software.";
 
 export const openGraphTitle = "LoopC Business Strategies";
 
 export const openGraphDescription =
   "LoopC ERP plus custom web, mobile and dashboard software — built around the way your business works.";
+
+/** Unique SEO copy for static public marketing pages. */
+export const pageSeo = {
+  home: {
+    title: homePageTitle,
+    description: homePageDescription,
+  },
+  about: {
+    title: "About LoopC Business Strategies | Business Technology & Software",
+    description:
+      "Learn how LoopC designs practical, scalable digital products — from discovery to long-term support for growing businesses.",
+  },
+  services: {
+    title: "Software Development Services | LoopC Business Strategies",
+    description:
+      "Web, mobile, SaaS, ERP customization, dashboards and business automation — digital solutions built around your goals.",
+  },
+  erp: {
+    title: "LoopC ERP | Connected Business Management Platform",
+    description:
+      "Run finance, sales, inventory, CRM, HR and reporting in one connected ERP — web and mobile for everyday operations.",
+  },
+  pricing: {
+    title: "LoopC ERP Pricing | Business Management Plans",
+    description:
+      "Transparent INR plans for LoopC ERP — Starter, Business, Professional and Enterprise. Upgrade modules as you grow.",
+  },
+  contact: {
+    title: "Contact LoopC Business Strategies | Build Your Business Solution",
+    description:
+      "Tell us about your project or ERP needs. We respond with a clear next step for custom software or LoopC ERP.",
+  },
+  features: {
+    title: "LoopC ERP Features | Modules for Everyday Operations",
+    description:
+      "Explore LoopC ERP modules for accounting, inventory, CRM, HR, payroll and reporting in one connected platform.",
+  },
+  solutions: {
+    title: "Business Software Solutions | LoopC Business Strategies",
+    description:
+      "ERP, custom software, web apps and automation solutions that replace disconnected tools with systems that fit how you work.",
+  },
+  work: {
+    title: "Our Work | Selected LoopC Product Stories",
+    description:
+      "Selected LoopC work and live products we stand behind — practical software built for real business operations.",
+  },
+  industries: {
+    title: "Industries We Serve | ERP & Custom Software",
+    description:
+      "LoopC delivers ERP and custom software for trading, wholesale, distribution and other growing Indian businesses.",
+  },
+  privacy: {
+    title: "Privacy Policy | LoopC Business Strategies",
+    description:
+      "How LoopC Business Strategies collects, uses and protects information when you use our website and related services.",
+  },
+  terms: {
+    title: "Terms of Use | LoopC Business Strategies",
+    description:
+      "Terms that govern use of the LoopC Business Strategies website and related public marketing materials.",
+  },
+  brochure: {
+    title: "Company Brochure | LoopC Business Strategies",
+    description:
+      "Overview of LoopC ERP and custom software services — print-friendly brochure for teams evaluating LoopC.",
+  },
+} as const;
 
 export const sitemapPaths = [
   "/",
@@ -60,17 +128,22 @@ export function pageMetadata({
   description,
   path,
   type = "website",
+  index = true,
 }: {
   title: string;
   description: string;
   path: string;
   type?: "website" | "article";
+  index?: boolean;
 }): Metadata {
   const url = getAbsoluteUrl(path);
   return {
     title,
     description,
     alternates: { canonical: url },
+    robots: index
+      ? { index: true, follow: true }
+      : { index: false, follow: false },
     openGraph: {
       type,
       title,
@@ -174,25 +247,18 @@ export function getBreadcrumbSchema(items: { name: string; path: string }[]) {
   };
 }
 
-export function getArticleSchema(post: InsightPost) {
+export function getFaqPageSchema(faqs: { question: string; answer: string }[]) {
   return {
     "@context": "https://schema.org",
-    "@type": "Article",
-    headline: post.title,
-    description: post.description,
-    datePublished: post.publishedAt,
-    dateModified: post.updatedAt,
-    author: {
-      "@type": "Organization",
-      name: insightAuthor,
-      url: getSiteUrl(),
-    },
-    publisher: {
-      "@type": "Organization",
-      name: siteConfig.legalName,
-      url: getSiteUrl(),
-    },
-    mainEntityOfPage: getAbsoluteUrl(`/insights/${post.slug}`),
+    "@type": "FAQPage",
+    mainEntity: faqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.answer,
+      },
+    })),
   };
 }
 

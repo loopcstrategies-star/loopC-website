@@ -4,13 +4,12 @@ import { JsonLd } from "@/components/json-ld";
 import { PageHero } from "@/components/page-hero";
 import { FadeIn } from "@/components/motion/fade-in";
 import { Container } from "@/components/ui/container";
-import { getBreadcrumbSchema, pageMetadata } from "@/lib/seo";
+import { getBreadcrumbSchema, pageMetadata, pageSeo } from "@/lib/seo";
 import { deliveryProcess } from "@/lib/process";
 
 export const metadata: Metadata = pageMetadata({
-  title: "About LoopC | Technology built around your business",
-  description:
-    "LoopC is a technology team focused on creating practical, scalable and user-friendly digital products that help businesses operate better.",
+  title: pageSeo.about.title,
+  description: pageSeo.about.description,
   path: "/about",
 });
 

@@ -4,7 +4,7 @@ import { JsonLd } from "@/components/json-ld";
 import { PageHero } from "@/components/page-hero";
 import { Container } from "@/components/ui/container";
 import { mapIntentQuery, mapServiceQuery } from "@/lib/contact";
-import { getBreadcrumbSchema, pageMetadata } from "@/lib/seo";
+import { getBreadcrumbSchema, pageMetadata, pageSeo } from "@/lib/seo";
 import {
   getPublishedEmail,
   getWhatsAppUrl,
@@ -14,9 +14,8 @@ import {
 } from "@/lib/site-config";
 
 export const metadata: Metadata = pageMetadata({
-  title: "Contact LoopC | Start a project or explore the ERP",
-  description:
-    "Tell us what you're building — web app, mobile app, SaaS, ERP, custom software or dashboard. We will come back with a clear next step.",
+  title: pageSeo.contact.title,
+  description: pageSeo.contact.description,
   path: "/contact",
 });
 

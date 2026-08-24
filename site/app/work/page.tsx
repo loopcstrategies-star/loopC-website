@@ -4,12 +4,11 @@ import { JsonLd } from "@/components/json-ld";
 import { PageHero } from "@/components/page-hero";
 import { Container } from "@/components/ui/container";
 import { projects } from "@/lib/projects";
-import { getBreadcrumbSchema, pageMetadata } from "@/lib/seo";
+import { getBreadcrumbSchema, pageMetadata, pageSeo } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
-  title: "Our work",
-  description:
-    "Selected LoopC work. We only publish projects we can stand behind — starting with Coacher Max, a live education product.",
+  title: pageSeo.work.title,
+  description: pageSeo.work.description,
   path: "/work",
 });
 

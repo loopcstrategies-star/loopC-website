@@ -19,16 +19,16 @@ import {
   sectionByKey,
 } from "@/lib/erp-api";
 import { getCustomSoftwareCta, getExploreErpCta } from "@/lib/navigation";
-import { getOrganizationSchema, homePageDescription, homePageTitle, pageMetadata } from "@/lib/seo";
+import { getOrganizationSchema, pageMetadata, pageSeo } from "@/lib/seo";
 import { siteConfig } from "@/lib/site-config";
 
 export const metadata: Metadata = {
   ...pageMetadata({
-    title: homePageTitle,
-    description: homePageDescription,
+    title: pageSeo.home.title,
+    description: pageSeo.home.description,
     path: "/",
   }),
-  title: { absolute: homePageTitle },
+  title: { absolute: pageSeo.home.title },
 };
 
 type SitePayload = {

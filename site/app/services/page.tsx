@@ -5,12 +5,11 @@ import { PageHero } from "@/components/page-hero";
 import { FadeIn } from "@/components/motion/fade-in";
 import { Container } from "@/components/ui/container";
 import { ServiceExplorer } from "@/components/services/service-explorer";
-import { getBreadcrumbSchema, pageMetadata } from "@/lib/seo";
+import { getBreadcrumbSchema, pageMetadata, pageSeo } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
-  title: "Services | Web, mobile, ERP & custom software",
-  description:
-    "From websites and mobile applications to complex business platforms — we design and develop digital solutions built around your goals.",
+  title: pageSeo.services.title,
+  description: pageSeo.services.description,
   path: "/services",
 });
 

@@ -5,7 +5,7 @@ import { motion, useReducedMotion } from "framer-motion";
 
 export function HeroVisualImage({
   src = "/images/hero/dashboard.png",
-  alt = "LoopC business dashboard showing revenue, sales, inventory and live activity",
+  alt = "LoopC ERP business analytics dashboard showing revenue, sales, inventory and live activity",
 }: {
   src?: string;
   alt?: string;
@@ -43,7 +43,7 @@ export function HeroVisualImage({
               fill
               priority
               sizes="(max-width: 1024px) 100vw, 55vw"
-              className="scale-[1.06] object-cover object-left-top"
+              className="object-cover object-left-top"
             />
           </div>
         </div>

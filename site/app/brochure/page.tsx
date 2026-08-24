@@ -4,12 +4,12 @@ import { JsonLd } from "@/components/json-ld";
 import { PrintButton } from "@/components/print-button";
 import { Container } from "@/components/ui/container";
 import { footerServiceLinks } from "@/lib/services";
-import { getBreadcrumbSchema, pageMetadata } from "@/lib/seo";
+import { getBreadcrumbSchema, pageMetadata, pageSeo } from "@/lib/seo";
 import { siteConfig } from "@/lib/site-config";
 
 export const metadata: Metadata = pageMetadata({
-  title: "Company brochure",
-  description: `A printable overview of ${siteConfig.name} — software, apps, websites and custom systems from ${siteConfig.location.short}.`,
+  title: pageSeo.brochure.title,
+  description: pageSeo.brochure.description,
   path: "/brochure",
 });
 

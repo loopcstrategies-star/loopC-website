@@ -4,12 +4,11 @@ import { PageHero } from "@/components/page-hero";
 import { PricingPlans } from "@/components/pricing/pricing-plans";
 import { Container } from "@/components/ui/container";
 import { type ErpPlan, erpFetch, getErpPublicUrl } from "@/lib/erp-api";
-import { getBreadcrumbSchema, pageMetadata } from "@/lib/seo";
+import { getBreadcrumbSchema, pageMetadata, pageSeo } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
-  title: "ERP pricing",
-  description:
-    "LoopC ERP subscription plans in INR — Starter, Business, Professional and Enterprise.",
+  title: pageSeo.pricing.title,
+  description: pageSeo.pricing.description,
   path: "/pricing",
 });
 

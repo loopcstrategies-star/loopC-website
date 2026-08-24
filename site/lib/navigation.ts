@@ -36,13 +36,13 @@ export function getExpertCta(): NavItem {
 }
 
 export function getExploreErpCta(): NavItem {
-  return { href: "/erp", label: "Explore ERP" };
+  return { href: "/erp", label: "Explore LoopC ERP" };
 }
 
 export function getCustomSoftwareCta(): NavItem {
   return {
     href: "/contact?service=custom-software",
-    label: "Start a Project",
+    label: "Start a software project",
   };
 }
 

@@ -3,12 +3,12 @@ import Link from "next/link";
 import { JsonLd } from "@/components/json-ld";
 import { PageHero } from "@/components/page-hero";
 import { Container } from "@/components/ui/container";
-import { getBreadcrumbSchema, pageMetadata } from "@/lib/seo";
+import { getBreadcrumbSchema, pageMetadata, pageSeo } from "@/lib/seo";
 import { getPublishedEmail, siteConfig } from "@/lib/site-config";
 
 export const metadata: Metadata = pageMetadata({
-  title: "Terms of use",
-  description: `Terms for using the ${siteConfig.name} website and for starting a software engagement.`,
+  title: pageSeo.terms.title,
+  description: pageSeo.terms.description,
   path: "/terms",
 });
 
