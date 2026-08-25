@@ -40,7 +40,7 @@ export default async function AppLayout({
       }
       headerActions={
         <>
-          {accessReady ? (
+          {accessReady && erpUrl ? (
             <a
               href={erpUrl}
               target="_blank"

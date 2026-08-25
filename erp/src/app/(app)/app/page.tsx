@@ -38,7 +38,7 @@ export default async function AccountPortalPage() {
           </p>
         </div>
         <div className="flex flex-wrap gap-2">
-          {accessReady ? (
+          {accessReady && erpUrl ? (
             <a href={erpUrl} target="_blank" rel="noopener noreferrer">
               <Button>Open ERP</Button>
             </a>
@@ -59,7 +59,7 @@ export default async function AccountPortalPage() {
           This portal sells and manages subscriptions. The ERP application itself is a separate
           product.
         </p>
-        {accessReady ? (
+        {accessReady && erpUrl ? (
           <a
             href={erpUrl}
             target="_blank"
@@ -70,7 +70,9 @@ export default async function AccountPortalPage() {
           </a>
         ) : (
           <p className="mt-4 text-sm text-[var(--muted)]">
-            Activate a subscription to unlock product access.
+            {accessReady
+              ? "Subscription is active, but the external ERP URL is not configured (set NEXT_PUBLIC_ERP_APP_URL)."
+              : "Activate a subscription to unlock product access."}
           </p>
         )}
       </Card>

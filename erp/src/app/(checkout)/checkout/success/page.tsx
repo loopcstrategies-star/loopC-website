@@ -5,13 +5,13 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardTitle } from "@/components/ui/card";
 
-/** Prefer same public aliases as getExternalErpUrl (client can only read NEXT_PUBLIC_*). */
-function externalErpUrl() {
-  return (
-    process.env.NEXT_PUBLIC_ERP_APP_URL?.replace(/\/$/, "") ||
-    process.env.NEXT_PUBLIC_EXTERNAL_ERP_URL?.replace(/\/$/, "") ||
-    "https://erp.example-domain.com"
-  );
+/** Same public aliases as getExternalErpUrl (client can only read NEXT_PUBLIC_*). No demo fallback. */
+function externalErpUrl(): string | null {
+  const raw =
+    process.env.NEXT_PUBLIC_ERP_APP_URL?.trim() ||
+    process.env.NEXT_PUBLIC_EXTERNAL_ERP_URL?.trim() ||
+    "";
+  return raw ? raw.replace(/\/$/, "") : null;
 }
 
 export default function CheckoutSuccessPage() {
@@ -65,7 +65,7 @@ export default function CheckoutSuccessPage() {
         <CardTitle>Payment received</CardTitle>
         <p className="mt-3 text-sm text-[var(--muted)]">{message}</p>
         <div className="mt-6 flex flex-col gap-2 sm:flex-row sm:justify-center">
-          {ready ? (
+          {ready && erpUrl ? (
             <a href={erpUrl} target="_blank" rel="noopener noreferrer">
               <Button className="w-full sm:w-auto">Open ERP</Button>
             </a>

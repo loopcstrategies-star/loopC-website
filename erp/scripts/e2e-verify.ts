@@ -321,7 +321,7 @@ async function main() {
 
     const { getExternalErpUrl } = await import("../src/lib/external-erp");
     const externalUrl = getExternalErpUrl();
-    log("TEST17 EXTERNAL_ERP_URL", Boolean(externalUrl), externalUrl);
+    log("TEST17 EXTERNAL_ERP_URL", Boolean(externalUrl), externalUrl ?? "(not set)");
 
     const { isErpAccessReady } = await import("../src/server/access/subscription");
     const now = new Date();

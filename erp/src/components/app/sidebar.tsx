@@ -56,7 +56,7 @@ export function AppSidebar({
           <p className="px-3 text-xs font-semibold uppercase tracking-wide text-[var(--muted)]">
             Product
           </p>
-          {accessReady ? (
+          {accessReady && erpUrl ? (
             <a
               href={erpUrl}
               target="_blank"
@@ -74,9 +74,11 @@ export function AppSidebar({
             </Link>
           )}
           <p className="mt-1 px-3 text-xs text-[var(--muted)]">
-            {accessReady
+            {accessReady && erpUrl
               ? "Opens the existing LoopC ERP product (separate from this portal)."
-              : "Activate a subscription to unlock product access."}
+              : accessReady
+                ? "ERP product URL is not configured. Set ERP_APP_URL / NEXT_PUBLIC_ERP_APP_URL."
+                : "Activate a subscription to unlock product access."}
           </p>
         </div>
 
