@@ -1,6 +1,7 @@
 import { Card, CardTitle } from "@/components/ui/card";
 import { CompaniesClient } from "@/components/admin/companies-client";
 import { requireAdminSession } from "@/lib/session-guards";
+import { isErpAccessReady } from "@/server/access/subscription";
 import { prisma } from "@/server/db";
 
 export default async function AdminCompaniesPage() {
@@ -35,6 +36,7 @@ export default async function AdminCompaniesPage() {
               subscriptionStatus: c.subscription?.status ?? null,
               planId: c.subscription?.planId ?? null,
               externalErpCustomerId: c.externalErpCustomerId ?? null,
+              erpAccessReady: isErpAccessReady(c.subscription),
             }))}
           />
         </div>

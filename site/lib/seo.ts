@@ -280,6 +280,61 @@ export function getFaqPageSchema(faqs: { question: string; answer: string }[]) {
   };
 }
 
+export function getArticleSchema(post: {
+  title: string;
+  slug: string;
+  excerpt?: string | null;
+  content?: string | null;
+  authorName?: string | null;
+  publishedAt?: string | null;
+  featuredImageUrl?: string | null;
+}) {
+  const url = getAbsoluteUrl(`/blog/${post.slug}`);
+  return {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.title,
+    description: post.excerpt || post.title,
+    url,
+    mainEntityOfPage: url,
+    datePublished: post.publishedAt || undefined,
+    author: {
+      "@type": "Person",
+      name: post.authorName || siteConfig.legalName,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: siteConfig.legalName,
+      url: getSiteUrl(),
+    },
+    image: post.featuredImageUrl || getAbsoluteUrl("/opengraph-image"),
+  };
+}
+
+/** Marketing schema for LoopC ERP product page — no fake ratings. */
+export function getSoftwareApplicationSchema() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    name: "LoopC ERP",
+    applicationCategory: "BusinessApplication",
+    operatingSystem: "Web",
+    description: pageSeo.erp.description,
+    url: getAbsoluteUrl("/erp"),
+    offers: {
+      "@type": "Offer",
+      url: getAbsoluteUrl("/pricing"),
+      priceCurrency: "INR",
+      availability: "https://schema.org/InStock",
+    },
+    provider: {
+      "@type": "Organization",
+      name: siteConfig.legalName,
+      url: getSiteUrl(),
+    },
+  };
+}
+
 export function getIndustryDescription(industry: Industry): string {
   return `${industry.summary} LoopC delivers ERP and custom software for ${industry.title.toLowerCase()} businesses.`;
 }

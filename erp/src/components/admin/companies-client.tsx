@@ -20,6 +20,7 @@ type CompanyRow = {
   subscriptionStatus: string | null;
   planId: string | null;
   externalErpCustomerId: string | null;
+  erpAccessReady: boolean;
 };
 
 export function CompaniesClient({ companies }: { companies: CompanyRow[] }) {
@@ -105,6 +106,7 @@ export function CompaniesClient({ companies }: { companies: CompanyRow[] }) {
               <th className="py-2">Name</th>
               <th className="py-2">Contact</th>
               <th className="py-2">ERP ID</th>
+              <th className="py-2">ERP access</th>
               <th className="py-2">Members</th>
               <th className="py-2">Plan</th>
               <th className="py-2">Company</th>
@@ -156,6 +158,13 @@ export function CompaniesClient({ companies }: { companies: CompanyRow[] }) {
                 </td>
                 <td className="py-2 font-mono text-xs">
                   {editingId === c.id ? "…" : (c.externalErpCustomerId ?? "—")}
+                </td>
+                <td className="py-2 text-xs">
+                  {c.erpAccessReady ? (
+                    <span className="text-emerald-700">Ready</span>
+                  ) : (
+                    <span className="text-[var(--muted)]">Off</span>
+                  )}
                 </td>
                 <td className="py-2">{c.memberships}</td>
                 <td className="py-2">{c.planName ?? "—"}</td>
@@ -225,6 +234,26 @@ export function CompaniesClient({ companies }: { companies: CompanyRow[] }) {
                         Activate
                       </Button>
                     )}
+                    {c.subscriptionStatus &&
+                    c.subscriptionStatus !== "CANCELLED" &&
+                    c.subscriptionStatus !== "EXPIRED" ? (
+                      <Button
+                        type="button"
+                        variant="secondary"
+                        disabled={pending || editingId === c.id}
+                        onClick={() => {
+                          if (
+                            typeof window !== "undefined" &&
+                            !window.confirm(`Cancel subscription for ${c.name}?`)
+                          ) {
+                            return;
+                          }
+                          void act({ action: "cancel", companyId: c.id });
+                        }}
+                      >
+                        Cancel
+                      </Button>
+                    ) : null}
                   </div>
                 </td>
               </tr>

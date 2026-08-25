@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Badge, subscriptionTone } from "@/components/ui/badge";
 import { getExternalErpUrl } from "@/lib/external-erp";
 
+/** Billing covers plan, invoices, and payment history (no separate /app/invoices route). */
 const NAV = [
   { href: "/app", label: "Account" },
   { href: "/app/billing", label: "Billing" },

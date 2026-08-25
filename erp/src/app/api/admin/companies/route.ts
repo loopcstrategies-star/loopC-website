@@ -47,6 +47,10 @@ const actionSchema = z.discriminatedUnion("action", [
     address: z.union([z.string().trim().max(500), z.null()]).optional(),
     externalErpCustomerId: z.union([z.string().trim().max(200), z.null()]).optional(),
   }),
+  z.object({
+    action: z.literal("cancel"),
+    companyId: z.string().min(1),
+  }),
 ]);
 
 export async function POST(req: Request) {
@@ -114,6 +118,15 @@ export async function POST(req: Request) {
         },
       });
       return jsonOk({ company });
+    }
+
+    if (body.action === "cancel") {
+      const subscription = await BillingService.cancelSubscription({
+        companyId: body.companyId,
+        actorId: session.user.id,
+        atPeriodEnd: false,
+      });
+      return jsonOk({ companyId: body.companyId, subscription });
     }
 
     await writeAuditLog({

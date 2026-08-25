@@ -31,6 +31,7 @@ const nextConfig: NextConfig = {
       { source: "/case-studies/:slug", destination: "/work/:slug", permanent: false },
       { source: "/demo", destination: "/contact", permanent: true },
       { source: "/request-demo", destination: "/contact", permanent: true },
+      { source: "/get-started", destination: "/pricing", permanent: true },
       { source: "/free-demo", destination: "/contact", permanent: true },
       { source: "/free-audit", destination: "/contact", permanent: true },
       { source: "/free-consultation", destination: "/contact", permanent: true },

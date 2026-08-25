@@ -4,6 +4,11 @@ import { JsonLd } from "@/components/json-ld";
 import { PageHero } from "@/components/page-hero";
 import { Container } from "@/components/ui/container";
 import { SectionHeader } from "@/components/ui/section-header";
+import {
+  type ErpWebsitePage,
+  erpFetch,
+  sectionByKey,
+} from "@/lib/erp-api";
 import { getBreadcrumbSchema, pageMetadata, pageSeo } from "@/lib/seo";
 import { solutions } from "@/lib/solutions";
 
@@ -13,7 +18,12 @@ export const metadata: Metadata = pageMetadata({
   path: "/solutions",
 });
 
-export default function SolutionsPage() {
+type PagePayload = { page: ErpWebsitePage };
+
+export default async function SolutionsPage() {
+  const data = await erpFetch<PagePayload>("/api/public/pages/solutions");
+  const hero = sectionByKey(data?.page?.sections, "hero");
+
   return (
     <div>
       <JsonLd
@@ -24,8 +34,12 @@ export default function SolutionsPage() {
       />
       <PageHero
         eyebrow="Solutions"
-        title="Software solutions for growing businesses."
-        description="LoopC ERP for connected operations — or custom software when your workflow needs something built around it."
+        title={hero?.title || "Software solutions for growing businesses."}
+        description={
+          hero?.subtitle ||
+          hero?.body ||
+          "LoopC ERP for connected operations — or custom software when your workflow needs something built around it."
+        }
         dark
       />
       <Container className="py-16 sm:py-20">
@@ -47,7 +61,10 @@ export default function SolutionsPage() {
                   <li key={point}>— {point}</li>
                 ))}
               </ul>
-              <Link href={solution.href} className="mt-5 inline-block text-sm font-semibold text-[var(--primary)]">
+              <Link
+                href={solution.href}
+                className="mt-5 inline-block text-sm font-semibold text-[var(--primary)]"
+              >
                 Explore {solution.title} →
               </Link>
             </article>

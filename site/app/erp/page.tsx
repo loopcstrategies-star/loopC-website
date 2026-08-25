@@ -15,7 +15,13 @@ import {
   sectionByKey,
 } from "@/lib/erp-api";
 import { getSalesCta } from "@/lib/navigation";
-import { getBreadcrumbSchema, getFaqPageSchema, pageMetadata, pageSeo } from "@/lib/seo";
+import {
+  getBreadcrumbSchema,
+  getFaqPageSchema,
+  getSoftwareApplicationSchema,
+  pageMetadata,
+  pageSeo,
+} from "@/lib/seo";
 import { erpModules, siteConfig } from "@/lib/site-config";
 
 export const metadata: Metadata = pageMetadata({
@@ -51,6 +57,7 @@ export default async function ErpPage() {
         ])}
       />
       {faqs.length > 0 ? <JsonLd data={getFaqPageSchema(faqs)} /> : null}
+      <JsonLd data={getSoftwareApplicationSchema()} />
 
       <PageHero
         eyebrow="LoopC ERP"

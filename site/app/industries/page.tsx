@@ -3,6 +3,11 @@ import Link from "next/link";
 import { JsonLd } from "@/components/json-ld";
 import { PageHero } from "@/components/page-hero";
 import { Container } from "@/components/ui/container";
+import {
+  type ErpWebsitePage,
+  erpFetch,
+  sectionByKey,
+} from "@/lib/erp-api";
 import { industries } from "@/lib/industries";
 import { getBreadcrumbSchema, pageMetadata, pageSeo } from "@/lib/seo";
 
@@ -12,7 +17,12 @@ export const metadata: Metadata = pageMetadata({
   path: "/industries",
 });
 
-export default function IndustriesPage() {
+type PagePayload = { page: ErpWebsitePage };
+
+export default async function IndustriesPage() {
+  const data = await erpFetch<PagePayload>("/api/public/pages/industries");
+  const hero = sectionByKey(data?.page?.sections, "hero");
+
   return (
     <div>
       <JsonLd
@@ -23,8 +33,12 @@ export default function IndustriesPage() {
       />
       <PageHero
         eyebrow="Industries"
-        title="Technology that understands the business behind it."
-        description="We design software around how these operations run. These pages describe the problems we solve — not a claim that we are the only specialist in the vertical."
+        title={hero?.title || "Technology that understands the business behind it."}
+        description={
+          hero?.subtitle ||
+          hero?.body ||
+          "We design software around how these operations run. These pages describe the problems we solve — not a claim that we are the only specialist in the vertical."
+        }
         dark
       />
       <Container className="grid gap-4 py-16 sm:py-20 md:grid-cols-2">

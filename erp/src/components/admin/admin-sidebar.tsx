@@ -9,6 +9,8 @@ const WEBSITE = [
   { href: "/admin/website", label: "Home", icon: "home" },
   { href: "/admin/website/about", label: "About", icon: "about" },
   { href: "/admin/website/services", label: "Services", icon: "services" },
+  { href: "/admin/website/solutions", label: "Solutions", icon: "about" },
+  { href: "/admin/website/industries", label: "Industries", icon: "services" },
   { href: "/admin/website/erp-product", label: "ERP Product", icon: "erp" },
   { href: "/admin/website/faqs", label: "FAQ", icon: "faq" },
   { href: "/admin/website/blog", label: "Blog", icon: "blog" },

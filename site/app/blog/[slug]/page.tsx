@@ -5,7 +5,7 @@ import { JsonLd } from "@/components/json-ld";
 import { PageHero } from "@/components/page-hero";
 import { Container } from "@/components/ui/container";
 import { type ErpBlogPost, erpFetch } from "@/lib/erp-api";
-import { getBreadcrumbSchema, pageMetadata } from "@/lib/seo";
+import { getArticleSchema, getBreadcrumbSchema, pageMetadata } from "@/lib/seo";
 
 type PostPayload = { post: ErpBlogPost };
 
@@ -26,6 +26,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: post.seoTitle || `${post.title} | LoopC Blog`,
     description: post.seoDescription || post.excerpt || post.title,
     path: `/blog/${post.slug}`,
+    type: "article",
   });
 }
 
@@ -44,6 +45,7 @@ export default async function BlogPostPage({ params }: Props) {
           { name: post.title, path: `/blog/${post.slug}` },
         ])}
       />
+      <JsonLd data={getArticleSchema(post)} />
       <PageHero
         eyebrow={post.category?.name || "Blog"}
         title={post.title}

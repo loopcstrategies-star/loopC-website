@@ -133,6 +133,26 @@ async function main() {
     },
   ]);
 
+  await upsertPage("solutions", "Solutions", [
+    {
+      key: "hero",
+      title: "Software solutions for growing businesses.",
+      subtitle:
+        "LoopC ERP for connected operations — or custom software when your workflow needs something built around it.",
+      sortOrder: 1,
+    },
+  ]);
+
+  await upsertPage("industries", "Industries", [
+    {
+      key: "hero",
+      title: "Technology that understands the business behind it.",
+      subtitle:
+        "We design software around how these operations run. These pages describe the problems we solve — not a claim that we are the only specialist in the vertical.",
+      sortOrder: 1,
+    },
+  ]);
+
   await upsertPage("erp", "ERP", [
     {
       key: "intro",

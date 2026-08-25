@@ -27,6 +27,7 @@ export default async function AccountPortalPage() {
   const userLimit =
     subscription?.plan.limits.find((l) => l.limitKey === "users")?.value ?? null;
   const accessReady = isErpAccessReady(subscription);
+  const canOpenErp = accessReady && Boolean(erpUrl);
 
   return (
     <div className="space-y-6">
@@ -34,12 +35,12 @@ export default async function AccountPortalPage() {
         <div>
           <h1 className="text-2xl font-semibold tracking-tight">Account</h1>
           <p className="mt-1 text-[var(--muted)]">
-            Manage your subscription here. Use Open ERP to access the product.
+            Manage your subscription and billing. Open ERP launches the separate product.
           </p>
         </div>
         <div className="flex flex-wrap gap-2">
-          {accessReady && erpUrl ? (
-            <a href={erpUrl} target="_blank" rel="noopener noreferrer">
+          {canOpenErp ? (
+            <a href={erpUrl!} target="_blank" rel="noopener noreferrer">
               <Button>Open ERP</Button>
             </a>
           ) : (
@@ -54,14 +55,31 @@ export default async function AccountPortalPage() {
       </div>
 
       <Card className="border-[var(--accent)]/25 bg-[var(--accent-soft)]/40">
-        <CardTitle>LoopC ERP access</CardTitle>
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <CardTitle>ERP Access</CardTitle>
+          <Badge tone={canOpenErp ? "success" : "neutral"}>
+            {canOpenErp ? "Ready" : accessReady ? "URL missing" : "Disabled"}
+          </Badge>
+        </div>
         <p className="mt-2 text-sm text-[var(--muted)]">
           This portal sells and manages subscriptions. The ERP application itself is a separate
           product.
         </p>
-        {accessReady && erpUrl ? (
+        <dl className="mt-4 grid gap-2 text-sm sm:grid-cols-2">
+          <div>
+            <dt className="text-[var(--muted)]">Subscription status</dt>
+            <dd className="font-medium">{subscription?.status ?? "None"}</dd>
+          </div>
+          <div>
+            <dt className="text-[var(--muted)]">Access</dt>
+            <dd className="font-medium">
+              {accessReady ? "Entitled" : "Not entitled — choose or renew a plan"}
+            </dd>
+          </div>
+        </dl>
+        {canOpenErp ? (
           <a
-            href={erpUrl}
+            href={erpUrl!}
             target="_blank"
             rel="noopener noreferrer"
             className="mt-4 inline-flex text-sm font-semibold text-[var(--accent)] hover:underline"
@@ -71,7 +89,7 @@ export default async function AccountPortalPage() {
         ) : (
           <p className="mt-4 text-sm text-[var(--muted)]">
             {accessReady
-              ? "Subscription is active, but the external ERP URL is not configured (set NEXT_PUBLIC_ERP_APP_URL)."
+              ? "Subscription is active, but the external ERP URL is not configured."
               : "Activate a subscription to unlock product access."}
           </p>
         )}
@@ -81,6 +99,7 @@ export default async function AccountPortalPage() {
         <Card>
           <p className="text-sm text-[var(--muted)]">Company</p>
           <p className="mt-2 text-xl font-semibold">{company?.name ?? "—"}</p>
+          <p className="mt-1 text-xs text-[var(--muted)]">{company?.email || "—"}</p>
         </Card>
         <Card>
           <p className="text-sm text-[var(--muted)]">Plan</p>
@@ -105,6 +124,27 @@ export default async function AccountPortalPage() {
         </Card>
       </div>
 
+      <Card>
+        <CardTitle>Company details</CardTitle>
+        <dl className="mt-3 grid gap-2 text-sm sm:grid-cols-2">
+          <div>
+            <dt className="text-[var(--muted)]">Email</dt>
+            <dd className="font-medium">{company?.email || "—"}</dd>
+          </div>
+          <div>
+            <dt className="text-[var(--muted)]">Phone</dt>
+            <dd className="font-medium">{company?.phone || "—"}</dd>
+          </div>
+          <div className="sm:col-span-2">
+            <dt className="text-[var(--muted)]">Address</dt>
+            <dd className="font-medium">{company?.address || "—"}</dd>
+          </div>
+        </dl>
+        <Link href="/app/settings" className="mt-4 inline-flex text-sm text-[var(--accent)] hover:underline">
+          Workspace settings →
+        </Link>
+      </Card>
+
       {subscription && (
         <Card>
           <CardTitle>Current period</CardTitle>
@@ -125,7 +165,7 @@ export default async function AccountPortalPage() {
         <div className="flex items-center justify-between gap-2">
           <CardTitle>Recent invoices</CardTitle>
           <Link href="/app/billing" className="text-sm text-[var(--accent)] hover:underline">
-            View billing
+            View billing &amp; payments
           </Link>
         </div>
         {recentInvoices.length === 0 ? (

@@ -26,6 +26,18 @@ export default async function SettingsPage() {
             <dd>{company?.slug}</dd>
           </div>
           <div className="flex justify-between gap-4">
+            <dt className="text-[var(--muted)]">Email</dt>
+            <dd>{company?.email ?? "—"}</dd>
+          </div>
+          <div className="flex justify-between gap-4">
+            <dt className="text-[var(--muted)]">Phone</dt>
+            <dd>{company?.phone ?? "—"}</dd>
+          </div>
+          <div className="flex justify-between gap-4">
+            <dt className="text-[var(--muted)]">Address</dt>
+            <dd className="text-right">{company?.address ?? "—"}</dd>
+          </div>
+          <div className="flex justify-between gap-4">
             <dt className="text-[var(--muted)]">Country</dt>
             <dd>{company?.country ?? "—"}</dd>
           </div>
@@ -38,6 +50,9 @@ export default async function SettingsPage() {
             <dd>{session.user.email}</dd>
           </div>
         </dl>
+        <p className="mt-4 text-xs text-[var(--muted)]">
+          Contact fields are managed by LoopC admin. Ask support if they need updating.
+        </p>
       </Card>
     </div>
   );

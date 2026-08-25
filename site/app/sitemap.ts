@@ -1,10 +1,13 @@
 import type { MetadataRoute } from "next";
 import { industries } from "@/lib/industries";
 import { projects } from "@/lib/projects";
+import { type ErpBlogPost, erpFetch } from "@/lib/erp-api";
 import { getAbsoluteUrl, sitemapPaths } from "@/lib/seo";
 import { services } from "@/lib/services";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+type BlogListPayload = { posts: ErpBlogPost[] };
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticEntries: MetadataRoute.Sitemap = sitemapPaths.map((path) => ({
     url: getAbsoluteUrl(path),
     changeFrequency: path === "/" ? "weekly" : "monthly",
@@ -29,5 +32,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
-  return [...staticEntries, ...serviceEntries, ...industryEntries, ...workEntries];
+  const blogData = await erpFetch<BlogListPayload>("/api/public/blog");
+  const blogEntries: MetadataRoute.Sitemap = (blogData?.posts ?? []).map((post) => ({
+    url: getAbsoluteUrl(`/blog/${post.slug}`),
+    changeFrequency: "weekly" as const,
+    priority: 0.6,
+    lastModified: post.publishedAt ? new Date(post.publishedAt) : undefined,
+  }));
+
+  return [
+    ...staticEntries,
+    ...serviceEntries,
+    ...industryEntries,
+    ...workEntries,
+    ...blogEntries,
+  ];
 }
