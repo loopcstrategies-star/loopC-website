@@ -13,7 +13,7 @@ export function HeroVisualImage({
   const reduce = useReducedMotion();
 
   return (
-    <div className="relative mx-auto w-full max-w-full overflow-x-hidden lg:max-w-none">
+    <div className="relative mx-auto w-full max-w-full overflow-hidden lg:max-w-none">
       <div
         className={`pointer-events-none absolute left-1/2 top-1/2 z-0 h-80 w-80 -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-br from-blue-600/40 via-violet-600/25 to-cyan-500/20 blur-3xl ${reduce ? "" : "hero-glow-pulse"}`}
         aria-hidden
