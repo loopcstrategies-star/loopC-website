@@ -10,6 +10,9 @@ type CompanyRow = {
   id: string;
   name: string;
   slug: string;
+  email: string | null;
+  phone: string | null;
+  address: string | null;
   status: string;
   createdAt: string | Date;
   memberships: number;
@@ -25,13 +28,21 @@ export function CompaniesClient({ companies }: { companies: CompanyRow[] }) {
   const [error, setError] = useState("");
   const [search, setSearch] = useState("");
   const [subFilter, setSubFilter] = useState("all");
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [draft, setDraft] = useState({
+    email: "",
+    phone: "",
+    address: "",
+    externalErpCustomerId: "",
+  });
 
   const filtered = companies.filter((c) => {
     if (subFilter !== "all" && c.subscriptionStatus !== subFilter) return false;
     if (
       search &&
       !c.name.toLowerCase().includes(search.toLowerCase()) &&
-      !c.slug.toLowerCase().includes(search.toLowerCase())
+      !c.slug.toLowerCase().includes(search.toLowerCase()) &&
+      !(c.email ?? "").toLowerCase().includes(search.toLowerCase())
     )
       return false;
     return true;
@@ -49,7 +60,18 @@ export function CompaniesClient({ companies }: { companies: CompanyRow[] }) {
       setError(data.error ?? "Action failed");
       return;
     }
+    setEditingId(null);
     startTransition(() => router.refresh());
+  }
+
+  function startEdit(c: CompanyRow) {
+    setEditingId(c.id);
+    setDraft({
+      email: c.email ?? "",
+      phone: c.phone ?? "",
+      address: c.address ?? "",
+      externalErpCustomerId: c.externalErpCustomerId ?? "",
+    });
   }
 
   return (
@@ -77,11 +99,11 @@ export function CompaniesClient({ companies }: { companies: CompanyRow[] }) {
         <span className="self-center text-sm text-[var(--muted)]">{filtered.length} customers</span>
       </div>
       <div className="overflow-x-auto">
-        <table className="w-full min-w-[720px] text-left text-sm">
+        <table className="w-full min-w-[960px] text-left text-sm">
           <thead className="text-[var(--muted)]">
             <tr>
               <th className="py-2">Name</th>
-              <th className="py-2">Slug</th>
+              <th className="py-2">Contact</th>
               <th className="py-2">ERP ID</th>
               <th className="py-2">Members</th>
               <th className="py-2">Plan</th>
@@ -93,10 +115,48 @@ export function CompaniesClient({ companies }: { companies: CompanyRow[] }) {
           </thead>
           <tbody>
             {filtered.map((c) => (
-              <tr key={c.id} className="border-t border-[var(--border)]">
-                <td className="py-2">{c.name}</td>
-                <td className="py-2">{c.slug}</td>
-                <td className="py-2 font-mono text-xs">{c.externalErpCustomerId ?? "—"}</td>
+              <tr key={c.id} className="border-t border-[var(--border)] align-top">
+                <td className="py-2">
+                  <div>{c.name}</div>
+                  <div className="text-xs text-[var(--muted)]">{c.slug}</div>
+                </td>
+                <td className="py-2">
+                  {editingId === c.id ? (
+                    <div className="flex min-w-[220px] flex-col gap-1.5">
+                      <Input
+                        placeholder="Email"
+                        value={draft.email}
+                        onChange={(e) => setDraft((d) => ({ ...d, email: e.target.value }))}
+                      />
+                      <Input
+                        placeholder="Phone"
+                        value={draft.phone}
+                        onChange={(e) => setDraft((d) => ({ ...d, phone: e.target.value }))}
+                      />
+                      <Input
+                        placeholder="Address"
+                        value={draft.address}
+                        onChange={(e) => setDraft((d) => ({ ...d, address: e.target.value }))}
+                      />
+                      <Input
+                        placeholder="External ERP customer ID"
+                        value={draft.externalErpCustomerId}
+                        onChange={(e) =>
+                          setDraft((d) => ({ ...d, externalErpCustomerId: e.target.value }))
+                        }
+                      />
+                    </div>
+                  ) : (
+                    <div className="space-y-0.5 text-xs">
+                      <div>{c.email || "—"}</div>
+                      <div className="text-[var(--muted)]">{c.phone || "—"}</div>
+                      <div className="text-[var(--muted)]">{c.address || "—"}</div>
+                    </div>
+                  )}
+                </td>
+                <td className="py-2 font-mono text-xs">
+                  {editingId === c.id ? "…" : (c.externalErpCustomerId ?? "—")}
+                </td>
                 <td className="py-2">{c.memberships}</td>
                 <td className="py-2">{c.planName ?? "—"}</td>
                 <td className="py-2">{c.status}</td>
@@ -104,11 +164,48 @@ export function CompaniesClient({ companies }: { companies: CompanyRow[] }) {
                 <td className="py-2">{formatDate(c.createdAt)}</td>
                 <td className="py-2">
                   <div className="flex flex-wrap gap-2">
-                    {c.status !== "suspended" ? (
+                    {editingId === c.id ? (
+                      <>
+                        <Button
+                          type="button"
+                          disabled={pending}
+                          onClick={() =>
+                            act({
+                              action: "update",
+                              companyId: c.id,
+                              email: draft.email.trim() || null,
+                              phone: draft.phone.trim() || null,
+                              address: draft.address.trim() || null,
+                              externalErpCustomerId: draft.externalErpCustomerId.trim() || null,
+                            })
+                          }
+                        >
+                          Save
+                        </Button>
+                        <Button
+                          type="button"
+                          variant="secondary"
+                          disabled={pending}
+                          onClick={() => setEditingId(null)}
+                        >
+                          Cancel
+                        </Button>
+                      </>
+                    ) : (
                       <Button
                         type="button"
                         variant="secondary"
                         disabled={pending}
+                        onClick={() => startEdit(c)}
+                      >
+                        Edit
+                      </Button>
+                    )}
+                    {c.status !== "suspended" ? (
+                      <Button
+                        type="button"
+                        variant="secondary"
+                        disabled={pending || editingId === c.id}
                         onClick={() => act({ action: "suspend", companyId: c.id })}
                       >
                         Suspend
@@ -116,7 +213,7 @@ export function CompaniesClient({ companies }: { companies: CompanyRow[] }) {
                     ) : (
                       <Button
                         type="button"
-                        disabled={pending || !c.planId}
+                        disabled={pending || !c.planId || editingId === c.id}
                         onClick={() =>
                           act({
                             action: "activate",

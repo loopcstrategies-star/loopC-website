@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardTitle } from "@/components/ui/card";
 
+/** Prefer same public aliases as getExternalErpUrl (client can only read NEXT_PUBLIC_*). */
 function externalErpUrl() {
   return (
     process.env.NEXT_PUBLIC_ERP_APP_URL?.replace(/\/$/, "") ||

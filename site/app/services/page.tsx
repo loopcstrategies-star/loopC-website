@@ -4,7 +4,15 @@ import { JsonLd } from "@/components/json-ld";
 import { PageHero } from "@/components/page-hero";
 import { FadeIn } from "@/components/motion/fade-in";
 import { Container } from "@/components/ui/container";
-import { ServiceExplorer } from "@/components/services/service-explorer";
+import {
+  ServiceExplorer,
+  type ServiceExplorerItem,
+} from "@/components/services/service-explorer";
+import {
+  type ErpCmsService,
+  asStringArray,
+  erpFetch,
+} from "@/lib/erp-api";
 import { getBreadcrumbSchema, pageMetadata, pageSeo } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
@@ -13,7 +21,29 @@ export const metadata: Metadata = pageMetadata({
   path: "/services",
 });
 
-export default function ServicesPage() {
+type ServicesPayload = { services: ErpCmsService[] };
+
+function cmsToExplorer(services: ErpCmsService[]): ServiceExplorerItem[] {
+  return services.map((svc) => ({
+    id: svc.slug,
+    label: svc.name.split(/[&/]/)[0]?.trim() || svc.name,
+    title: svc.name,
+    description: svc.description || svc.summary || "",
+    features: asStringArray(svc.featuresJson),
+    technologies: [],
+    cta: {
+      label: svc.ctaLabel || "Start a Project",
+      href: svc.ctaHref || `/contact?service=${svc.slug}`,
+    },
+    detailHref: `/services/${svc.slug}`,
+  }));
+}
+
+export default async function ServicesPage() {
+  const data = await erpFetch<ServicesPayload>("/api/public/services");
+  const explorerItems =
+    data?.services?.length ? cmsToExplorer(data.services) : undefined;
+
   return (
     <div>
       <JsonLd
@@ -30,7 +60,6 @@ export default function ServicesPage() {
         backgroundImage="/images/page-heroes/services.jpg"
       />
 
-      {/* Interactive service explorer */}
       <section className="bg-white py-20 sm:py-24">
         <Container>
           <FadeIn>
@@ -39,14 +68,14 @@ export default function ServicesPage() {
               What would you like to build?
             </h2>
             <p className="mt-4 max-w-xl text-slate-600">
-              Select a service to explore what we deliver, the technologies we use, and how to get started.
+              Select a service to explore what we deliver, the technologies we use, and how to get
+              started.
             </p>
           </FadeIn>
-          <ServiceExplorer />
+          <ServiceExplorer items={explorerItems} />
         </Container>
       </section>
 
-      {/* ERP CTA */}
       <section className="section-light py-16 sm:py-20">
         <Container>
           <FadeIn>

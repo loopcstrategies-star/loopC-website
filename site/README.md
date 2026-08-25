@@ -1,11 +1,14 @@
 # LoopC Business Strategies — website
 
-Next.js 16 (App Router) marketing site for LoopC Business Strategies, a software development company on OMR, Chennai.
+Next.js 16 (App Router) marketing site for LoopC Business Strategies (OMR, Chennai).
+
+This app is **marketing only**. Signup, checkout, billing and Super Admin live in the portal app (`erp/` in this monorepo). The LoopC ERP product is a separate external application.
 
 ## Local development
 
 ```bash
 cd site
+cp env.example .env.local
 npm install
 npm run dev
 ```
@@ -14,17 +17,16 @@ Open [http://localhost:3000](http://localhost:3000). Node.js 20.9+ is required.
 
 ## Environment
 
-Copy [`env.example`](env.example) to `.env.local`.
-
 | Variable | Purpose |
 |----------|---------|
-| `NEXT_PUBLIC_SITE_URL` | Canonical URL for metadata, sitemap and Open Graph. |
-| `FORMSPREE_FORM_ID` | Server-only Formspree form id for the contact API. |
-| `CONTACT_TO_EMAIL` | Server-only fallback inbox if Formspree is unset. |
-| `TURNSTILE_SECRET_KEY` | Optional Cloudflare Turnstile secret. |
-| `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | Optional Turnstile site key (public). |
+| `NEXT_PUBLIC_SITE_URL` | Canonical URL for metadata, sitemap and Open Graph |
+| `NEXT_PUBLIC_ERP_URL` | Portal base URL (signup / login links) |
+| `ERP_API_URL` | Server-side portal public API (CMS, plans, contact, blog) |
+| `FORMSPREE_FORM_ID` | Optional fallback if portal contact API is unreachable |
+| `CONTACT_TO_EMAIL` | Optional Formsubmit fallback |
+| `TURNSTILE_SECRET_KEY` / `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | Optional Cloudflare Turnstile |
 
-Company identity, location and unpublished contact fields live in [`lib/site-config.ts`](lib/site-config.ts). Empty phone, WhatsApp, email, GST and social URLs stay hidden until verified values are added.
+Company identity lives in [`lib/site-config.ts`](lib/site-config.ts).
 
 ## Production
 
@@ -33,12 +35,12 @@ npm run build
 npm start
 ```
 
-On Vercel (or similar), set the project **Root Directory** to `site`.
+On Vercel, set the project **Root Directory** to `site`.
 
 ## Routes
 
-`/`, `/services`, `/services/[slug]`, `/solutions`, `/work`, `/work/[slug]`, `/industries`, `/industries/[slug]`, `/about`, `/insights`, `/insights/[slug]`, `/contact`, `/privacy`, `/terms`, `/brochure`.
+`/`, `/about`, `/services`, `/services/[slug]`, `/solutions`, `/erp`, `/features`, `/benefits`, `/pricing`, `/work`, `/work/[slug]`, `/industries`, `/industries/[slug]`, `/blog`, `/blog/[slug]`, `/contact`, `/privacy`, `/terms`, `/cookies`, `/brochure`.
 
 ## Contact API
 
-`POST /api/contact` validates input on the server, applies a honeypot, optional Turnstile, rate limiting and size limits. Delivery uses server-only env vars — never a public Formspree id.
+`POST /api/contact` validates input, applies honeypot, optional Turnstile, rate limiting, then forwards to the portal `/api/public/contact`.

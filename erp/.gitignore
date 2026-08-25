@@ -44,3 +44,8 @@ next-env.d.ts
 
 .vercel
 .env*.local
+
+# Local AI agent skill packs (not required for build/deploy)
+.agents/
+.claude/
+.windsurf/

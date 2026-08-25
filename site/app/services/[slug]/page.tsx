@@ -4,10 +4,51 @@ import { notFound } from "next/navigation";
 import { JsonLd } from "@/components/json-ld";
 import { PageHero } from "@/components/page-hero";
 import { Container } from "@/components/ui/container";
+import {
+  type ErpCmsService,
+  asStringArray,
+  erpFetch,
+} from "@/lib/erp-api";
 import { getBreadcrumbSchema, getServiceSchema, pageMetadata } from "@/lib/seo";
-import { getRelatedServices, getService, services } from "@/lib/services";
+import {
+  type Service,
+  getRelatedServices,
+  getService,
+  services,
+} from "@/lib/services";
 
 type Params = { slug: string };
+type ServicePayload = { service: ErpCmsService };
+
+function cmsToService(cms: ErpCmsService): Service {
+  const features = asStringArray(cms.featuresJson);
+  return {
+    slug: cms.slug,
+    title: cms.name,
+    shortTitle: cms.name,
+    navLabel: cms.name,
+    summary: cms.summary || cms.description || "",
+    description: cms.description || cms.summary || "",
+    whoFor: cms.summary || "Teams looking for a practical digital solution for their workflow.",
+    includes: features.length
+      ? features
+      : ["Discovery and scoping", "Design and implementation", "Launch support"],
+    outcomes: [
+      "A clear delivery plan matched to your business",
+      "A product your team can use day to day",
+      "A path for ongoing improvement after launch",
+    ],
+    related: [],
+    href: `/services/${cms.slug}`,
+    motif: "gears",
+  };
+}
+
+async function resolveService(slug: string): Promise<Service | null> {
+  const cms = await erpFetch<ServicePayload>(`/api/public/services/${slug}`);
+  if (cms?.service) return cmsToService(cms.service);
+  return getService(slug) ?? null;
+}
 
 export function generateStaticParams() {
   return services.map((service) => ({ slug: service.slug }));
@@ -19,7 +60,7 @@ export async function generateMetadata({
   params: Promise<Params>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const service = getService(slug);
+  const service = await resolveService(slug);
   if (!service) return {};
   return pageMetadata({
     title: `${service.title} | Software development Chennai`,
@@ -30,7 +71,7 @@ export async function generateMetadata({
 
 export default async function ServiceDetailPage({ params }: { params: Promise<Params> }) {
   const { slug } = await params;
-  const service = getService(slug);
+  const service = await resolveService(slug);
   if (!service) notFound();
   const related = getRelatedServices(service.slug);
 

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 
-type ServiceItem = {
+export type ServiceExplorerItem = {
   id: string;
   label: string;
   title: string;
@@ -12,9 +12,10 @@ type ServiceItem = {
   features: string[];
   technologies: string[];
   cta: { label: string; href: string };
+  detailHref?: string;
 };
 
-const explorerServices: ServiceItem[] = [
+const defaultExplorerServices: ServiceExplorerItem[] = [
   {
     id: "web",
     label: "Web Apps",
@@ -82,17 +83,17 @@ const explorerServices: ServiceItem[] = [
     description:
       "Design intuitive digital experiences that make complex products simple to understand and easy to use.",
     features: [
-      "User research and discovery",
-      "Wireframes and prototypes",
-      "UI design and design systems",
-      "UX audits and improvements",
+      "User research and journey mapping",
+      "Wireframes and interactive prototypes",
+      "UI design systems",
+      "Usability-focused product design",
     ],
-    technologies: ["Figma", "Prototyping", "Design Systems", "Usability Testing"],
+    technologies: ["Figma", "Design systems", "Prototyping", "User testing"],
     cta: { label: "Start with design", href: "/contact?service=ui-ux" },
   },
   {
-    id: "api",
-    label: "API",
+    id: "integrations",
+    label: "Integrations",
     title: "API & Integrations",
     description:
       "Connect your applications, services and business workflows with reliable APIs and integrations.",
@@ -137,22 +138,27 @@ const explorerServices: ServiceItem[] = [
   },
 ];
 
-export function ServiceExplorer() {
+export function ServiceExplorer({
+  items = defaultExplorerServices,
+}: {
+  items?: ServiceExplorerItem[];
+}) {
   const [active, setActive] = useState(0);
   const reduce = useReducedMotion();
-  const current = explorerServices[active];
+  const list = items.length > 0 ? items : defaultExplorerServices;
+  const safeIndex = Math.min(active, list.length - 1);
+  const current = list[safeIndex] ?? list[0];
 
   return (
     <div className="mt-12 flex flex-col gap-8 lg:flex-row lg:gap-12">
-      {/* Tabs */}
       <div className="-mx-1 flex gap-2 overflow-x-auto pb-1 max-lg:snap-x max-lg:snap-mandatory lg:mx-0 lg:w-52 lg:shrink-0 lg:flex-col lg:overflow-visible lg:pb-0">
-        {explorerServices.map((service, i) => (
+        {list.map((service, i) => (
           <button
             key={service.id}
             type="button"
             onClick={() => setActive(i)}
             className={`shrink-0 snap-start whitespace-nowrap rounded-xl px-4 py-2.5 text-left text-sm font-medium transition-all duration-150 lg:w-full lg:whitespace-normal ${
-              active === i
+              i === safeIndex
                 ? "bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)] text-white shadow-md"
                 : "bg-slate-100 text-slate-700 hover:bg-blue-50 hover:text-blue-800"
             }`}
@@ -162,7 +168,6 @@ export function ServiceExplorer() {
         ))}
       </div>
 
-      {/* Detail panel */}
       <div className="flex-1 min-w-0">
         <AnimatePresence mode="wait">
           <motion.div
@@ -182,37 +187,60 @@ export function ServiceExplorer() {
                 <ul className="mt-3 space-y-2">
                   {current.features.map((f) => (
                     <li key={f} className="flex items-start gap-2 text-sm text-slate-600">
-                      <span className="mt-0.5 shrink-0 text-[var(--primary)]" aria-hidden>—</span>
+                      <span className="mt-0.5 shrink-0 text-[var(--primary)]" aria-hidden>
+                        —
+                      </span>
                       {f}
                     </li>
                   ))}
                 </ul>
               </div>
-              <div>
-                <p className="text-xs font-bold tracking-widest text-[var(--primary)]">Technologies</p>
-                <div className="mt-3 flex flex-wrap gap-2">
-                  {current.technologies.map((t) => (
-                    <span
-                      key={t}
-                      className="rounded-lg border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-medium text-slate-700"
-                    >
-                      {t}
-                    </span>
-                  ))}
+              {current.technologies.length > 0 ? (
+                <div>
+                  <p className="text-xs font-bold tracking-widest text-[var(--primary)]">Technologies</p>
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    {current.technologies.map((t) => (
+                      <span
+                        key={t}
+                        className="rounded-lg border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-medium text-slate-700"
+                      >
+                        {t}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              ) : null}
             </div>
 
-            <div className="mt-6">
+            <div className="mt-6 flex flex-wrap items-center gap-3">
               <Link
                 href={current.cta.href}
                 className="btn-primary inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)] px-5 py-2.5 text-sm font-semibold text-white transition hover:brightness-105"
               >
                 {current.cta.label}
-                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                <svg
+                  className="h-4 w-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                  aria-hidden
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
+                  />
                 </svg>
               </Link>
+              {current.detailHref ? (
+                <Link
+                  href={current.detailHref}
+                  className="inline-flex text-sm font-semibold text-[var(--primary)] hover:underline"
+                >
+                  View details
+                </Link>
+              ) : null}
             </div>
           </motion.div>
         </AnimatePresence>

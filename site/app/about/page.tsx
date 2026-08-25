@@ -4,6 +4,11 @@ import { JsonLd } from "@/components/json-ld";
 import { PageHero } from "@/components/page-hero";
 import { FadeIn } from "@/components/motion/fade-in";
 import { Container } from "@/components/ui/container";
+import {
+  type ErpWebsitePage,
+  erpFetch,
+  sectionByKey,
+} from "@/lib/erp-api";
 import { getBreadcrumbSchema, pageMetadata, pageSeo } from "@/lib/seo";
 import { deliveryProcess } from "@/lib/process";
 
@@ -13,7 +18,7 @@ export const metadata: Metadata = pageMetadata({
   path: "/about",
 });
 
-const values = [
+const defaultValues = [
   {
     title: "Business First",
     copy: "We start with the workflow, the constraint and the user — not the technology trend.",
@@ -41,7 +46,34 @@ const values = [
   },
 ] as const;
 
-export default function AboutPage() {
+type PagePayload = { page: ErpWebsitePage };
+
+function storyParagraphs(body: string | null | undefined, fallback: string[]): string[] {
+  if (!body?.trim()) return fallback;
+  return body
+    .split(/\n\n+/)
+    .map((p) => p.trim())
+    .filter(Boolean);
+}
+
+export default async function AboutPage() {
+  const data = await erpFetch<PagePayload>("/api/public/pages/about");
+  const hero = sectionByKey(data?.page?.sections, "hero");
+  const story = sectionByKey(data?.page?.sections, "story");
+
+  const heroTitle =
+    hero?.title || "We Build Technology Around the Way Businesses Work.";
+  const heroDescription =
+    hero?.subtitle ||
+    hero?.body ||
+    "We are a technology team focused on creating practical, scalable and user-friendly digital products that help businesses operate better.";
+  const storyTitle = story?.title || "From Business Problems to Digital Solutions";
+  const storyCopy = storyParagraphs(story?.body, [
+    "Businesses often operate across spreadsheets, disconnected tools, manual processes and multiple systems. We believe technology should simplify that complexity.",
+    "Our approach is simple: understand the problem, design the right experience, build reliable technology and continue improving it as the business grows.",
+    "From a single ERP implementation to a complex custom platform, every engagement starts the same way — with a genuine understanding of how the work gets done today and what better would look like tomorrow.",
+  ]);
+
   return (
     <div>
       <JsonLd
@@ -52,42 +84,28 @@ export default function AboutPage() {
       />
       <PageHero
         eyebrow="About LoopC"
-        title="We Build Technology Around the Way Businesses Work."
-        description="We are a technology team focused on creating practical, scalable and user-friendly digital products that help businesses operate better."
+        title={heroTitle}
+        description={heroDescription}
         dark
         backgroundImage="/images/page-heroes/about.jpg"
       />
 
-      {/* Our Story */}
       <section className="bg-white py-20 sm:py-24">
         <Container className="grid gap-12 lg:grid-cols-2 lg:gap-20">
           <FadeIn>
             <p className="type-label text-[var(--primary)]">Our story</p>
-            <h2 className="type-h2 mt-3 font-bold text-slate-950">
-              From Business Problems to Digital Solutions
-            </h2>
+            <h2 className="type-h2 mt-3 font-bold text-slate-950">{storyTitle}</h2>
           </FadeIn>
           <FadeIn delay={0.08}>
             <div className="space-y-5 text-slate-600 leading-relaxed">
-              <p>
-                Businesses often operate across spreadsheets, disconnected tools, manual processes
-                and multiple systems. We believe technology should simplify that complexity.
-              </p>
-              <p>
-                Our approach is simple: understand the problem, design the right experience, build
-                reliable technology and continue improving it as the business grows.
-              </p>
-              <p>
-                From a single ERP implementation to a complex custom platform, every engagement
-                starts the same way — with a genuine understanding of how the work gets done today
-                and what better would look like tomorrow.
-              </p>
+              {storyCopy.map((paragraph) => (
+                <p key={paragraph.slice(0, 48)}>{paragraph}</p>
+              ))}
             </div>
           </FadeIn>
         </Container>
       </section>
 
-      {/* Approach timeline */}
       <section className="section-light py-20 sm:py-24">
         <Container>
           <FadeIn>
@@ -113,7 +131,6 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      {/* Values */}
       <section className="bg-white py-20 sm:py-24">
         <Container>
           <FadeIn>
@@ -123,10 +140,12 @@ export default function AboutPage() {
             </h2>
           </FadeIn>
           <ul className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {values.map((value, i) => (
+            {defaultValues.map((value, i) => (
               <FadeIn key={value.title} delay={i * 0.07}>
                 <li className="group flex flex-col rounded-2xl border border-slate-200/80 bg-[#f8faf9] p-6 transition-all duration-200 hover:-translate-y-1 hover:border-blue-300/60 hover:shadow-md">
-                  <span className="text-2xl text-[var(--primary)]" aria-hidden>{value.icon}</span>
+                  <span className="text-2xl text-[var(--primary)]" aria-hidden>
+                    {value.icon}
+                  </span>
                   <p className="mt-3 font-bold text-slate-950">{value.title}</p>
                   <p className="mt-2 text-sm leading-relaxed text-slate-600">{value.copy}</p>
                 </li>
@@ -136,7 +155,6 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      {/* CTA */}
       <section className="section-dark on-dark py-20 sm:py-24">
         <Container className="text-center">
           <FadeIn>

@@ -39,6 +39,14 @@ const actionSchema = z.discriminatedUnion("action", [
     companyId: z.string().min(1),
     note: z.string().trim().min(1).max(2000),
   }),
+  z.object({
+    action: z.literal("update"),
+    companyId: z.string().min(1),
+    email: z.union([z.string().trim().email(), z.literal(""), z.null()]).optional(),
+    phone: z.union([z.string().trim().max(64), z.null()]).optional(),
+    address: z.union([z.string().trim().max(500), z.null()]).optional(),
+    externalErpCustomerId: z.union([z.string().trim().max(200), z.null()]).optional(),
+  }),
 ]);
 
 export async function POST(req: Request) {
@@ -75,6 +83,37 @@ export async function POST(req: Request) {
         actorId: session.user.id,
       });
       return jsonOk({ companyId: body.companyId, subscription });
+    }
+
+    if (body.action === "update") {
+      const emptyToNull = (v: string | null | undefined) => {
+        if (v == null) return null;
+        const t = v.trim();
+        return t.length ? t : null;
+      };
+      const company = await prisma.company.update({
+        where: { id: body.companyId },
+        data: {
+          email: emptyToNull(body.email as string | null | undefined),
+          phone: emptyToNull(body.phone),
+          address: emptyToNull(body.address),
+          externalErpCustomerId: emptyToNull(body.externalErpCustomerId),
+        },
+      });
+      await writeAuditLog({
+        actorId: session.user.id,
+        companyId: body.companyId,
+        action: "admin.company.update",
+        entityType: "Company",
+        entityId: body.companyId,
+        metadata: {
+          email: company.email,
+          phone: company.phone,
+          address: company.address,
+          externalErpCustomerId: company.externalErpCustomerId,
+        },
+      });
+      return jsonOk({ company });
     }
 
     await writeAuditLog({
