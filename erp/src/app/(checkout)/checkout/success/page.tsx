@@ -7,8 +7,9 @@ import { Card, CardTitle } from "@/components/ui/card";
 
 function externalErpUrl() {
   return (
+    process.env.NEXT_PUBLIC_ERP_APP_URL?.replace(/\/$/, "") ||
     process.env.NEXT_PUBLIC_EXTERNAL_ERP_URL?.replace(/\/$/, "") ||
-    "https://app.loopcstrategies.com"
+    "https://erp.example-domain.com"
   );
 }
 

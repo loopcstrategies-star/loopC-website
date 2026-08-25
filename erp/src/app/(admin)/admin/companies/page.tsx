@@ -31,6 +31,7 @@ export default async function AdminCompaniesPage() {
               planName: c.subscription?.plan.name ?? null,
               subscriptionStatus: c.subscription?.status ?? null,
               planId: c.subscription?.planId ?? null,
+              externalErpCustomerId: c.externalErpCustomerId ?? null,
             }))}
           />
         </div>

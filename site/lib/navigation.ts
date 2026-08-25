@@ -78,6 +78,7 @@ export const ctaNav: NavItem = {
 
 export const footerProduct: NavItem[] = [
   { href: "/erp", label: "ERP" },
+  { href: "/benefits", label: "Benefits" },
   { href: "/pricing", label: "Pricing" },
   { href: "/features", label: "ERP Features" },
   { href: "/solutions", label: "Solutions" },
@@ -96,12 +97,14 @@ export const footerCompany: NavItem[] = [
   { href: "/about", label: "About" },
   { href: "/work", label: "Work" },
   { href: "/industries", label: "Industries" },
+  { href: "/blog", label: "Blog" },
   { href: "/contact", label: "Contact" },
 ];
 
 export const footerLegal: NavItem[] = [
   { href: "/privacy", label: "Privacy" },
   { href: "/terms", label: "Terms" },
+  { href: "/cookies", label: "Cookies" },
   { href: "/brochure", label: "Brochure" },
 ];
 

@@ -100,6 +100,21 @@ export const pageSeo = {
     description:
       "Overview of LoopC ERP and custom software services — print-friendly brochure for teams evaluating LoopC.",
   },
+  blog: {
+    title: "Blog & Insights | LoopC Business Strategies",
+    description:
+      "Articles on ERP, custom software and operations — published by LoopC Business Strategies.",
+  },
+  cookies: {
+    title: "Cookie Policy | LoopC Business Strategies",
+    description:
+      "How LoopC Business Strategies uses cookies and similar technologies on the public website.",
+  },
+  benefits: {
+    title: "LoopC ERP Benefits | Why Teams Choose LoopC",
+    description:
+      "Practical benefits of LoopC ERP for growing businesses — connected operations, modular plans and clear subscription access.",
+  },
 } as const;
 
 export const sitemapPaths = [
@@ -109,12 +124,15 @@ export const sitemapPaths = [
   "/solutions",
   "/erp",
   "/features",
+  "/benefits",
   "/pricing",
   "/work",
   "/industries",
+  "/blog",
   "/contact",
   "/privacy",
   "/terms",
+  "/cookies",
   "/brochure",
 ] as const;
 

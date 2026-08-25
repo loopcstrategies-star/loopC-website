@@ -16,6 +16,7 @@ type CompanyRow = {
   planName: string | null;
   subscriptionStatus: string | null;
   planId: string | null;
+  externalErpCustomerId: string | null;
 };
 
 export function CompaniesClient({ companies }: { companies: CompanyRow[] }) {
@@ -81,6 +82,7 @@ export function CompaniesClient({ companies }: { companies: CompanyRow[] }) {
             <tr>
               <th className="py-2">Name</th>
               <th className="py-2">Slug</th>
+              <th className="py-2">ERP ID</th>
               <th className="py-2">Members</th>
               <th className="py-2">Plan</th>
               <th className="py-2">Company</th>
@@ -94,6 +96,7 @@ export function CompaniesClient({ companies }: { companies: CompanyRow[] }) {
               <tr key={c.id} className="border-t border-[var(--border)]">
                 <td className="py-2">{c.name}</td>
                 <td className="py-2">{c.slug}</td>
+                <td className="py-2 font-mono text-xs">{c.externalErpCustomerId ?? "—"}</td>
                 <td className="py-2">{c.memberships}</td>
                 <td className="py-2">{c.planName ?? "—"}</td>
                 <td className="py-2">{c.status}</td>

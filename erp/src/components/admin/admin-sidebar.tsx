@@ -11,6 +11,8 @@ const WEBSITE = [
   { href: "/admin/website/services", label: "Services", icon: "services" },
   { href: "/admin/website/erp-product", label: "ERP Product", icon: "erp" },
   { href: "/admin/website/faqs", label: "FAQ", icon: "faq" },
+  { href: "/admin/website/blog", label: "Blog", icon: "blog" },
+  { href: "/admin/website/testimonials", label: "Testimonials", icon: "testimonials" },
   { href: "/admin/website/contacts", label: "Contact", icon: "contact" },
   { href: "/admin/website/seo", label: "SEO", icon: "seo" },
   { href: "/admin/website/media", label: "Media", icon: "media" },
@@ -98,7 +100,7 @@ export function AdminSidebar() {
           <NavLink key={`${l.href}-${l.label}`} {...l} />
         ))}
 
-        <SectionLabel>ERP Sales</SectionLabel>
+        <SectionLabel>Sales</SectionLabel>
         {SALES.map((l) => (
           <NavLink key={l.href} {...l} />
         ))}

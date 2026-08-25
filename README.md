@@ -1,85 +1,74 @@
-# LoopC website
+# LoopC Business Strategies
 
-Monorepo for LoopC Business Strategies — premium public website, ERP sales admin, and the existing ERP product.
+Monorepo for the **public marketing website**, **SaaS sales / billing portal**, and **Super Admin** — not the ERP product itself.
 
-| App | URL | Path | Purpose |
+The LoopC ERP application is a **separate project**. This repo sells and provisions access to it via subscription entitlements and a configurable `ERP_APP_URL`.
+
+| App | Local | Path | Purpose |
 |---|---|---|---|
-| Marketing | http://localhost:3000 | [`site/`](site/) | Public website (Home, About, Services, ERP, Pricing, Contact, FAQ, Blog) |
-| ERP SaaS + Admin | http://localhost:3001 | [`erp/`](erp/) | ERP product, signup/checkout, Super Admin `/admin`, billing APIs |
-| Postgres | localhost:5433 | Docker Compose in `erp/` | Shared database |
+| Marketing | http://localhost:3000 | [`site/`](site/) | Public website (`www.loopcstrategies.com`) |
+| Portal + Admin | http://localhost:3001 | [`erp/`](erp/) | Signup, checkout, customer account portal, Super Admin `/admin` |
+| Postgres | localhost:5433 | Docker Compose in `erp/` | Portal database |
+| External ERP | `ERP_APP_URL` | Separate deploy | Real product customers open after subscribe |
 
 ## Architecture
 
 ```
-Marketing site (:3000)  ---api/public/*--->  ERP app (:3001)  --->  Postgres (:5433)
-                                                   ^
-                                            Super Admin /admin
-                                            controls CMS + billing
-                         ---/signup?plan=---> Signup/Checkout (/checkout, /webhooks)
-                                                   |
-                                                   v
-                                            Subscription ACTIVE
-                                                   |
-                                                   v
-                                            Existing ERP /app (untouched)
+www.loopcstrategies.com (site/)  --api/public/*-->  portal (erp/ :3001)  -->  Postgres
+        |                                              ^
+   pricing / contact                            Super Admin /admin
+        |                                         (admin.loopcstrategies.com)
+        +---- signup?plan= ---> checkout --> webhook --> Subscription ACTIVE
+                                                              |
+                                                              v
+                                                     ERP_APP_URL (external product)
 ```
 
-**Separation rule:** The public website and Admin Panel sell and manage access to the ERP. They do not implement CRM, accounting, inventory, HR, payroll or other ERP business modules. Those live only in `erp/src/app/(app)/`.
+**Separation rule:** This repo sells and manages access to LoopC ERP. It does **not** implement CRM, accounting, inventory, HR, payroll, or other ERP business modules. Those live only in the external ERP application.
+
+Customer `/app` in this repo is an **account / billing portal**, not the ERP product.
 
 ## Quick start
 
 ```bash
-# Start the database
+# Portal + database
 cd erp
 docker compose up -d
-cp env.example .env         # fill in AUTH_SECRET, DATABASE_URL, SEED_ADMIN_PASSWORD
-
+cp env.example .env         # AUTH_SECRET, DATABASE_URL, SEED_ADMIN_PASSWORD, ERP_APP_URL
 npm install
 npx prisma migrate dev
-npm run db:seed             # seed admin user and plans
-npm run db:seed:cms         # seed website content (hero, services, FAQs, etc.)
-npm run dev                 # ERP on :3001
+npm run db:seed
+npm run db:seed:cms
+npm run dev                 # portal on :3001
 ```
 
 ```bash
-# Marketing site (second terminal)
+# Marketing site
 cd site
-cp .env.example .env.local  # set ERP_API_URL=http://localhost:3001
+cp env.example .env.local   # ERP_API_URL=http://localhost:3001
 npm install
 npm run dev                 # site on :3000
 ```
 
-Admin login credentials come from `SEED_ADMIN_EMAIL` / `SEED_ADMIN_PASSWORD` in `erp/.env`.
+Admin login: `SEED_ADMIN_EMAIL` / `SEED_ADMIN_PASSWORD` in `erp/.env`.
 
 ## Key flows
 
-1. **Customer purchase:** `site/pricing` → choose plan → `erp/signup` → checkout → Razorpay → webhook → ACTIVE subscription → `/app` (existing ERP)
-2. **Content management:** Admin → Website CMS → edit hero/services/FAQ → appears on `site/` immediately (30s revalidation)
-3. **Plan management:** Admin → ERP Sales → Plans → change prices/features → reflected on `site/pricing` from DB
-4. **Enquiries:** Contact form → `erp/api/public/contact` → Admin → Website → Contact Enquiries → status workflow
+1. **Purchase:** `site/pricing` → portal `/signup` → `/checkout` → Razorpay (or mock) → webhook → ACTIVE → Open ERP (`ERP_APP_URL`)
+2. **CMS:** Admin → Website → edits → `site/` via public APIs (~30s revalidate)
+3. **Plans:** Admin → Sales → Plans → reflected on `site/pricing`
+4. **Enquiries:** Contact form → portal `/api/public/contact` → Admin → Contacts
 
-## Admin panel
+## Domains
 
-`/admin` (requires `isSuperAdmin = true` on the user account)
-
-| Section | Routes |
+| Host | App |
 |---|---|
-| Dashboard | `/admin` |
-| Website | `/admin/website` (Home, About, ERP Product, Services, FAQs, Testimonials, Contact Enquiries, SEO, Media Library, Blog) |
-| ERP Sales | `/admin/plans`, `/admin/companies`, `/admin/subscriptions`, `/admin/payments`, `/admin/invoices`, `/admin/coupons` |
-| Operations | `/admin/analytics`, `/admin/settings`, `/admin/audit` |
+| `www.loopcstrategies.com` | Marketing (`site/`) |
+| Portal `APP_URL` (e.g. signup/checkout host) | Sales + customer account (`erp/`) |
+| `admin.loopcstrategies.com` | Super Admin only (same `erp/` deploy; host gate) |
+| `ERP_APP_URL` | External LoopC ERP product |
 
-## Deployment
+## Environment
 
-| App | Recommended host | Domain example |
-|---|---|---|
-| `site/` | Vercel / Railway | `www.loopcstrategies.com` |
-| `erp/` | Railway | `app.loopcstrategies.com` |
-
-Set `ERP_API_URL` and `NEXT_PUBLIC_ERP_URL` in `site/` to point to the production ERP domain.
-Set `MARKETING_URL` in `erp/.env` to the production marketing domain for CORS.
-
-## Environment variables
-
-- `erp/env.example` — ERP app (database, auth, Razorpay, storage, CORS)
-- `site/.env.example` — Marketing site (ERP API URL, Turnstile)
+- `erp/env.example` — database, auth, `ERP_APP_URL`, Razorpay, CORS, seed
+- `site/env.example` — `ERP_API_URL` / `NEXT_PUBLIC_ERP_URL` (portal public API + signup links)

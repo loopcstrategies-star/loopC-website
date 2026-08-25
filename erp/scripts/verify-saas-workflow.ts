@@ -212,17 +212,17 @@ async function main() {
       amountPaise: checkoutB.checkout.totalInr,
     });
 
-    const partyA = await prisma.party.create({
-      data: {
-        companyId: coA.company.id,
-        name: "Secret Customer A",
-        type: "customer",
-      },
+    const membershipLeak = await prisma.membership.findFirst({
+      where: { companyId: coB.company.id, userId: userA.id },
     });
-    const leaked = await prisma.party.findFirst({
-      where: { id: partyA.id, companyId: coB.company.id },
+    assert(!membershipLeak, "J: company B must not include company A user");
+
+    const coASub = await prisma.subscription.findUnique({ where: { companyId: coA.company.id } });
+    assert(Boolean(coASub), "J: company A should have a subscription");
+    const wrongScope = await prisma.subscription.findFirst({
+      where: { id: coASub!.id, companyId: coB.company.id },
     });
-    assert(!leaked, "J: company B cannot query company A party by id+tenant");
+    assert(!wrongScope, "J: company A subscription not queryable under company B");
     results.push("J. Multi-tenant isolation: OK");
 
     await prisma.planFeature.updateMany({
