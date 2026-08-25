@@ -4,35 +4,22 @@ import type { Project } from "@/lib/projects";
 import type { Service } from "@/lib/services";
 import { getPublishedEmail, getSiteUrl, isPublished, siteConfig } from "@/lib/site-config";
 
-export const seoKeywords = [
-  "ERP software India",
-  "custom ERP development",
-  "business software company Chennai",
-  "SaaS development",
-  "ERP customization",
-  "business dashboard development",
-  "custom business software",
-  "web application development Chennai",
-  "mobile app development Chennai",
-  "LoopC ERP",
-] as const;
-
 export const defaultSiteTitle =
   "LoopC Business Strategies | Enterprise ERP & Business Technology";
 
 export const defaultSiteDescription =
-  "LoopC builds LoopC ERP and custom business software — web apps, mobile apps, dashboards and integrations for growing companies in India.";
+  "LoopC Business Strategies provides business technology solutions and subscription-based ERP software, along with web, mobile and custom SaaS solutions for modern businesses.";
 
 export const homePageTitle =
   "LoopC Business Strategies | Enterprise ERP & Business Technology";
 
 export const homePageDescription =
-  "Design and build powerful digital products for modern businesses — LoopC ERP, web and mobile apps, SaaS platforms and custom software.";
+  "LoopC Business Strategies provides business technology solutions and subscription-based ERP software, along with web, mobile and custom SaaS solutions for modern businesses.";
 
 export const openGraphTitle = "LoopC Business Strategies";
 
 export const openGraphDescription =
-  "LoopC ERP plus custom web, mobile and dashboard software — built around the way your business works.";
+  "LoopC Business Strategies provides business technology solutions and subscription-based ERP software, along with web, mobile and custom SaaS solutions for modern businesses.";
 
 /** Unique SEO copy for static public marketing pages. */
 export const pageSeo = {

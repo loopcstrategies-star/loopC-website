@@ -10,7 +10,6 @@ import { IntroCardsSection } from "@/components/home/intro-cards-section";
 import { DigitalProductsSection } from "@/components/home/digital-products-section";
 import { ProcessSection } from "@/components/home/process-section";
 import { TechStripSection } from "@/components/home/tech-strip-section";
-import { JsonLd } from "@/components/json-ld";
 import {
   type ErpPlan,
   type ErpWebsitePage,
@@ -19,7 +18,7 @@ import {
   sectionByKey,
 } from "@/lib/erp-api";
 import { getCustomSoftwareCta, getExploreErpCta } from "@/lib/navigation";
-import { getOrganizationSchema, pageMetadata, pageSeo } from "@/lib/seo";
+import { pageMetadata, pageSeo } from "@/lib/seo";
 import { siteConfig } from "@/lib/site-config";
 
 export const metadata: Metadata = {
@@ -61,7 +60,6 @@ export default async function HomePage() {
 
   return (
     <div>
-      <JsonLd data={getOrganizationSchema()} />
       <HomeHero
         title={hero?.title || siteData?.site?.tagline || siteConfig.tagline}
         subtitle={hero?.subtitle || siteConfig.supportingLine}

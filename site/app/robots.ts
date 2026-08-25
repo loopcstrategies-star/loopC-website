@@ -11,6 +11,5 @@ export default function robots(): MetadataRoute.Robots {
       },
     ],
     sitemap: getAbsoluteUrl("/sitemap.xml"),
-    host: getAbsoluteUrl("/").replace(/\/$/, ""),
   };
 }

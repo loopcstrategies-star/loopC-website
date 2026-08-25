@@ -11,7 +11,6 @@ import {
   getWebSiteSchema,
   openGraphDescription,
   openGraphTitle,
-  seoKeywords,
 } from "@/lib/seo";
 
 const siteUrl = getSiteUrl();
@@ -28,7 +27,6 @@ export const metadata: Metadata = {
     template: `%s | ${siteConfig.brand}`,
   },
   description: defaultSiteDescription,
-  keywords: [...seoKeywords],
   openGraph: {
     type: "website",
     locale: "en_IN",
