@@ -21,6 +21,42 @@ export async function getCompanySubscription(companyId: string) {
   });
 }
 
+type SubscriptionAccessFields = {
+  status: SubscriptionStatus;
+  trialEndDate: Date | null;
+  graceEndsAt: Date | null;
+};
+
+/**
+ * Product access for Open ERP: TRIAL (not expired), ACTIVE, or PAST_DUE still in grace.
+ */
+export function isErpAccessReady(
+  subscription: SubscriptionAccessFields | null | undefined,
+  now: Date = new Date(),
+): boolean {
+  if (!subscription) return false;
+
+  if (
+    subscription.status === SubscriptionStatus.TRIAL ||
+    subscription.status === SubscriptionStatus.ACTIVE
+  ) {
+    if (
+      subscription.status === SubscriptionStatus.TRIAL &&
+      subscription.trialEndDate &&
+      subscription.trialEndDate < now
+    ) {
+      return false;
+    }
+    return true;
+  }
+
+  if (subscription.status === SubscriptionStatus.PAST_DUE) {
+    return Boolean(subscription.graceEndsAt && subscription.graceEndsAt > now);
+  }
+
+  return false;
+}
+
 /**
  * Allows TRIAL | ACTIVE.
  * PAST_DUE is allowed only while graceEndsAt is still in the future.

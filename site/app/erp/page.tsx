@@ -32,7 +32,7 @@ export default async function ErpPage() {
   const salesCta = getSalesCta();
   const [data, faqData] = await Promise.all([
     erpFetch<PagePayload>("/api/public/pages/erp"),
-    erpFetch<FaqPayload>("/api/public/faqs?page=erp"),
+    erpFetch<FaqPayload>("/api/public/faqs?pageSlug=faq"),
   ]);
   const intro = sectionByKey(data?.page?.sections, "intro");
   const modules = asStringArray(

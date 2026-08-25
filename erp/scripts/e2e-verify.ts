@@ -270,6 +270,79 @@ async function main() {
       enquiry?.id,
     );
 
+    const siteCms = await fetch(`${ERP}/api/public/site`);
+    log("TEST15 public site CMS", siteCms.status === 200);
+
+    const erpPage = await fetch(`${ERP}/api/public/pages/erp`);
+    log("TEST15b public pages/erp", erpPage.status === 200);
+
+    const faqsRes = await fetch(`${ERP}/api/public/faqs?pageSlug=faq`);
+    const faqsJson = (await faqsRes.json()) as { faqs?: unknown[] };
+    log(
+      "TEST15c faqs pageSlug=faq",
+      faqsRes.status === 200 && Array.isArray(faqsJson.faqs),
+      `${faqsJson.faqs?.length ?? 0} faqs`,
+    );
+
+    const faqsAlias = await fetch(`${ERP}/api/public/faqs?page=faq`);
+    const faqsAliasJson = (await faqsAlias.json()) as { faqs?: unknown[] };
+    log(
+      "TEST15d faqs page alias",
+      faqsAlias.status === 200 &&
+        Array.isArray(faqsAliasJson.faqs) &&
+        faqsAliasJson.faqs.length === (faqsJson.faqs?.length ?? -1),
+    );
+
+    log("TEST15e pricing signup CTA", mktHtml.includes("/signup?plan="));
+
+    const siteEmail = `e2e-site-${Date.now()}@example.com`;
+    const siteContactRes = await fetch(`${MARKETING}/api/contact`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: "E2E Site Contact",
+        company: "E2E Site Co",
+        email: siteEmail,
+        phone: "9111111112",
+        service: "erp",
+        message: "Please call me about ERP pricing and onboarding.",
+      }),
+    });
+    const siteContactBody = (await siteContactRes.json()) as { ok?: boolean };
+    const siteEnquiry = await prisma.contactSubmission.findFirst({
+      where: { email: siteEmail.toLowerCase() },
+      orderBy: { createdAt: "desc" },
+    });
+    log(
+      "TEST16 site contact proxy",
+      siteContactRes.status === 200 && siteContactBody.ok === true && Boolean(siteEnquiry),
+      siteEnquiry?.id,
+    );
+
+    const { getExternalErpUrl } = await import("../src/lib/external-erp");
+    const externalUrl = getExternalErpUrl();
+    log("TEST17 EXTERNAL_ERP_URL", Boolean(externalUrl), externalUrl);
+
+    const { isErpAccessReady } = await import("../src/server/access/subscription");
+    const now = new Date();
+    log("TEST18 unpaid not ready", isErpAccessReady(null) === false);
+    log(
+      "TEST18b ACTIVE ready",
+      isErpAccessReady({
+        status: SubscriptionStatus.ACTIVE,
+        trialEndDate: null,
+        graceEndsAt: null,
+      }),
+    );
+    log(
+      "TEST18c expired trial not ready",
+      isErpAccessReady({
+        status: SubscriptionStatus.TRIAL,
+        trialEndDate: new Date(now.getTime() - 1000),
+        graceEndsAt: null,
+      }) === false,
+    );
+
     console.log("\nE2E PASS — all critical flows verified");
   } finally {
     await prisma.$disconnect();

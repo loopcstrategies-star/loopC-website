@@ -5,7 +5,7 @@ import { Card, CardTitle } from "@/components/ui/card";
 import { formatDate } from "@/lib/format";
 import { getExternalErpUrl } from "@/lib/external-erp";
 import { requireAppSession } from "@/lib/session-guards";
-import { getCompanySubscription } from "@/server/access/subscription";
+import { getCompanySubscription, isErpAccessReady } from "@/server/access/subscription";
 import { prisma } from "@/server/db";
 
 export default async function AccountPortalPage() {
@@ -26,8 +26,7 @@ export default async function AccountPortalPage() {
 
   const userLimit =
     subscription?.plan.limits.find((l) => l.limitKey === "users")?.value ?? null;
-  const accessReady =
-    subscription?.status === "ACTIVE" || subscription?.status === "TRIAL";
+  const accessReady = isErpAccessReady(subscription);
 
   return (
     <div className="space-y-6">

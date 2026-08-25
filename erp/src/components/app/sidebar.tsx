@@ -14,11 +14,13 @@ export function AppSidebar({
   subscriptionStatus,
   planName,
   isSuperAdmin,
+  accessReady,
 }: {
   companyName: string;
   subscriptionStatus: string | null;
   planName: string | null;
   isSuperAdmin: boolean;
+  accessReady: boolean;
 }) {
   const erpUrl = getExternalErpUrl();
 
@@ -54,16 +56,27 @@ export function AppSidebar({
           <p className="px-3 text-xs font-semibold uppercase tracking-wide text-[var(--muted)]">
             Product
           </p>
-          <a
-            href={erpUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-1 block rounded-md px-3 py-2 font-medium text-[var(--accent)] hover:bg-[var(--surface-2)]"
-          >
-            Open ERP →
-          </a>
+          {accessReady ? (
+            <a
+              href={erpUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-1 block rounded-md px-3 py-2 font-medium text-[var(--accent)] hover:bg-[var(--surface-2)]"
+            >
+              Open ERP →
+            </a>
+          ) : (
+            <Link
+              href="/pricing"
+              className="mt-1 block rounded-md px-3 py-2 font-medium text-[var(--accent)] hover:bg-[var(--surface-2)]"
+            >
+              Choose a plan
+            </Link>
+          )}
           <p className="mt-1 px-3 text-xs text-[var(--muted)]">
-            Opens the existing LoopC ERP product (separate from this portal).
+            {accessReady
+              ? "Opens the existing LoopC ERP product (separate from this portal)."
+              : "Activate a subscription to unlock product access."}
           </p>
         </div>
 

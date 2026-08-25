@@ -4,7 +4,7 @@ import { AppSidebar } from "@/components/app/sidebar";
 import { ResponsiveSidebarLayout } from "@/components/ui/responsive-sidebar-layout";
 import { getExternalErpUrl } from "@/lib/external-erp";
 import { requireAppSession } from "@/lib/session-guards";
-import { getCompanySubscription } from "@/server/access/subscription";
+import { getCompanySubscription, isErpAccessReady } from "@/server/access/subscription";
 import { prisma } from "@/server/db";
 
 export default async function AppLayout({
@@ -19,6 +19,7 @@ export default async function AppLayout({
   const subscription = await getCompanySubscription(companyId);
   const displayName = session.user.name || session.user.email;
   const erpUrl = getExternalErpUrl();
+  const accessReady = isErpAccessReady(subscription);
 
   return (
     <ResponsiveSidebarLayout
@@ -28,6 +29,7 @@ export default async function AppLayout({
           subscriptionStatus={subscription?.status ?? null}
           planName={subscription?.plan.name ?? null}
           isSuperAdmin={session.user.isSuperAdmin}
+          accessReady={accessReady}
         />
       }
       title={
@@ -38,14 +40,23 @@ export default async function AppLayout({
       }
       headerActions={
         <>
-          <a
-            href={erpUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-sm font-medium text-[var(--accent)] hover:underline"
-          >
-            Open ERP
-          </a>
+          {accessReady ? (
+            <a
+              href={erpUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm font-medium text-[var(--accent)] hover:underline"
+            >
+              Open ERP
+            </a>
+          ) : (
+            <Link
+              href="/pricing"
+              className="text-sm font-medium text-[var(--accent)] hover:underline"
+            >
+              Choose a plan
+            </Link>
+          )}
           <Link
             href="/pricing"
             className="text-sm text-[var(--muted)] hover:text-[var(--ink)]"

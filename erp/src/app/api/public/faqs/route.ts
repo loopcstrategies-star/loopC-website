@@ -10,7 +10,8 @@ export async function OPTIONS(req: Request) {
 
 export async function GET(req: Request) {
   try {
-    const pageSlug = new URL(req.url).searchParams.get("pageSlug") ?? undefined;
+    const params = new URL(req.url).searchParams;
+    const pageSlug = params.get("pageSlug") ?? params.get("page") ?? undefined;
     const faqs = await prisma.faqItem.findMany({
       where: {
         isActive: true,

@@ -89,7 +89,7 @@ export function HomePricingPreview({ plans }: { plans?: ErpPlan[] | null }) {
                     href={
                       plan.isCustomPricing
                         ? "/contact"
-                        : `${erp}/signup?plan=${encodeURIComponent(plan.slug)}`
+                        : `${erp}/signup?plan=${encodeURIComponent(plan.slug)}&cycle=MONTHLY`
                     }
                     className="mt-5 text-sm font-semibold text-[var(--primary)] hover:underline"
                   >
